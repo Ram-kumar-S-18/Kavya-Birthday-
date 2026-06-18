@@ -489,3 +489,133 @@ body.hover-interactive .custom-cursor-follower {
         font-size: clamp(1.08rem, 5.3vw, 1.5rem);
     }
 }
+
+/* ==========================================================================
+   Wax Seal Barrier
+   ========================================================================== */
+.wax-seal-barrier {
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.wax-seal-barrier.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.envelope-half {
+    position: absolute;
+    inset: 0;
+    background: rgba(252, 248, 248, 0.38);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    transition: transform 0.9s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.9s ease;
+    z-index: 101;
+    pointer-events: none;
+}
+
+.envelope-half.left {
+    clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+}
+
+.envelope-half.right {
+    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+}
+
+.wax-seal-barrier.split-open #envelope-left {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.wax-seal-barrier.split-open #envelope-right {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.seal-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 102;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+    will-change: transform, opacity;
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.seal-container.dragging {
+    cursor: grabbing;
+    transition: none; /* Instant feedback when dragging */
+}
+
+.wax-seal-barrier.split-open .seal-container {
+    opacity: 0;
+    transform: translate(-50%, 0%) scale(0.5);
+    pointer-events: none;
+    transition: opacity 0.6s cubic-bezier(0.77, 0, 0.175, 1), transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.wax-seal {
+    width: clamp(105px, 15vw, 130px);
+    height: clamp(105px, 15vw, 130px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    filter: drop-shadow(0 8px 24px rgba(44, 36, 36, 0.18));
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.wax-seal svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.wax-seal:hover svg {
+    transform: scale(1.08) rotate(2deg);
+}
+
+.seal-container.dragging .wax-seal svg {
+    transform: scale(0.96) rotate(-2deg);
+}
+
+.seal-prompt {
+    margin-top: 18px;
+    font-family: var(--font-body);
+    font-size: clamp(0.7rem, 1.4vw, 0.82rem);
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-whisper);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.4s, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1) 0.4s;
+    pointer-events: none;
+}
+
+.wax-seal-barrier.active .seal-prompt {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.seal-container.dragging .seal-prompt {
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+

@@ -14,7 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         particlesState: 'drift',
         constellationPoints: [],
-        audioPlaying: false
+        audioPlaying: false,
+        sealOpened: false,
+        sealActive: false
     };
 
     const cursor = document.getElementById('custom-cursor');
@@ -38,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         generateConstellation();
     }
 
-    window.addEventListener('mousemove', (event) => {
+    window.addEventListener('pointermove', (event) => {
         state.mouse.targetX = event.clientX;
         state.mouse.targetY = event.clientY;
     });
@@ -170,19 +172,26 @@ document.addEventListener('DOMContentLoaded', () => {
             this.x += this.vx;
             this.y += this.vy;
 
+            if (state.particlesState === 'burst') {
+                this.vx *= 0.93;
+                this.vy *= 0.93;
+            }
+
             if (this.x < -20) this.x = bgCanvas.width + 20;
             if (this.x > bgCanvas.width + 20) this.x = -20;
             if (this.y < -20) this.y = bgCanvas.height + 20;
             if (this.y > bgCanvas.height + 20) this.y = -20;
 
-            const dx = state.mouse.targetX - this.x;
-            const dy = state.mouse.targetY - this.y;
-            const dist = Math.hypot(dx, dy);
+            if (state.particlesState !== 'burst') {
+                const dx = state.mouse.targetX - this.x;
+                const dy = state.mouse.targetY - this.y;
+                const dist = Math.hypot(dx, dy);
 
-            if (dist < 120) {
-                const force = (120 - dist) / 120;
-                this.x -= (dx / (dist + 1)) * force * 1.8;
-                this.y -= (dy / (dist + 1)) * force * 1.8;
+                if (dist < 120) {
+                    const force = (120 - dist) / 120;
+                    this.x -= (dx / (dist + 1)) * force * 1.8;
+                    this.y -= (dy / (dist + 1)) * force * 1.8;
+                }
             }
         }
 
@@ -457,6 +466,182 @@ document.addEventListener('DOMContentLoaded', () => {
             .set(cards, { autoAlpha: 0, visibility: 'hidden' }, exitPoint + 1.05);
     }
 
+    function triggerParticleBurst(centerX, centerY) {
+        state.particlesState = 'burst';
+        particles.forEach((p) => {
+            p.x = centerX;
+            p.y = centerY;
+            const angle = Math.random() * Math.PI * 2;
+            const speed = Math.random() * 9 + 4;
+            p.vx = Math.cos(angle) * speed;
+            p.vy = Math.sin(angle) * speed;
+            p.size = Math.random() * 2.8 + 1.2;
+            p.alpha = 1.0;
+            p.color = Math.random() > 0.4 ? '#D4AF37' : '#E07A5F';
+            p.constellationTarget = null;
+        });
+    }
+
+    function activateWaxSeal(scrollTrigger) {
+        const barrier = document.getElementById('wax-seal-barrier');
+        const leftEnv = document.getElementById('envelope-left');
+        const rightEnv = document.getElementById('envelope-right');
+        const sealContainer = document.getElementById('seal-container');
+        const seal = document.getElementById('wax-seal');
+
+        barrier.classList.add('active');
+
+        seal.addEventListener('pointerenter', () => {
+            document.body.classList.add('hover-interactive');
+        });
+        seal.addEventListener('pointerleave', () => {
+            if (!isDragging) {
+                document.body.classList.remove('hover-interactive');
+            }
+        });
+
+        let isDragging = false;
+        let startY = 0;
+
+        function updateTear(dy) {
+            const viewportHeight = window.innerHeight;
+            const viewportWidth = window.innerWidth;
+            const initialY = viewportHeight * 0.5;
+            const sealY = initialY + dy;
+            const maxGap = viewportWidth * 0.22;
+            const gapX = Math.min(maxGap, dy * 0.45);
+
+            leftEnv.style.clipPath = `polygon(0% 0%, calc(50% - ${gapX}px) 0%, 50% ${sealY}px, 50% 100%, 0% 100%)`;
+            rightEnv.style.clipPath = `polygon(calc(50% + ${gapX}px) 0%, 100% 0%, 100% 100%, 50% 100%, 50% ${sealY}px)`;
+        }
+
+        function onPointerDown(e) {
+            isDragging = true;
+            startY = e.clientY;
+            sealContainer.classList.add('dragging');
+            document.body.classList.add('hover-interactive');
+            sealContainer.setPointerCapture(e.pointerId);
+        }
+
+        function onPointerMove(e) {
+            if (!isDragging) return;
+
+            const dyRaw = e.clientY - startY;
+            const dy = Math.max(0, dyRaw);
+
+            sealContainer.style.transform = `translate(-50%, calc(-50% + ${dy}px))`;
+            updateTear(dy);
+
+            const threshold = window.innerHeight * 0.4;
+            if (dy >= threshold) {
+                isDragging = false;
+                sealContainer.releasePointerCapture(e.pointerId);
+                popSeal(dy);
+            }
+        }
+
+        function onPointerUp(e) {
+            if (!isDragging) return;
+            isDragging = false;
+            sealContainer.releasePointerCapture(e.pointerId);
+            resetSeal();
+        }
+
+        function resetSeal() {
+            sealContainer.classList.remove('dragging');
+            document.body.classList.remove('hover-interactive');
+
+            const transform = sealContainer.style.transform;
+            const match = transform.match(/calc\(-50% \+ ([\d.]+)px\)/);
+            const currentDy = match ? parseFloat(match[1]) : 0;
+
+            const animObj = { dy: currentDy };
+            gsap.to(animObj, {
+                dy: 0,
+                duration: 0.6,
+                ease: 'elastic.out(1, 0.6)',
+                onUpdate: () => {
+                    sealContainer.style.transform = `translate(-50%, calc(-50% + ${animObj.dy}px))`;
+                    updateTear(animObj.dy);
+                }
+            });
+        }
+
+        function popSeal(finalDy) {
+            state.sealOpened = true;
+            state.sealActive = false;
+
+            const burstY = window.innerHeight * 0.5 + finalDy;
+            triggerParticleBurst(window.innerWidth / 2, burstY);
+
+            if (state.audioPlaying && audioCtx && synth) {
+                const popTime = audioCtx.currentTime;
+                
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(140, popTime);
+                osc.frequency.exponentialRampToValueAtTime(640, popTime + 0.35);
+                gainNode.gain.setValueAtTime(0.12, popTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, popTime + 0.35);
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(popTime + 0.35);
+
+                const chime = audioCtx.createOscillator();
+                const chimeGain = audioCtx.createGain();
+                chime.type = 'sine';
+                chime.frequency.setValueAtTime(880, popTime);
+                chime.frequency.exponentialRampToValueAtTime(1760, popTime + 0.45);
+                chimeGain.gain.setValueAtTime(0.06, popTime);
+                chimeGain.gain.exponentialRampToValueAtTime(0.001, popTime + 0.45);
+                chime.connect(chimeGain);
+                chimeGain.connect(audioCtx.destination);
+                chime.start();
+                chime.stop(popTime + 0.45);
+            }
+
+            barrier.classList.add('split-open');
+
+            setTimeout(() => {
+                barrier.classList.remove('active');
+                document.body.style.overflow = '';
+                if (lenis) lenis.start();
+
+                const startScroll = scrollTrigger.start + (scrollTrigger.end - scrollTrigger.start) * 0.92;
+                const endScroll = scrollTrigger.end;
+
+                if (lenis) {
+                    lenis.scrollTo(endScroll, {
+                        duration: 2.2,
+                        easing: (t) => 1 - Math.pow(1 - t, 3)
+                    });
+                } else {
+                    const scrollObj = { y: startScroll };
+                    gsap.to(scrollObj, {
+                        y: endScroll,
+                        duration: 2.2,
+                        ease: 'power3.out',
+                        onUpdate: () => {
+                            window.scrollTo(0, scrollObj.y);
+                            ScrollTrigger.update();
+                        }
+                    });
+                }
+
+                setTimeout(() => {
+                    state.particlesState = 'constellation';
+                }, 600);
+            }, 850);
+        }
+
+        sealContainer.addEventListener('pointerdown', onPointerDown);
+        sealContainer.addEventListener('pointermove', onPointerMove);
+        sealContainer.addEventListener('pointerup', onPointerUp);
+        sealContainer.addEventListener('pointercancel', onPointerUp);
+    }
+
     function initScroll() {
         if (window.Lenis) {
             lenis = new Lenis({
@@ -487,17 +672,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 onUpdate: (self) => {
                     adjustAudio(self.progress);
 
-                    if (self.progress > 0.91) {
-                        state.particlesState = 'constellation';
+                    if (self.progress >= 0.92 && !state.sealOpened && !state.sealActive) {
+                        state.sealActive = true;
+                        if (lenis) lenis.stop();
+                        document.body.style.overflow = 'hidden';
+                        self.scroll(self.start + (self.end - self.start) * 0.92);
+                        activateWaxSeal(self);
+                    }
+
+                    if (self.progress > 0.91 && state.sealOpened) {
+                        if (state.particlesState !== 'burst') {
+                            state.particlesState = 'constellation';
+                        }
                     } else {
-                        state.particlesState = 'drift';
-                        particles.forEach((particle) => {
-                            particle.constellationTarget = null;
-                        });
+                        if (state.particlesState !== 'burst') {
+                            state.particlesState = 'drift';
+                            particles.forEach((particle) => {
+                                particle.constellationTarget = null;
+                            });
+                        }
                     }
                 },
                 onLeave: () => {
-                    state.particlesState = 'constellation';
+                    if (state.sealOpened) {
+                        state.particlesState = 'constellation';
+                    }
                 }
             }
         });
