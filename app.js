@@ -214,90 +214,188 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // 3D Magnetic Parallax and Sibling Focus Pull hover effects
-    const clusters = document.querySelectorAll('.photo-cluster');
-    clusters.forEach((cluster) => {
-        let leaveTimeout = null;
+    // Initialize GSAP quickTo properties for 3D tilt
+    const allPhotoCards = document.querySelectorAll('.photo-card');
+    allPhotoCards.forEach((card) => {
+        card._quickRotateX = gsap.quickTo(card, "rotateX", { duration: 0.25, ease: "power2.out" });
+        card._quickRotateY = gsap.quickTo(card, "rotateY", { duration: 0.25, ease: "power2.out" });
+    });
 
-        const cards = cluster.querySelectorAll('.photo-card');
-        cards.forEach((card) => {
-            let isHovered = false;
+    // Physics Scatter & 3D Focus Interactions
+    const memoryCanvas = document.querySelector('.memory-canvas');
+    if (memoryCanvas) {
+        let isCanvasHovered = false;
+        let activeCards = [];
 
-            card.addEventListener('pointerenter', () => {
-                isHovered = true;
-                if (leaveTimeout) {
-                    clearTimeout(leaveTimeout);
-                    leaveTimeout = null;
+        function getActiveCards() {
+            const activeSection = Array.from(document.querySelectorAll('.photo-section')).find(s => {
+                const style = window.getComputedStyle(s);
+                return style.visibility === 'visible' && style.opacity !== '0';
+            });
+            return activeSection ? Array.from(activeSection.querySelectorAll('.photo-card')) : [];
+        }
+
+        memoryCanvas.addEventListener('pointerenter', () => {
+            isCanvasHovered = true;
+            activeCards = getActiveCards();
+            if (!activeCards.length) return;
+
+            // Scatter animation (fans out data-x and data-y coordinates by 1.8)
+            gsap.to(activeCards, {
+                x: (index, element) => cardX(element) * 1.8,
+                y: (index, element) => cardY(element) * 1.8,
+                duration: 1.3,
+                ease: 'elastic.out(1, 0.75)',
+                overwrite: 'auto'
+            });
+        });
+
+        memoryCanvas.addEventListener('pointerleave', () => {
+            isCanvasHovered = false;
+            if (!activeCards.length) return;
+
+            // Reset all active cards back to clustered coordinates and clear focus pull
+            gsap.to(activeCards, {
+                x: (index, element) => cardX(element),
+                y: (index, element) => cardY(element),
+                scale: 1,
+                opacity: 1,
+                filter: 'blur(0px)',
+                duration: 0.8,
+                ease: 'power2.out',
+                overwrite: 'auto',
+                onComplete: () => {
+                    activeCards.forEach(c => {
+                        c.style.zIndex = '';
+                        c.classList.remove('hovered');
+                    });
                 }
-                cards.forEach(c => {
-                    if (c !== card) c.classList.remove('hovered');
-                });
-                card.classList.add('hovered');
-                cluster.classList.add('has-hover');
             });
 
-            card.addEventListener('pointermove', (e) => {
-                if (!isHovered) return;
-
-                const rect = card.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-
-                const dx = e.clientX - centerX;
-                const dy = e.clientY - centerY;
-
-                const px = dx / (rect.width / 2);
-                const py = dy / (rect.height / 2);
-
-                const nx = Math.max(-1, Math.min(1, px));
-                const ny = Math.max(-1, Math.min(1, py));
-
-                card.style.setProperty('--mouse-x', `${((nx + 1) / 2 * 100).toFixed(1)}%`);
-                card.style.setProperty('--mouse-y', `${((ny + 1) / 2 * 100).toFixed(1)}%`);
-
-                const targetRotateX = -ny * 8;
-                const targetRotateY = nx * 8;
-
-                gsap.to(card, {
-                    rotateX: targetRotateX,
-                    rotateY: targetRotateY,
-                    duration: 0.5,
-                    ease: 'power2.out',
-                    overwrite: 'auto'
-                });
+            // Smoothly tilt back to 0
+            activeCards.forEach(c => {
+                c.classList.remove('hovered');
+                c.style.setProperty('--mouse-x', '50%');
+                c.style.setProperty('--mouse-y', '50%');
+                if (c._quickRotateX && c._quickRotateY) {
+                    c._quickRotateX(0);
+                    c._quickRotateY(0);
+                }
             });
 
-            card.addEventListener('pointerleave', () => {
-                isHovered = false;
+            activeCards = [];
+        });
+
+        // Delegate hover events for individual cards
+        memoryCanvas.addEventListener('pointerover', (e) => {
+            if (!isCanvasHovered) return;
+            const card = e.target.closest('.photo-card');
+            if (!card || !activeCards.includes(card)) return;
+
+            // Focus on hovered card
+            card.classList.add('hovered');
+            card.style.zIndex = '50';
+
+            gsap.to(card, {
+                scale: 1.15,
+                opacity: 1,
+                filter: 'blur(0px)',
+                duration: 0.5,
+                ease: 'power2.out',
+                overwrite: 'auto'
+            });
+
+            // Push siblings back
+            activeCards.forEach((sibling) => {
+                if (sibling !== card) {
+                    sibling.classList.remove('hovered');
+                    sibling.style.zIndex = '1';
+                    gsap.to(sibling, {
+                        scale: 0.9,
+                        opacity: 0.4,
+                        filter: 'blur(4px)',
+                        duration: 0.5,
+                        ease: 'power2.out',
+                        overwrite: 'auto'
+                    });
+                }
+            });
+        });
+
+        memoryCanvas.addEventListener('pointerout', (e) => {
+            if (!isCanvasHovered) return;
+            const card = e.target.closest('.photo-card');
+            const relatedTarget = e.relatedTarget;
+            const newCard = relatedTarget ? relatedTarget.closest('.photo-card') : null;
+
+            if (!card || !activeCards.includes(card)) return;
+            if (newCard === card) return;
+
+            if (!newCard) {
+                // Return all cards to default scattered state
+                activeCards.forEach((c) => {
+                    c.classList.remove('hovered');
+                    c.style.zIndex = '2';
+                    gsap.to(c, {
+                        scale: 1,
+                        opacity: 1,
+                        filter: 'blur(0px)',
+                        duration: 0.5,
+                        ease: 'power2.out',
+                        overwrite: 'auto'
+                    });
+
+                    // Reset 3D tilt
+                    c.style.setProperty('--mouse-x', '50%');
+                    c.style.setProperty('--mouse-y', '50%');
+                    if (c._quickRotateX && c._quickRotateY) {
+                        c._quickRotateX(0);
+                        c._quickRotateY(0);
+                    }
+                });
+            } else {
+                // Moving between cards: reset tilt on previous card
                 card.classList.remove('hovered');
-
-                card.style.setProperty('--mouse-x', '30%');
-                card.style.setProperty('--mouse-y', '30%');
-
-                gsap.to(card, {
-                    rotateX: 0,
-                    rotateY: 0,
-                    duration: 0.6,
-                    ease: 'power2.out',
-                    overwrite: 'auto'
-                });
-            });
-        });
-
-        cluster.addEventListener('pointerleave', () => {
-            if (leaveTimeout) clearTimeout(leaveTimeout);
-            leaveTimeout = setTimeout(() => {
-                cluster.classList.remove('has-hover');
-            }, 600); // 600ms matches the CSS transition time
-        });
-
-        cluster.addEventListener('pointerenter', () => {
-            if (leaveTimeout) {
-                clearTimeout(leaveTimeout);
-                leaveTimeout = null;
+                card.style.setProperty('--mouse-x', '50%');
+                card.style.setProperty('--mouse-y', '50%');
+                if (card._quickRotateX && card._quickRotateY) {
+                    card._quickRotateX(0);
+                    card._quickRotateY(0);
+                }
             }
         });
-    });
+
+        // 3D tilt tracking using GSAP quickTo
+        memoryCanvas.addEventListener('pointermove', (e) => {
+            if (!isCanvasHovered) return;
+            const card = e.target.closest('.photo-card');
+            if (!card || !activeCards.includes(card)) return;
+
+            const rect = card.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const dx = e.clientX - centerX;
+            const dy = e.clientY - centerY;
+
+            const px = dx / (rect.width / 2);
+            const py = dy / (rect.height / 2);
+
+            const nx = Math.max(-1, Math.min(1, px));
+            const ny = Math.max(-1, Math.min(1, py));
+
+            card.style.setProperty('--mouse-x', `${((nx + 1) / 2 * 100).toFixed(1)}%`);
+            card.style.setProperty('--mouse-y', `${((ny + 1) / 2 * 100).toFixed(1)}%`);
+
+            const targetRotateX = -ny * 15; // Max 15 degrees tilt
+            const targetRotateY = nx * 15;
+
+            if (card._quickRotateX && card._quickRotateY) {
+                card._quickRotateX(targetRotateX);
+                card._quickRotateY(targetRotateY);
+            }
+        });
+    }
 
     function animateParticles() {
         ctx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
@@ -798,14 +896,14 @@ document.addEventListener('DOMContentLoaded', () => {
             scrollTrigger: {
                 trigger: masterStage,
                 start: 'top top',
-                end: '+=1150%',
+                end: '+=1300%',
                 pin: true,
                 scrub: 1,
                 anticipatePin: 1,
                 onUpdate: (self) => {
                     adjustAudio(self.progress);
 
-                    if (self.progress > 0.91) {
+                    if (self.progress > 0.93) {
                         if (state.particlesState !== 'burst') {
                             state.particlesState = 'constellation';
                         }
@@ -869,6 +967,7 @@ document.addEventListener('DOMContentLoaded', () => {
         revealLayer(timeline, '[data-layer="impact"]', 12.0);
 
         // 6. Memory Flood (Ribbon & Mosaic simultaneously)
+        // 6. Memory Ribbon Gallery
         revealPhotoSection(timeline, '[data-photo-section="ribbon"]', 14.3, {
             staggerFrom: 'start',
             stagger: 0.045,
@@ -879,7 +978,9 @@ document.addEventListener('DOMContentLoaded', () => {
             exitDriftX: 48,
             exitFrom: 'end'
         });
-        revealPhotoSection(timeline, '[data-photo-section="mosaic"]', 14.3, {
+
+        // 7. Memory Mosaic Gallery (starts after Ribbon fully exits at 17.17)
+        revealPhotoSection(timeline, '[data-photo-section="mosaic"]', 17.37, {
             staggerFrom: 'random',
             originY: -30,
             driftY: -14,
@@ -888,12 +989,12 @@ document.addEventListener('DOMContentLoaded', () => {
             exitRotate: 4
         });
 
-        // Memory canvas hidden after flood finishes
-        timeline.set('.memory-canvas', { autoAlpha: 0, visibility: 'hidden', pointerEvents: 'none' }, 17.17);
+        // Memory canvas hidden after mosaic finishes (17.37 + 2.87 = 20.24)
+        timeline.set('.memory-canvas', { autoAlpha: 0, visibility: 'hidden', pointerEvents: 'none' }, 20.24);
 
-        // 7. Zenith Reveal (Wax Seal activates at 17.48 / progress 0.92)
+        // 8. Zenith Reveal (starts after Mosaic finishes)
         timeline
-            .set('[data-layer="zenith"]', { visibility: 'visible' }, 17.5)
+            .set('[data-layer="zenith"]', { visibility: 'visible' }, 20.44)
             .fromTo('[data-layer="zenith"]',
                 {
                     autoAlpha: 0,
@@ -912,9 +1013,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         state.particlesState = 'constellation';
                     }
                 },
-                17.5
+                20.44
             )
-            .to('[data-layer="zenith"]', { autoAlpha: 1, duration: 0.3 }, 18.7);
+            .to('[data-layer="zenith"]', { autoAlpha: 1, duration: 0.3 }, 21.64);
     }
 
     gsap.set('.arrival-line', { autoAlpha: 0, scale: 1.08, filter: 'blur(12px)' });
