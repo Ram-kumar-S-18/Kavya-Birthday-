@@ -313,12 +313,16 @@ body.hover-interactive .custom-cursor-follower {
 
 .photo-cluster {
     position: absolute;
-    inset: 0;
+    width: min(800px, 90vw);
+    height: min(600px, 80vh);
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, calc(-50% + var(--photo-cluster-lift)), 0px);
+    transform-style: preserve-3d;
     display: grid;
     place-items: center;
-    transform-style: preserve-3d;
-    transform: translateY(var(--photo-cluster-lift));
     z-index: 2;
+    pointer-events: auto;
 }
 
 .photo-card {

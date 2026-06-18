@@ -222,26 +222,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Physics Scatter & 3D Focus Interactions
-    const memoryCanvas = document.querySelector('.memory-canvas');
-    if (memoryCanvas) {
-        let isCanvasHovered = false;
-        let activeCards = [];
+    const clusters = document.querySelectorAll('.photo-cluster');
+    clusters.forEach((cluster) => {
+        let isClusterHovered = false;
+        const cards = Array.from(cluster.querySelectorAll('.photo-card'));
+        if (!cards.length) return;
 
-        function getActiveCards() {
-            const activeSection = Array.from(document.querySelectorAll('.photo-section')).find(s => {
-                const style = window.getComputedStyle(s);
-                return style.visibility === 'visible' && style.opacity !== '0';
-            });
-            return activeSection ? Array.from(activeSection.querySelectorAll('.photo-card')) : [];
-        }
-
-        memoryCanvas.addEventListener('pointerenter', () => {
-            isCanvasHovered = true;
-            activeCards = getActiveCards();
-            if (!activeCards.length) return;
+        cluster.addEventListener('pointerenter', () => {
+            isClusterHovered = true;
 
             // Scatter animation (fans out data-x and data-y coordinates by 1.8)
-            gsap.to(activeCards, {
+            gsap.to(cards, {
                 x: (index, element) => cardX(element) * 1.8,
                 y: (index, element) => cardY(element) * 1.8,
                 duration: 1.3,
@@ -250,12 +241,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        memoryCanvas.addEventListener('pointerleave', () => {
-            isCanvasHovered = false;
-            if (!activeCards.length) return;
+        cluster.addEventListener('pointerleave', () => {
+            isClusterHovered = false;
 
-            // Reset all active cards back to clustered coordinates and clear focus pull
-            gsap.to(activeCards, {
+            // Reset all cards in this cluster back to clustered coordinates and clear focus pull
+            gsap.to(cards, {
                 x: (index, element) => cardX(element),
                 y: (index, element) => cardY(element),
                 scale: 1,
@@ -265,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ease: 'power2.out',
                 overwrite: 'auto',
                 onComplete: () => {
-                    activeCards.forEach(c => {
+                    cards.forEach(c => {
                         c.style.zIndex = '';
                         c.classList.remove('hovered');
                     });
@@ -273,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // Smoothly tilt back to 0
-            activeCards.forEach(c => {
+            cards.forEach(c => {
                 c.classList.remove('hovered');
                 c.style.setProperty('--mouse-x', '50%');
                 c.style.setProperty('--mouse-y', '50%');
@@ -282,15 +272,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     c._quickRotateY(0);
                 }
             });
-
-            activeCards = [];
         });
 
-        // Delegate hover events for individual cards
-        memoryCanvas.addEventListener('pointerover', (e) => {
-            if (!isCanvasHovered) return;
+        // Delegate hover events for individual cards inside this cluster
+        cluster.addEventListener('pointerover', (e) => {
+            if (!isClusterHovered) return;
             const card = e.target.closest('.photo-card');
-            if (!card || !activeCards.includes(card)) return;
+            if (!card || !cards.includes(card)) return;
 
             // Focus on hovered card
             card.classList.add('hovered');
@@ -306,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // Push siblings back
-            activeCards.forEach((sibling) => {
+            cards.forEach((sibling) => {
                 if (sibling !== card) {
                     sibling.classList.remove('hovered');
                     sibling.style.zIndex = '1';
@@ -322,18 +310,18 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        memoryCanvas.addEventListener('pointerout', (e) => {
-            if (!isCanvasHovered) return;
+        cluster.addEventListener('pointerout', (e) => {
+            if (!isClusterHovered) return;
             const card = e.target.closest('.photo-card');
             const relatedTarget = e.relatedTarget;
             const newCard = relatedTarget ? relatedTarget.closest('.photo-card') : null;
 
-            if (!card || !activeCards.includes(card)) return;
+            if (!card || !cards.includes(card)) return;
             if (newCard === card) return;
 
-            if (!newCard) {
+            if (!newCard || !cards.includes(newCard)) {
                 // Return all cards to default scattered state
-                activeCards.forEach((c) => {
+                cards.forEach((c) => {
                     c.classList.remove('hovered');
                     c.style.zIndex = '2';
                     gsap.to(c, {
@@ -354,7 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
             } else {
-                // Moving between cards: reset tilt on previous card
+                // Moving between cards inside the same cluster: reset tilt on previous card
                 card.classList.remove('hovered');
                 card.style.setProperty('--mouse-x', '50%');
                 card.style.setProperty('--mouse-y', '50%');
@@ -366,10 +354,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // 3D tilt tracking using GSAP quickTo
-        memoryCanvas.addEventListener('pointermove', (e) => {
-            if (!isCanvasHovered) return;
+        cluster.addEventListener('pointermove', (e) => {
+            if (!isClusterHovered) return;
             const card = e.target.closest('.photo-card');
-            if (!card || !activeCards.includes(card)) return;
+            if (!card || !cards.includes(card)) return;
 
             const rect = card.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
@@ -395,7 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 card._quickRotateY(targetRotateY);
             }
         });
-    }
+    });
 
     function animateParticles() {
         ctx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
