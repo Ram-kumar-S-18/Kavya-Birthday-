@@ -466,6 +466,66 @@ document.addEventListener('DOMContentLoaded', () => {
             .set(cards, { autoAlpha: 0, visibility: 'hidden' }, exitPoint + 1.05);
     }
 
+    function spawnFlowerShower() {
+        const stage = document.querySelector('.stage-viewport');
+        const colors = ['#E07A5F', '#D4AF37', '#F4A261', '#E76F51', '#F4C2C2'];
+        const petalPaths = [
+            'M 15,0 C 25,0 30,10 25,25 C 20,40 10,40 5,25 C 0,10 5,0 15,0 Z',
+            'M 10,0 C 22,2 26,14 18,26 C 10,38 2,34 0,22 C -2,10 2,0 10,0 Z',
+            'M 12,5 A 4,4 0 0,1 16,9 A 4,4 0 0,1 12,13 A 4,4 0 0,1 8,9 A 4,4 0 0,1 12,5 Z M 16,9 A 4,4 0 0,1 20,13 A 4,4 0 0,1 16,17 A 4,4 0 0,1 12,13 A 4,4 0 0,1 16,9 Z'
+        ];
+
+        const count = 36;
+        for (let i = 0; i < count; i++) {
+            const container = document.createElement('div');
+            container.className = 'falling-petal';
+            container.style.position = 'absolute';
+            container.style.left = `${Math.random() * 100}%`;
+            container.style.top = `-40px`;
+            container.style.width = `${Math.random() * 20 + 15}px`;
+            container.style.height = `${Math.random() * 20 + 15}px`;
+            container.style.pointerEvents = 'none';
+            container.style.zIndex = '103';
+
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('viewBox', '0 0 30 30');
+            svg.style.width = '100%';
+            svg.style.height = '100%';
+
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            path.setAttribute('d', petalPaths[Math.floor(Math.random() * petalPaths.length)]);
+            path.setAttribute('fill', colors[Math.floor(Math.random() * colors.length)]);
+            path.setAttribute('opacity', (Math.random() * 0.4 + 0.5).toFixed(2));
+
+            svg.appendChild(path);
+            container.appendChild(svg);
+            stage.appendChild(container);
+
+            const duration = Math.random() * 3.5 + 2.5;
+            const delay = Math.random() * 0.8;
+
+            gsap.fromTo(container,
+                {
+                    y: 0,
+                    xPercent: -50,
+                    rotation: Math.random() * 360,
+                    scale: Math.random() * 0.4 + 0.6
+                },
+                {
+                    y: window.innerHeight + 80,
+                    x: `+=${Math.random() * 160 - 80}`,
+                    rotation: `+=${Math.random() * 720 - 360}`,
+                    duration: duration,
+                    delay: delay,
+                    ease: 'sine.inOut',
+                    onComplete: () => {
+                        container.remove();
+                    }
+                }
+            );
+        }
+    }
+
     function triggerParticleBurst(centerX, centerY) {
         state.particlesState = 'burst';
         particles.forEach((p) => {
@@ -573,6 +633,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const burstY = window.innerHeight * 0.5 + finalDy;
             triggerParticleBurst(window.innerWidth / 2, burstY);
+            spawnFlowerShower();
 
             if (state.audioPlaying && audioCtx && synth) {
                 const popTime = audioCtx.currentTime;
@@ -609,29 +670,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.body.style.overflow = '';
                 if (lenis) lenis.start();
 
-                const startScroll = scrollTrigger.start + (scrollTrigger.end - scrollTrigger.start) * 0.92;
-                const endScroll = scrollTrigger.end;
-
-                if (lenis) {
-                    lenis.scrollTo(endScroll, {
-                        duration: 2.2,
-                        easing: (t) => 1 - Math.pow(1 - t, 3)
-                    });
-                } else {
-                    const scrollObj = { y: startScroll };
-                    gsap.to(scrollObj, {
-                        y: endScroll,
-                        duration: 2.2,
-                        ease: 'power3.out',
-                        onUpdate: () => {
-                            window.scrollTo(0, scrollObj.y);
-                            ScrollTrigger.update();
-                        }
-                    });
-                }
-
                 setTimeout(() => {
-                    state.particlesState = 'constellation';
+                    if (!state.sealActive) {
+                        state.particlesState = 'drift';
+                    }
                 }, 600);
             }, 850);
         }
@@ -658,7 +700,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             gsap.ticker.lagSmoothing(0);
+
+            // Lock scroll immediately on page load until envelope is opened
+            lenis.stop();
         }
+        document.body.style.overflow = 'hidden';
 
         const timeline = gsap.timeline({
             defaults: { ease: 'none' },
@@ -672,15 +718,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 onUpdate: (self) => {
                     adjustAudio(self.progress);
 
-                    if (self.progress >= 0.92 && !state.sealOpened && !state.sealActive) {
-                        state.sealActive = true;
-                        if (lenis) lenis.stop();
-                        document.body.style.overflow = 'hidden';
-                        self.scroll(self.start + (self.end - self.start) * 0.92);
-                        activateWaxSeal(self);
-                    }
-
-                    if (self.progress > 0.91 && state.sealOpened) {
+                    if (self.progress > 0.91) {
                         if (state.particlesState !== 'burst') {
                             state.particlesState = 'constellation';
                         }
@@ -694,12 +732,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 },
                 onLeave: () => {
-                    if (state.sealOpened) {
-                        state.particlesState = 'constellation';
-                    }
+                    state.particlesState = 'constellation';
                 }
             }
         });
+
+        // Activate the Hero Wax Seal immediately
+        activateWaxSeal(timeline.scrollTrigger);
 
         timeline
             .to('.arrival-line', { autoAlpha: 1, scale: 1, filter: 'blur(0px)', duration: 0.34 })
@@ -714,25 +753,36 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .set('.arrival-layer', { visibility: 'hidden' });
 
+        // 1. Kindness Reveal
         revealLayer(timeline, '[data-layer="kindness"]', 1.58);
-        revealLayer(timeline, '[data-layer="resilience"]', 3.92);
-        revealLayer(timeline, '[data-layer="impact"]', 6.26);
 
-        timeline.set('.memory-canvas', { autoAlpha: 1, visibility: 'visible' }, 8.64);
+        // Memory canvas visible starting at Bloom
+        timeline.set('.memory-canvas', { autoAlpha: 1, visibility: 'visible' }, 3.8);
 
-        revealPhotoSection(timeline, '[data-photo-section="bloom"]', 8.64, {
+        // 2. Bloom Gallery
+        revealPhotoSection(timeline, '[data-photo-section="bloom"]', 3.8, {
             staggerFrom: 'center',
             driftY: -12,
             rotateDrift: 1.8
         });
-        revealPhotoSection(timeline, '[data-photo-section="duet"]', 11.26, {
+
+        // 3. Resilience Reveal
+        revealLayer(timeline, '[data-layer="resilience"]', 6.8);
+
+        // 4. Duet Gallery
+        revealPhotoSection(timeline, '[data-photo-section="duet"]', 9.0, {
             staggerFrom: 'edges',
             originY: 44,
             driftY: -10,
             holdScale: 1.01,
             exitRotate: 2
         });
-        revealPhotoSection(timeline, '[data-photo-section="ribbon"]', 13.94, {
+
+        // 5. Impact Reveal
+        revealLayer(timeline, '[data-layer="impact"]', 12.0);
+
+        // 6. Memory Flood (Ribbon & Mosaic simultaneously)
+        revealPhotoSection(timeline, '[data-photo-section="ribbon"]', 14.3, {
             staggerFrom: 'start',
             stagger: 0.045,
             originX: -80,
@@ -742,7 +792,7 @@ document.addEventListener('DOMContentLoaded', () => {
             exitDriftX: 48,
             exitFrom: 'end'
         });
-        revealPhotoSection(timeline, '[data-photo-section="mosaic"]', 16.72, {
+        revealPhotoSection(timeline, '[data-photo-section="mosaic"]', 14.3, {
             staggerFrom: 'random',
             originY: -30,
             driftY: -14,
@@ -750,10 +800,13 @@ document.addEventListener('DOMContentLoaded', () => {
             exitScale: 0.72,
             exitRotate: 4
         });
-        timeline.set('.memory-canvas', { autoAlpha: 0, visibility: 'hidden' }, 19.3);
 
+        // Memory canvas hidden after flood finishes
+        timeline.set('.memory-canvas', { autoAlpha: 0, visibility: 'hidden' }, 17.17);
+
+        // 7. Zenith Reveal (Wax Seal activates at 17.48 / progress 0.92)
         timeline
-            .set('[data-layer="zenith"]', { visibility: 'visible' }, 19.64)
+            .set('[data-layer="zenith"]', { visibility: 'visible' }, 17.5)
             .fromTo('[data-layer="zenith"]',
                 {
                     autoAlpha: 0,
@@ -766,15 +819,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     scale: 1,
                     z: 0,
                     filter: 'blur(0px)',
-                    duration: 1.28,
+                    duration: 1.2,
                     ease: 'power3.out',
                     onStart: () => {
                         state.particlesState = 'constellation';
                     }
                 },
-                19.64
+                17.5
             )
-            .to('[data-layer="zenith"]', { autoAlpha: 1, duration: 1.16 }, 20.96);
+            .to('[data-layer="zenith"]', { autoAlpha: 1, duration: 0.3 }, 18.7);
     }
 
     gsap.set('.arrival-line', { autoAlpha: 0, scale: 1.08, filter: 'blur(12px)' });
