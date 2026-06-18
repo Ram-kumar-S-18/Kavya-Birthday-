@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaviya | A Birthday Story</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="photos/1781799660423.png">
+    <link rel="preload" as="image" href="photos/1781799671233.png">
+    <link rel="preload" as="image" href="photos/1781799677010.png">
+    <link rel="preload" as="image" href="photos/1781799682283.png">
+    <link rel="preload" as="image" href="photos/1781799687992.png">
+    <link rel="preload" as="image" href="photos/1781799704353.png">
+    <link rel="preload" as="image" href="photos/IMG_20260618_215602.jpg.jpeg">
+    <link rel="preload" as="image" href="photos/IMG_20260618_215611.jpg.jpeg">
+    <link rel="preload" as="image" href="photos/IMG_20260618_215630.jpg.jpeg">
+    <link rel="preload" as="image" href="photos/IMG_20260618_215643.jpg.jpeg">
+    <link rel="preload" as="image" href="photos/IMG_20260618_215656.jpg.jpeg">
+    <link rel="preload" as="image" href="photos/IMG_20260618_215710.jpg.jpeg">
+    <link rel="preload" as="image" href="photos/IMG_20260618_215724.jpg.jpeg">
+    <link rel="preload" as="image" href="photos/IMG_20260618_215740.jpg.jpeg">
+    <link rel="preload" as="image" href="photos/IMG_20260618_215804.jpg.jpeg">
+    <link rel="preload" as="image" href="photos/Screenshot_20260618_215213.jpg.jpeg">
+    <link rel="preload" as="image" href="photos/Screenshot_20260618_215244.jpg.jpeg">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="custom-cursor" id="custom-cursor"></div>
+    <div class="custom-cursor-follower" id="custom-cursor-follower"></div>
+
+    <button class="audio-control" id="audio-control" type="button" aria-label="Toggle ambient audio">
+        <span class="audio-visualizer" id="visualizer" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+        <span class="audio-label">AMBIENT OFF</span>
+    </button>
+
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+    <main id="master-stage" aria-label="Kaviya birthday narrative">
+        <section class="stage-viewport">
+            <div class="ambient-glow" aria-hidden="true"></div>
+
+            <div class="stage-grid">
+                <article class="narrative-layer arrival-layer" data-layer="arrival">
+                    <h1>Kaviya</h1>
+                    <p class="arrival-line">A story written in the stars...</p>
+                </article>
+
+                <article class="narrative-layer text-layer" data-layer="kindness">
+                    <p>There is a rare warmth in the way you view the world.</p>
+                    <span>Kindness, not as a gesture, but as something quietly woven into you.</span>
+                </article>
+
+                <article class="narrative-layer text-layer" data-layer="resilience">
+                    <p>A quiet strength that makes everything around you brighter.</p>
+                    <span>You carry grace through ordinary days and turn them into something softer.</span>
+                </article>
+
+                <article class="narrative-layer text-layer" data-layer="impact">
+                    <p>You do not just exist in my life; you illuminate it.</p>
+                    <span>Some people are remembered by moments. You become the light inside them.</span>
+                </article>
+
+                <section class="memory-canvas" aria-label="Photo memories">
+                    <section class="photo-section photo-bloom" data-photo-section="bloom" aria-label="Photo memories opening cluster">
+                        <div class="photo-cluster">
+                            <figure class="photo-card portrait tall" data-x="-230" data-y="-72" data-r="-8">
+                                <img src="photos/1781799660423.png" alt="Kaviya memory photo">
+                            </figure>
+                            <figure class="photo-card portrait" data-x="28" data-y="-104" data-r="5">
+                                <img src="photos/1781799671233.png" alt="Kaviya memory photo">
+                            </figure>
+                            <figure class="photo-card square" data-x="230" data-y="30" data-r="9">
+                                <img src="photos/1781799687992.png" alt="Kaviya memory photo">
+                            </figure>
+                            <figure class="photo-card square" data-x="-28" data-y="116" data-r="-3">
+                                <img src="photos/1781799704353.png" alt="Kaviya memory photo">
+                            </figure>
+                        </div>
+                        <p class="photo-caption">Little pieces of time, glowing because they have you in them.</p>
+                    </section>
+
+                    <section class="photo-section photo-duet" data-photo-section="duet" aria-label="Two portrait memories">
+                        <div class="photo-cluster">
+                            <figure class="photo-card portrait feature" data-x="-150" data-y="0" data-r="-4">
+                                <img src="photos/IMG_20260618_215602.jpg.jpeg" alt="Kaviya portrait memory">
+                            </figure>
+                            <figure class="photo-card portrait feature" data-x="150" data-y="0" data-r="4">
+                                <img src="photos/IMG_20260618_215611.jpg.jpeg" alt="Kaviya portrait memory">
+                            </figure>
+                        </div>
+                        <p class="photo-caption">Some frames feel calm, like the world paused to notice you.</p>
+                    </section>
+
+                    <section class="photo-section photo-ribbon" data-photo-section="ribbon" aria-label="Flowing portrait memories">
+                        <div class="photo-cluster">
+                            <figure class="photo-card portrait slim" data-x="-360" data-y="10" data-r="-11">
+                                <img src="photos/IMG_20260618_215630.jpg.jpeg" alt="Kaviya portrait memory">
+                            </figure>
+                            <figure class="photo-card portrait slim" data-x="-240" data-y="-46" data-r="6">
+                                <img src="photos/IMG_20260618_215643.jpg.jpeg" alt="Kaviya portrait memory">
+                            </figure>
+                            <figure class="photo-card portrait slim" data-x="-120" data-y="30" data-r="-5">
+                                <img src="photos/IMG_20260618_215656.jpg.jpeg" alt="Kaviya portrait memory">
+                            </figure>
+                            <figure class="photo-card portrait slim" data-x="0" data-y="-58" data-r="3">
+                                <img src="photos/IMG_20260618_215710.jpg.jpeg" alt="Kaviya portrait memory">
+                            </figure>
+                            <figure class="photo-card portrait slim" data-x="120" data-y="34" data-r="8">
+                                <img src="photos/IMG_20260618_215724.jpg.jpeg" alt="Kaviya portrait memory">
+                            </figure>
+                            <figure class="photo-card portrait slim" data-x="240" data-y="-42" data-r="-6">
+                                <img src="photos/IMG_20260618_215740.jpg.jpeg" alt="Kaviya portrait memory">
+                            </figure>
+                            <figure class="photo-card portrait slim" data-x="360" data-y="12" data-r="10">
+                                <img src="photos/IMG_20260618_215804.jpg.jpeg" alt="Kaviya portrait memory">
+                            </figure>
+                        </div>
+                        <p class="photo-caption">Every expression, every small light, carrying its own quiet story.</p>
+                    </section>
+
+                    <section class="photo-section photo-mosaic" data-photo-section="mosaic" aria-label="Final photo mosaic">
+                        <div class="photo-cluster">
+                            <figure class="photo-card portrait" data-x="-250" data-y="-68" data-r="-6">
+                                <img src="photos/1781799677010.png" alt="Kaviya memory photo">
+                            </figure>
+                            <figure class="photo-card portrait" data-x="0" data-y="-90" data-r="3">
+                                <img src="photos/1781799682283.png" alt="Kaviya memory photo">
+                            </figure>
+                            <figure class="photo-card screen" data-x="220" data-y="-48" data-r="7">
+                                <img src="photos/Screenshot_20260618_215213.jpg.jpeg" alt="Kaviya screenshot memory">
+                            </figure>
+                            <figure class="photo-card screen" data-x="52" data-y="110" data-r="-4">
+                                <img src="photos/Screenshot_20260618_215244.jpg.jpeg" alt="Kaviya screenshot memory">
+                            </figure>
+                        </div>
+                        <p class="photo-caption">And then the memories gather into one bright, impossible thank you.</p>
+                    </section>
+                </section>
+
+                <article class="narrative-layer zenith-layer" data-layer="zenith">
+                    <h2>Happy Birthday, <span>Kaviya</span></h2>
+                    <p>May this year meet you with wonder, peace, and every beautiful thing you quietly deserve.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
