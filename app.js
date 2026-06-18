@@ -222,30 +222,107 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Physics Scatter & 3D Focus Interactions
-    const clusters = document.querySelectorAll('.photo-cluster');
-    clusters.forEach((cluster) => {
-        let isClusterHovered = false;
-        const cards = Array.from(cluster.querySelectorAll('.photo-card'));
-        if (!cards.length) return;
+    const memoryCanvas = document.querySelector('.memory-canvas');
+    if (memoryCanvas) {
+        let activeCluster = null;
+        let activeCards = [];
+        let isScattered = false;
 
-        cluster.addEventListener('pointerenter', () => {
-            isClusterHovered = true;
+        function getActiveCluster() {
+            const activeSection = Array.from(document.querySelectorAll('.photo-section')).find(s => {
+                const style = window.getComputedStyle(s);
+                return style.visibility === 'visible' && style.opacity !== '0';
+            });
+            return activeSection ? activeSection.querySelector('.photo-cluster') : null;
+        }
 
-            // Scatter animation (fans out data-x and data-y coordinates by 1.8)
-            gsap.to(cards, {
+        memoryCanvas.addEventListener('pointermove', (e) => {
+            const cluster = getActiveCluster();
+            if (!cluster) {
+                if (isScattered) resetScatter();
+                return;
+            }
+
+            // If cluster changed, reset previous and target the new one
+            if (activeCluster !== cluster) {
+                if (isScattered) resetScatter();
+                activeCluster = cluster;
+                activeCards = Array.from(cluster.querySelectorAll('.photo-card'));
+            }
+
+            // Calculate distance to visual cluster center (including transforms/lift)
+            const rect = cluster.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const dx = e.clientX - centerX;
+            const dy = e.clientY - centerY;
+            const distance = Math.hypot(dx, dy);
+
+            // Responsive hysteresis thresholds
+            const enterThreshold = window.innerWidth < 760 ? 250 : 380;
+            const leaveThreshold = window.innerWidth < 760 ? 400 : 650;
+
+            if (!isScattered && distance < enterThreshold) {
+                triggerScatter();
+            } else if (isScattered && distance > leaveThreshold) {
+                resetScatter();
+            }
+
+            // 3D tilt tracking on the hovered card
+            if (isScattered) {
+                const card = e.target.closest('.photo-card');
+                if (card && activeCards.includes(card)) {
+                    const cardRect = card.getBoundingClientRect();
+                    const cardCenterX = cardRect.left + cardRect.width / 2;
+                    const cardCenterY = cardRect.top + cardRect.height / 2;
+
+                    const cdx = e.clientX - cardCenterX;
+                    const cdy = e.clientY - cardCenterY;
+
+                    const px = cdx / (cardRect.width / 2);
+                    const py = cdy / (cardRect.height / 2);
+
+                    const nx = Math.max(-1, Math.min(1, px));
+                    const ny = Math.max(-1, Math.min(1, py));
+
+                    card.style.setProperty('--mouse-x', `${((nx + 1) / 2 * 100).toFixed(1)}%`);
+                    card.style.setProperty('--mouse-y', `${((ny + 1) / 2 * 100).toFixed(1)}%`);
+
+                    const targetRotateX = -ny * 15; // Max 15 degrees tilt
+                    const targetRotateY = nx * 15;
+
+                    if (card._quickRotateX && card._quickRotateY) {
+                        card._quickRotateX(targetRotateX);
+                        card._quickRotateY(targetRotateY);
+                    }
+                }
+            }
+        });
+
+        // Add a global pointerleave to reset scatter if mouse leaves canvas completely
+        memoryCanvas.addEventListener('pointerleave', () => {
+            if (isScattered) resetScatter();
+        });
+
+        function triggerScatter() {
+            isScattered = true;
+            if (!activeCards.length) return;
+
+            gsap.to(activeCards, {
                 x: (index, element) => cardX(element) * 1.8,
                 y: (index, element) => cardY(element) * 1.8,
                 duration: 1.3,
                 ease: 'elastic.out(1, 0.75)',
                 overwrite: 'auto'
             });
-        });
+        }
 
-        cluster.addEventListener('pointerleave', () => {
-            isClusterHovered = false;
+        function resetScatter() {
+            isScattered = false;
+            if (!activeCards.length) return;
 
-            // Reset all cards in this cluster back to clustered coordinates and clear focus pull
-            gsap.to(cards, {
+            gsap.to(activeCards, {
                 x: (index, element) => cardX(element),
                 y: (index, element) => cardY(element),
                 scale: 1,
@@ -255,15 +332,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 ease: 'power2.out',
                 overwrite: 'auto',
                 onComplete: () => {
-                    cards.forEach(c => {
+                    activeCards.forEach(c => {
                         c.style.zIndex = '';
                         c.classList.remove('hovered');
                     });
                 }
             });
 
-            // Smoothly tilt back to 0
-            cards.forEach(c => {
+            activeCards.forEach(c => {
                 c.classList.remove('hovered');
                 c.style.setProperty('--mouse-x', '50%');
                 c.style.setProperty('--mouse-y', '50%');
@@ -272,15 +348,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     c._quickRotateY(0);
                 }
             });
-        });
+        }
 
-        // Delegate hover events for individual cards inside this cluster
-        cluster.addEventListener('pointerover', (e) => {
-            if (!isClusterHovered) return;
+        // Delegate hover events for individual cards inside the active cluster
+        memoryCanvas.addEventListener('pointerover', (e) => {
+            if (!isScattered) return;
             const card = e.target.closest('.photo-card');
-            if (!card || !cards.includes(card)) return;
+            if (!card || !activeCards.includes(card)) return;
 
-            // Focus on hovered card
             card.classList.add('hovered');
             card.style.zIndex = '50';
 
@@ -293,8 +368,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 overwrite: 'auto'
             });
 
-            // Push siblings back
-            cards.forEach((sibling) => {
+            activeCards.forEach((sibling) => {
                 if (sibling !== card) {
                     sibling.classList.remove('hovered');
                     sibling.style.zIndex = '1';
@@ -310,18 +384,18 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        cluster.addEventListener('pointerout', (e) => {
-            if (!isClusterHovered) return;
+        // Reset individual card focus when moving back to scattered space
+        memoryCanvas.addEventListener('pointerout', (e) => {
+            if (!isScattered) return;
             const card = e.target.closest('.photo-card');
             const relatedTarget = e.relatedTarget;
             const newCard = relatedTarget ? relatedTarget.closest('.photo-card') : null;
 
-            if (!card || !cards.includes(card)) return;
+            if (!card || !activeCards.includes(card)) return;
             if (newCard === card) return;
 
-            if (!newCard || !cards.includes(newCard)) {
-                // Return all cards to default scattered state
-                cards.forEach((c) => {
+            if (!newCard || !activeCards.includes(newCard)) {
+                activeCards.forEach((c) => {
                     c.classList.remove('hovered');
                     c.style.zIndex = '2';
                     gsap.to(c, {
@@ -333,7 +407,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         overwrite: 'auto'
                     });
 
-                    // Reset 3D tilt
                     c.style.setProperty('--mouse-x', '50%');
                     c.style.setProperty('--mouse-y', '50%');
                     if (c._quickRotateX && c._quickRotateY) {
@@ -342,7 +415,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
             } else {
-                // Moving between cards inside the same cluster: reset tilt on previous card
                 card.classList.remove('hovered');
                 card.style.setProperty('--mouse-x', '50%');
                 card.style.setProperty('--mouse-y', '50%');
@@ -352,38 +424,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
-
-        // 3D tilt tracking using GSAP quickTo
-        cluster.addEventListener('pointermove', (e) => {
-            if (!isClusterHovered) return;
-            const card = e.target.closest('.photo-card');
-            if (!card || !cards.includes(card)) return;
-
-            const rect = card.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-
-            const dx = e.clientX - centerX;
-            const dy = e.clientY - centerY;
-
-            const px = dx / (rect.width / 2);
-            const py = dy / (rect.height / 2);
-
-            const nx = Math.max(-1, Math.min(1, px));
-            const ny = Math.max(-1, Math.min(1, py));
-
-            card.style.setProperty('--mouse-x', `${((nx + 1) / 2 * 100).toFixed(1)}%`);
-            card.style.setProperty('--mouse-y', `${((ny + 1) / 2 * 100).toFixed(1)}%`);
-
-            const targetRotateX = -ny * 15; // Max 15 degrees tilt
-            const targetRotateY = nx * 15;
-
-            if (card._quickRotateX && card._quickRotateY) {
-                card._quickRotateX(targetRotateX);
-                card._quickRotateY(targetRotateY);
-            }
-        });
-    });
+    }
 
     function animateParticles() {
         ctx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
