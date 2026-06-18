@@ -355,6 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!isScattered) return;
             const card = e.target.closest('.photo-card');
             if (!card || !activeCards.includes(card)) return;
+            if (card.classList.contains('hovered')) return;
 
             card.classList.add('hovered');
             card.style.zIndex = '50';
