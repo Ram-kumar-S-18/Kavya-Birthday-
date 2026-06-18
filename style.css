@@ -328,11 +328,11 @@ body.hover-interactive .custom-cursor-follower {
     width: clamp(150px, 22vw, 270px);
     aspect-ratio: 4 / 5;
     margin: 0;
-    padding: 8px;
-    border: 1px solid rgba(212, 175, 55, 0.28);
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.66);
-    box-shadow: 0 16px 45px rgba(44, 36, 36, 0.24), 0 4px 16px rgba(44, 36, 36, 0.12), inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+    padding: 14px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 6px;
+    background: linear-gradient(135deg, #FFFFFF 0%, #FAFAF7 100%);
+    box-shadow: 0 4px 12px rgba(44, 36, 36, 0.04), 0 12px 32px rgba(44, 36, 36, 0.08), 0 24px 64px rgba(44, 36, 36, 0.06);
     clip-path: circle(0% at 50% 50%);
     filter: blur(18px);
     transform: translate3d(-50%, -50%, -320px) scale(0.7);
@@ -345,26 +345,29 @@ body.hover-interactive .custom-cursor-follower {
 .photo-card::before {
     content: "";
     position: absolute;
-    inset: 8px;
-    border-radius: 6px;
-    background: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.16), transparent 58%);
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(105deg, transparent 20%, rgba(255, 255, 255, 0.6) 25%, transparent 30%);
+    transform: translateX(-100%);
+    transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
     pointer-events: none;
-    z-index: 1;
+    z-index: 5;
+}
+
+.photo-card.hovered::before {
+    transform: translateX(50%);
 }
 
 .photo-card::after {
     content: "";
     position: absolute;
-    inset: 0;
+    inset: 14px;
     pointer-events: none;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0) calc(var(--mouse-x, 50%) - 25%), rgba(255, 255, 255, 0.45) var(--mouse-x, 50%), rgba(255, 255, 255, 0) calc(var(--mouse-x, 50%) + 25%));
+    box-shadow: inset 0px 4px 10px rgba(44, 36, 36, 0.15), inset 0px 1px 2px rgba(44, 36, 36, 0.2);
+    border-radius: 2px;
     z-index: 3;
-    opacity: 0;
-    transition: opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-.photo-card.hovered::after {
-    opacity: 1;
 }
 
 .photo-card img {
@@ -372,7 +375,7 @@ body.hover-interactive .custom-cursor-follower {
     height: 100%;
     object-fit: contain;
     display: block;
-    border-radius: 6px;
+    border-radius: 2px;
     background: rgba(252, 248, 248, 0.82);
     filter: sepia(0.05) contrast(1.05);
 }
