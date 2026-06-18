@@ -214,6 +214,91 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
+    // 3D Magnetic Parallax and Sibling Focus Pull hover effects
+    const clusters = document.querySelectorAll('.photo-cluster');
+    clusters.forEach((cluster) => {
+        let leaveTimeout = null;
+
+        const cards = cluster.querySelectorAll('.photo-card');
+        cards.forEach((card) => {
+            let isHovered = false;
+
+            card.addEventListener('pointerenter', () => {
+                isHovered = true;
+                if (leaveTimeout) {
+                    clearTimeout(leaveTimeout);
+                    leaveTimeout = null;
+                }
+                cards.forEach(c => {
+                    if (c !== card) c.classList.remove('hovered');
+                });
+                card.classList.add('hovered');
+                cluster.classList.add('has-hover');
+            });
+
+            card.addEventListener('pointermove', (e) => {
+                if (!isHovered) return;
+
+                const rect = card.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+
+                const dx = e.clientX - centerX;
+                const dy = e.clientY - centerY;
+
+                const px = dx / (rect.width / 2);
+                const py = dy / (rect.height / 2);
+
+                const nx = Math.max(-1, Math.min(1, px));
+                const ny = Math.max(-1, Math.min(1, py));
+
+                card.style.setProperty('--mouse-x', `${((nx + 1) / 2 * 100).toFixed(1)}%`);
+                card.style.setProperty('--mouse-y', `${((ny + 1) / 2 * 100).toFixed(1)}%`);
+
+                const targetRotateX = -ny * 8;
+                const targetRotateY = nx * 8;
+
+                gsap.to(card, {
+                    rotateX: targetRotateX,
+                    rotateY: targetRotateY,
+                    duration: 0.5,
+                    ease: 'power2.out',
+                    overwrite: 'auto'
+                });
+            });
+
+            card.addEventListener('pointerleave', () => {
+                isHovered = false;
+                card.classList.remove('hovered');
+
+                card.style.setProperty('--mouse-x', '30%');
+                card.style.setProperty('--mouse-y', '30%');
+
+                gsap.to(card, {
+                    rotateX: 0,
+                    rotateY: 0,
+                    duration: 0.6,
+                    ease: 'power2.out',
+                    overwrite: 'auto'
+                });
+            });
+        });
+
+        cluster.addEventListener('pointerleave', () => {
+            if (leaveTimeout) clearTimeout(leaveTimeout);
+            leaveTimeout = setTimeout(() => {
+                cluster.classList.remove('has-hover');
+            }, 600); // 600ms matches the CSS transition time
+        });
+
+        cluster.addEventListener('pointerenter', () => {
+            if (leaveTimeout) {
+                clearTimeout(leaveTimeout);
+                leaveTimeout = null;
+            }
+        });
+    });
+
     function animateParticles() {
         ctx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
 
@@ -371,7 +456,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const exitPoint = position + 1.82;
 
         timeline
-            .set(selector, { autoAlpha: 1, visibility: 'visible' }, position)
+            .set(selector, { autoAlpha: 1, visibility: 'visible', pointerEvents: 'auto' }, position)
             .set(caption, { visibility: 'visible' }, position)
             .fromTo(cards,
                 {
@@ -397,6 +482,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     rotate: (index, element) => cardRotation(element),
                     filter: 'blur(0px)',
                     clipPath: 'circle(76% at 50% 50%)',
+                    pointerEvents: 'auto',
                     duration: options.enterDuration || 1.12,
                     ease: 'power3.out',
                     stagger: {
@@ -452,6 +538,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     rotate: (index, element) => cardRotation(element, options.exitRotate || -2),
                     filter: 'blur(20px)',
                     clipPath: 'circle(34% at 50% 50%)',
+                    pointerEvents: 'none',
                     duration: 0.82,
                     ease: 'power3.in',
                     stagger: {
@@ -461,7 +548,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 exitPoint
             )
-            .set(selector, { autoAlpha: 0, visibility: 'hidden' }, exitPoint + 1.05)
+            .set(selector, { autoAlpha: 0, visibility: 'hidden', pointerEvents: 'none' }, exitPoint + 1.05)
             .set(caption, { autoAlpha: 0, visibility: 'hidden' }, exitPoint + 1.05)
             .set(cards, { autoAlpha: 0, visibility: 'hidden' }, exitPoint + 1.05);
     }
@@ -757,7 +844,7 @@ document.addEventListener('DOMContentLoaded', () => {
         revealLayer(timeline, '[data-layer="kindness"]', 1.58);
 
         // Memory canvas visible starting at Bloom
-        timeline.set('.memory-canvas', { autoAlpha: 1, visibility: 'visible' }, 3.8);
+        timeline.set('.memory-canvas', { autoAlpha: 1, visibility: 'visible', pointerEvents: 'auto' }, 3.8);
 
         // 2. Bloom Gallery
         revealPhotoSection(timeline, '[data-photo-section="bloom"]', 3.8, {
@@ -802,7 +889,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Memory canvas hidden after flood finishes
-        timeline.set('.memory-canvas', { autoAlpha: 0, visibility: 'hidden' }, 17.17);
+        timeline.set('.memory-canvas', { autoAlpha: 0, visibility: 'hidden', pointerEvents: 'none' }, 17.17);
 
         // 7. Zenith Reveal (Wax Seal activates at 17.48 / progress 0.92)
         timeline
