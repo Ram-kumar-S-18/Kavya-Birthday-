@@ -263,16 +263,46 @@ document.addEventListener('DOMContentLoaded', () => {
             const enterThreshold = window.innerWidth < 760 ? 250 : 380;
             const leaveThreshold = window.innerWidth < 760 ? 400 : 650;
 
-            if (!isScattered && distance < enterThreshold) {
+            const card = e.target.closest('.photo-card');
+            const isOverCard = card && activeCards.includes(card);
+
+            if (!isScattered && (distance < enterThreshold || isOverCard)) {
                 triggerScatter();
-            } else if (isScattered && distance > leaveThreshold) {
-                resetScatter();
             }
 
-            // 3D tilt tracking on the hovered card
+            // 3D tilt tracking and focus pull on the hovered card
             if (isScattered) {
-                const card = e.target.closest('.photo-card');
-                if (card && activeCards.includes(card)) {
+                if (isOverCard) {
+                    // Instantly trigger focus pull if not already active
+                    if (!card.classList.contains('hovered')) {
+                        card.classList.add('hovered');
+                        card.style.zIndex = '50';
+
+                        gsap.to(card, {
+                            scale: 1.15,
+                            opacity: 1,
+                            filter: 'blur(0px)',
+                            duration: 0.5,
+                            ease: 'power2.out',
+                            overwrite: 'auto'
+                        });
+
+                        activeCards.forEach((sibling) => {
+                            if (sibling !== card) {
+                                sibling.classList.remove('hovered');
+                                sibling.style.zIndex = '1';
+                                gsap.to(sibling, {
+                                    scale: 0.9,
+                                    opacity: 0.4,
+                                    filter: 'blur(4px)',
+                                    duration: 0.5,
+                                    ease: 'power2.out',
+                                    overwrite: 'auto'
+                                });
+                            }
+                        });
+                    }
+
                     const cardRect = card.getBoundingClientRect();
                     const cardCenterX = cardRect.left + cardRect.width / 2;
                     const cardCenterY = cardRect.top + cardRect.height / 2;
@@ -295,6 +325,30 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (card._quickRotateX && card._quickRotateY) {
                         card._quickRotateX(targetRotateX);
                         card._quickRotateY(targetRotateY);
+                    }
+                } else {
+                    // Reset focus pull when mouse is on empty canvas space (fallback for missed pointerout)
+                    const hasHoveredCard = activeCards.some(c => c.classList.contains('hovered'));
+                    if (hasHoveredCard) {
+                        activeCards.forEach((c) => {
+                            c.classList.remove('hovered');
+                            c.style.zIndex = '2';
+                            gsap.to(c, {
+                                scale: 1,
+                                opacity: 1,
+                                filter: 'blur(0px)',
+                                duration: 0.5,
+                                ease: 'power2.out',
+                                overwrite: 'auto'
+                            });
+
+                            c.style.setProperty('--mouse-x', '50%');
+                            c.style.setProperty('--mouse-y', '50%');
+                            if (c._quickRotateX && c._quickRotateY) {
+                                c._quickRotateX(0);
+                                c._quickRotateY(0);
+                            }
+                        });
                     }
                 }
             }
@@ -932,6 +986,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 anticipatePin: 1,
                 onUpdate: (self) => {
                     adjustAudio(self.progress);
+
+                    // Clear any hovered/sticky states on scroll so they can smoothly re-trigger on next mouse move
+                    allPhotoCards.forEach(c => {
+                        if (c.classList.contains('hovered')) {
+                            c.classList.remove('hovered');
+                            c.style.zIndex = '';
+                            c.style.setProperty('--mouse-x', '50%');
+                            c.style.setProperty('--mouse-y', '50%');
+                            if (c._quickRotateX && c._quickRotateY) {
+                                c._quickRotateX(0);
+                                c._quickRotateY(0);
+                            }
+                        }
+                    });
 
                     if (self.progress > 0.93) {
                         if (state.particlesState !== 'burst') {
