@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kaviya | A Birthday Story</title>
+    <meta name="description" content="A birthday story written for the most beautiful soul — Kaviya.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
@@ -30,6 +31,11 @@
     <div class="custom-cursor" id="custom-cursor"></div>
     <div class="custom-cursor-follower" id="custom-cursor-follower"></div>
 
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true">
+        <div class="scroll-progress-fill" id="scroll-progress-fill"></div>
+    </div>
+
     <button class="audio-control" id="audio-control" type="button" aria-label="Toggle ambient audio">
         <span class="audio-visualizer" id="visualizer" aria-hidden="true">
             <span></span>
@@ -42,111 +48,296 @@
 
     <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
+    <!-- Floating Hearts Layer -->
+    <div class="floating-hearts-layer" id="floating-hearts-layer" aria-hidden="true"></div>
+
     <main id="master-stage" aria-label="Kaviya birthday narrative">
         <section class="stage-viewport">
-            <div class="ambient-glow" aria-hidden="true"></div>
+            <div class="ambient-glow" id="ambient-glow" aria-hidden="true"></div>
 
             <div class="stage-grid">
+                <!-- 1. ARRIVAL -->
                 <article class="narrative-layer arrival-layer" data-layer="arrival">
-                    <h1>Happy Birthday, <br><span>Kaviya</span></h1>
-                    <p class="arrival-line">A story written in the stars...</p>
+                    <h1 class="hero-title">Happy Birthday, <br><span class="shimmer-text">Kaviya</span></h1>
+                    <p class="arrival-line">For the girl who makes the stars jealous...</p>
                 </article>
 
+                <!-- 2. KINDNESS -->
                 <article class="narrative-layer text-layer" data-layer="kindness">
-                    <p>There is a rare warmth in the way you view the world.</p>
-                    <span>Kindness, not as a gesture, but as something quietly woven into you.</span>
+                    <p class="typewriter-text">You have this warmth about you that makes everyone around you feel like they actually matter.</p>
+                    <span>Your kindness isn't something you do — it's just who you are. And honestly, the world doesn't deserve you.</span>
                 </article>
 
+                <!-- 3. THOSE EYES ✨ NEW -->
+                <article class="narrative-layer text-layer" data-layer="eyes">
+                    <p class="typewriter-text">And then there are your eyes...</p>
+                    <span>The kind that make you forget what you were about to say. I kept falling, and honestly? I never wanted to land.</span>
+                </article>
+
+                <!-- 4. RESILIENCE -->
                 <article class="narrative-layer text-layer" data-layer="resilience">
-                    <p>A quiet strength that makes everything around you brighter.</p>
-                    <span>You carry grace through ordinary days and turn them into something softer.</span>
+                    <p class="typewriter-text">You carry this quiet strength that makes people want to be better just by being near you.</p>
+                    <span>You turn ordinary days into something that actually feels worth remembering.</span>
                 </article>
 
+                <!-- 5. BEAUTIFUL INSIDE & OUT ✨ NEW -->
+                <article class="narrative-layer text-layer" data-layer="beautiful">
+                    <p class="typewriter-text">Beautiful isn't even the right word for you.</p>
+                    <span>Some people are pretty. Some people are kind. You? You're the unfair combination of both. And it's honestly just rude how effortlessly you do it.</span>
+                </article>
+
+                <!-- 6. IMPACT -->
                 <article class="narrative-layer text-layer" data-layer="impact">
-                    <p>You do not just exist in my life; you illuminate it.</p>
-                    <span>Some people are remembered by moments. You become the light inside them.</span>
+                    <p class="typewriter-text">I don't know when it happened, but somewhere along the way, you became my favorite part of everything.</p>
+                    <span>Some people cross your mind. You? You moved in and redecorated.</span>
                 </article>
 
+                <!-- PHOTO GALLERIES -->
                 <section class="memory-canvas" aria-label="Photo memories">
-                    <section class="photo-section photo-bloom" data-photo-section="bloom" aria-label="Photo memories opening cluster">
+
+                    <!-- ============================================
+                         BLOOM — "Golden Gallery Frames"
+                         Ornate double-mat gold frames with corner flourishes
+                         ============================================ -->
+                    <section class="photo-section photo-bloom" data-photo-section="bloom" aria-label="Golden gallery frames">
                         <div class="photo-cluster">
-                            <figure class="photo-card portrait tall" data-x="-230" data-y="-72" data-r="-8">
-                                <img src="photos/1781799660423.png" alt="Kaviya memory photo">
+                            <figure class="photo-card portrait tall hero-card" data-x="0" data-y="-30" data-r="0">
+                                <div class="card-frame gold-frame">
+                                    <div class="frame-corner tl"></div>
+                                    <div class="frame-corner tr"></div>
+                                    <div class="frame-corner bl"></div>
+                                    <div class="frame-corner br"></div>
+                                    <div class="card-inner-mat">
+                                        <img src="photos/1781799660423.png" alt="Kaviya memory photo">
+                                        <div class="photo-vignette"></div>
+                                        <div class="photo-light-leak"></div>
+                                    </div>
+                                </div>
+                                <div class="photo-glow" aria-hidden="true"></div>
                             </figure>
-                            <figure class="photo-card portrait" data-x="28" data-y="-104" data-r="5">
-                                <img src="photos/1781799671233.png" alt="Kaviya memory photo">
+                            <figure class="photo-card portrait orbit-card" data-x="-260" data-y="60" data-r="-14">
+                                <div class="card-frame gold-frame">
+                                    <div class="frame-corner tl"></div>
+                                    <div class="frame-corner tr"></div>
+                                    <div class="frame-corner bl"></div>
+                                    <div class="frame-corner br"></div>
+                                    <div class="card-inner-mat">
+                                        <img src="photos/1781799671233.png" alt="Kaviya memory photo">
+                                        <div class="photo-vignette"></div>
+                                    </div>
+                                </div>
+                                <div class="photo-glow" aria-hidden="true"></div>
                             </figure>
-                            <figure class="photo-card square" data-x="230" data-y="30" data-r="9">
-                                <img src="photos/1781799687992.png" alt="Kaviya memory photo">
+                            <figure class="photo-card square orbit-card" data-x="260" data-y="60" data-r="12">
+                                <div class="card-frame gold-frame">
+                                    <div class="frame-corner tl"></div>
+                                    <div class="frame-corner tr"></div>
+                                    <div class="frame-corner bl"></div>
+                                    <div class="frame-corner br"></div>
+                                    <div class="card-inner-mat">
+                                        <img src="photos/1781799687992.png" alt="Kaviya memory photo">
+                                        <div class="photo-vignette"></div>
+                                    </div>
+                                </div>
+                                <div class="photo-glow" aria-hidden="true"></div>
                             </figure>
-                            <figure class="photo-card square" data-x="-28" data-y="116" data-r="-3">
-                                <img src="photos/1781799704353.png" alt="Kaviya memory photo">
+                            <figure class="photo-card square orbit-card" data-x="0" data-y="180" data-r="-4">
+                                <div class="card-frame gold-frame">
+                                    <div class="frame-corner tl"></div>
+                                    <div class="frame-corner tr"></div>
+                                    <div class="frame-corner bl"></div>
+                                    <div class="frame-corner br"></div>
+                                    <div class="card-inner-mat">
+                                        <img src="photos/1781799704353.png" alt="Kaviya memory photo">
+                                        <div class="photo-vignette"></div>
+                                    </div>
+                                </div>
+                                <div class="photo-glow" aria-hidden="true"></div>
                             </figure>
                         </div>
-                        <p class="photo-caption">Little pieces of time, glowing because they have you in them.</p>
+                        <p class="photo-caption">Every photo with you is proof that some moments are just built different.</p>
                     </section>
 
-                    <section class="photo-section photo-duet" data-photo-section="duet" aria-label="Two portrait memories">
+                    <!-- ============================================
+                         DUET — "Cinema Spotlight"
+                         Film-strip sprocket frames with spotlight vignette
+                         ============================================ -->
+                    <section class="photo-section photo-duet" data-photo-section="duet" aria-label="Cinema spotlight duet">
                         <div class="photo-cluster">
-                            <figure class="photo-card portrait feature" data-x="-150" data-y="0" data-r="-4">
-                                <img src="photos/IMG_20260618_215602.jpg.jpeg" alt="Kaviya portrait memory">
+                            <figure class="photo-card portrait feature editorial-back" data-x="-100" data-y="-40" data-r="-12">
+                                <div class="card-frame cinema-frame">
+                                    <div class="film-sprocket left-sprocket"></div>
+                                    <div class="film-sprocket right-sprocket"></div>
+                                    <div class="card-inner-mat">
+                                        <img src="photos/IMG_20260618_215602.jpg.jpeg" alt="Kaviya portrait memory">
+                                        <div class="photo-vignette vignette-dramatic"></div>
+                                        <div class="photo-spotlight"></div>
+                                    </div>
+                                </div>
+                                <div class="photo-glow" aria-hidden="true"></div>
                             </figure>
-                            <figure class="photo-card portrait feature" data-x="150" data-y="0" data-r="4">
-                                <img src="photos/IMG_20260618_215611.jpg.jpeg" alt="Kaviya portrait memory">
+                            <figure class="photo-card portrait feature editorial-front" data-x="100" data-y="40" data-r="8">
+                                <div class="card-frame cinema-frame">
+                                    <div class="film-sprocket left-sprocket"></div>
+                                    <div class="film-sprocket right-sprocket"></div>
+                                    <div class="card-inner-mat">
+                                        <img src="photos/IMG_20260618_215611.jpg.jpeg" alt="Kaviya portrait memory">
+                                        <div class="photo-vignette vignette-dramatic"></div>
+                                        <div class="photo-spotlight"></div>
+                                        <div class="photo-light-leak"></div>
+                                    </div>
+                                </div>
+                                <div class="photo-glow" aria-hidden="true"></div>
                             </figure>
                         </div>
-                        <p class="photo-caption">Some frames feel calm, like the world paused to notice you.</p>
+                        <p class="photo-caption">The camera doesn't do you justice, but it tries its best.</p>
                     </section>
 
-                    <section class="photo-section photo-ribbon" data-photo-section="ribbon" aria-label="Flowing portrait memories">
+                    <!-- ============================================
+                         RIBBON — "Fairy Light String"
+                         Photos clipped to a fairy light string with bokeh
+                         ============================================ -->
+                    <section class="photo-section photo-ribbon" data-photo-section="ribbon" aria-label="Fairy light string">
                         <div class="photo-cluster">
-                            <figure class="photo-card portrait slim" data-x="-360" data-y="10" data-r="-11">
-                                <img src="photos/IMG_20260618_215630.jpg.jpeg" alt="Kaviya portrait memory">
+                            <div class="fairy-string" aria-hidden="true"></div>
+                            <figure class="photo-card portrait slim wave-peak" data-x="-390" data-y="-60" data-r="-16">
+                                <div class="card-frame clip-frame">
+                                    <div class="photo-clip"></div>
+                                    <div class="card-inner-mat">
+                                        <img src="photos/IMG_20260618_215630.jpg.jpeg" alt="Kaviya portrait memory">
+                                        <div class="photo-vignette vignette-warm"></div>
+                                    </div>
+                                </div>
+                                <div class="photo-glow" aria-hidden="true"></div>
                             </figure>
-                            <figure class="photo-card portrait slim" data-x="-240" data-y="-46" data-r="6">
-                                <img src="photos/IMG_20260618_215643.jpg.jpeg" alt="Kaviya portrait memory">
+                            <figure class="photo-card portrait slim wave-valley" data-x="-260" data-y="55" data-r="10">
+                                <div class="card-frame clip-frame">
+                                    <div class="photo-clip"></div>
+                                    <div class="card-inner-mat">
+                                        <img src="photos/IMG_20260618_215643.jpg.jpeg" alt="Kaviya portrait memory">
+                                        <div class="photo-vignette vignette-warm"></div>
+                                    </div>
+                                </div>
+                                <div class="photo-glow" aria-hidden="true"></div>
                             </figure>
-                            <figure class="photo-card portrait slim" data-x="-120" data-y="30" data-r="-5">
-                                <img src="photos/IMG_20260618_215656.jpg.jpeg" alt="Kaviya portrait memory">
+                            <figure class="photo-card portrait slim wave-peak wave-featured" data-x="-130" data-y="-70" data-r="-6">
+                                <div class="card-frame clip-frame">
+                                    <div class="photo-clip"></div>
+                                    <div class="card-inner-mat">
+                                        <img src="photos/IMG_20260618_215656.jpg.jpeg" alt="Kaviya portrait memory">
+                                        <div class="photo-vignette vignette-warm"></div>
+                                        <div class="photo-light-leak"></div>
+                                    </div>
+                                </div>
+                                <div class="photo-glow" aria-hidden="true"></div>
                             </figure>
-                            <figure class="photo-card portrait slim" data-x="0" data-y="-58" data-r="3">
-                                <img src="photos/IMG_20260618_215710.jpg.jpeg" alt="Kaviya portrait memory">
+                            <figure class="photo-card portrait slim wave-center" data-x="0" data-y="30" data-r="0">
+                                <div class="card-frame clip-frame">
+                                    <div class="photo-clip"></div>
+                                    <div class="card-inner-mat">
+                                        <img src="photos/IMG_20260618_215710.jpg.jpeg" alt="Kaviya portrait memory">
+                                        <div class="photo-vignette vignette-warm"></div>
+                                        <div class="photo-light-leak"></div>
+                                    </div>
+                                </div>
+                                <div class="photo-glow" aria-hidden="true"></div>
                             </figure>
-                            <figure class="photo-card portrait slim" data-x="120" data-y="34" data-r="8">
-                                <img src="photos/IMG_20260618_215724.jpg.jpeg" alt="Kaviya portrait memory">
+                            <figure class="photo-card portrait slim wave-peak wave-featured" data-x="130" data-y="-70" data-r="7">
+                                <div class="card-frame clip-frame">
+                                    <div class="photo-clip"></div>
+                                    <div class="card-inner-mat">
+                                        <img src="photos/IMG_20260618_215724.jpg.jpeg" alt="Kaviya portrait memory">
+                                        <div class="photo-vignette vignette-warm"></div>
+                                    </div>
+                                </div>
+                                <div class="photo-glow" aria-hidden="true"></div>
                             </figure>
-                            <figure class="photo-card portrait slim" data-x="240" data-y="-42" data-r="-6">
-                                <img src="photos/IMG_20260618_215740.jpg.jpeg" alt="Kaviya portrait memory">
+                            <figure class="photo-card portrait slim wave-valley" data-x="260" data-y="55" data-r="-9">
+                                <div class="card-frame clip-frame">
+                                    <div class="photo-clip"></div>
+                                    <div class="card-inner-mat">
+                                        <img src="photos/IMG_20260618_215740.jpg.jpeg" alt="Kaviya portrait memory">
+                                        <div class="photo-vignette vignette-warm"></div>
+                                    </div>
+                                </div>
+                                <div class="photo-glow" aria-hidden="true"></div>
                             </figure>
-                            <figure class="photo-card portrait slim" data-x="360" data-y="12" data-r="10">
-                                <img src="photos/IMG_20260618_215804.jpg.jpeg" alt="Kaviya portrait memory">
+                            <figure class="photo-card portrait slim wave-peak" data-x="390" data-y="-60" data-r="14">
+                                <div class="card-frame clip-frame">
+                                    <div class="photo-clip"></div>
+                                    <div class="card-inner-mat">
+                                        <img src="photos/IMG_20260618_215804.jpg.jpeg" alt="Kaviya portrait memory">
+                                        <div class="photo-vignette vignette-warm"></div>
+                                    </div>
+                                </div>
+                                <div class="photo-glow" aria-hidden="true"></div>
                             </figure>
                         </div>
-                        <p class="photo-caption">Every expression, every small light, carrying its own quiet story.</p>
+                        <p class="photo-caption">Every single expression of yours tells a story I could listen to forever.</p>
                     </section>
 
-                    <section class="photo-section photo-mosaic" data-photo-section="mosaic" aria-label="Final photo mosaic">
+                    <!-- ============================================
+                         MOSAIC — "Love Locket"
+                         Heart-ornamented cards with locket metallic frames
+                         ============================================ -->
+                    <section class="photo-section photo-mosaic" data-photo-section="mosaic" aria-label="Love locket memories">
                         <div class="photo-cluster">
-                            <figure class="photo-card portrait" data-x="-180" data-y="-120" data-r="-6">
-                                <img src="photos/1781799677010.png" alt="Kaviya memory photo">
+                            <figure class="photo-card portrait heart-top-left" data-x="-140" data-y="-100" data-r="-18">
+                                <div class="card-frame locket-frame">
+                                    <div class="heart-ornament top-ornament"></div>
+                                    <div class="card-inner-mat">
+                                        <img src="photos/1781799677010.png" alt="Kaviya memory photo">
+                                        <div class="photo-vignette vignette-rose"></div>
+                                        <div class="photo-light-leak light-leak-rose"></div>
+                                    </div>
+                                </div>
+                                <div class="photo-glow" aria-hidden="true"></div>
                             </figure>
-                            <figure class="photo-card portrait" data-x="180" data-y="-120" data-r="4">
-                                <img src="photos/1781799682283.png" alt="Kaviya memory photo">
+                            <figure class="photo-card portrait heart-top-right" data-x="140" data-y="-100" data-r="18">
+                                <div class="card-frame locket-frame">
+                                    <div class="heart-ornament top-ornament"></div>
+                                    <div class="card-inner-mat">
+                                        <img src="photos/1781799682283.png" alt="Kaviya memory photo">
+                                        <div class="photo-vignette vignette-rose"></div>
+                                        <div class="photo-light-leak light-leak-rose"></div>
+                                    </div>
+                                </div>
+                                <div class="photo-glow" aria-hidden="true"></div>
                             </figure>
-                            <figure class="photo-card screen" data-x="-180" data-y="120" data-r="-3">
-                                <img src="photos/Screenshot_20260618_215213.jpg.jpeg" alt="Kaviya screenshot memory">
+                            <figure class="photo-card screen heart-mid-left" data-x="-200" data-y="50" data-r="-10">
+                                <div class="card-frame locket-frame">
+                                    <div class="heart-ornament top-ornament"></div>
+                                    <div class="card-inner-mat">
+                                        <img src="photos/Screenshot_20260618_215213.jpg.jpeg" alt="Kaviya screenshot memory">
+                                        <div class="photo-vignette vignette-rose"></div>
+                                    </div>
+                                </div>
+                                <div class="photo-glow" aria-hidden="true"></div>
                             </figure>
-                            <figure class="photo-card screen" data-x="180" data-y="120" data-r="5">
-                                <img src="photos/Screenshot_20260618_215244.jpg.jpeg" alt="Kaviya screenshot memory">
+                            <figure class="photo-card screen heart-mid-right" data-x="200" data-y="50" data-r="10">
+                                <div class="card-frame locket-frame">
+                                    <div class="heart-ornament top-ornament"></div>
+                                    <div class="card-inner-mat">
+                                        <img src="photos/Screenshot_20260618_215244.jpg.jpeg" alt="Kaviya screenshot memory">
+                                        <div class="photo-vignette vignette-rose"></div>
+                                    </div>
+                                </div>
+                                <div class="photo-glow" aria-hidden="true"></div>
                             </figure>
                         </div>
-                        <p class="photo-caption">And then the memories gather into one bright, impossible thank you.</p>
+                        <p class="photo-caption">And when I look at all of these, I just think — how did I get this lucky?</p>
                     </section>
                 </section>
 
+                <!-- GRAND FINALE -->
                 <article class="narrative-layer zenith-layer" data-layer="zenith">
-                    <h2>A Wish for You</h2>
-                    <p>May this year meet you with wonder, peace, and every beautiful thing you quietly deserve.</p>
+                    <h2>Here's What I Really Want to Say</h2>
+                    <div class="zenith-message">
+                        <p class="zenith-para">You are, without question, one of the most beautiful people I have ever known. And I don't just mean the kind of beautiful that turns heads — though trust me, you do that too.</p>
+                        <p class="zenith-para">Your heart is so genuinely good that it makes me want to be a better person. Your laugh is the kind that fills an entire room. And those eyes? Don't even get me started. I've been trying to find words for them and I still can't.</p>
+                        <p class="zenith-para">I hope this birthday reminds you of how many lives you light up just by being you. Especially mine.</p>
+                        <p class="zenith-para zenith-sign-off">Happy Birthday, Kaviya. ✨</p>
+                    </div>
                 </article>
             </div>
 

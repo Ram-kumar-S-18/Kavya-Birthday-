@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Kaviya Birthday Story: Narrative Redesign
+   Kaviya Birthday Story: Grand Redesign ✨
    ========================================================================== */
 
 :root {
@@ -10,6 +10,9 @@
     --color-whisper: #8B7B7B;
     --color-surface: rgba(255, 255, 255, 0.48);
     --color-surface-border: rgba(212, 175, 55, 0.24);
+    --color-heart: #E07A5F;
+    --color-glow-gold: rgba(212, 175, 55, 0.35);
+    --color-glow-coral: rgba(224, 122, 95, 0.3);
     --font-display: 'Cormorant Garamond', Georgia, serif;
     --font-body: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
@@ -47,6 +50,39 @@ a {
     cursor: none;
 }
 
+/* ==========================================================================
+   Scroll Progress Bar
+   ========================================================================== */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    z-index: 200;
+    background: rgba(212, 175, 55, 0.1);
+    overflow: hidden;
+}
+
+.scroll-progress-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-hover), var(--color-accent-primary));
+    background-size: 200% 100%;
+    animation: progressShimmer 3s ease-in-out infinite;
+    border-radius: 0 2px 2px 0;
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.6), 0 0 24px rgba(212, 175, 55, 0.3);
+    transition: width 0.08s linear;
+}
+
+@keyframes progressShimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* ==========================================================================
+   Background Canvas
+   ========================================================================== */
 #bg-canvas {
     position: fixed;
     inset: 0;
@@ -56,6 +92,82 @@ a {
     pointer-events: none;
 }
 
+/* ==========================================================================
+   Floating Hearts Layer
+   ========================================================================== */
+.floating-hearts-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.floating-heart {
+    position: absolute;
+    color: var(--color-heart);
+    opacity: 0;
+    pointer-events: none;
+    filter: blur(0.5px);
+    animation: floatHeart linear infinite;
+}
+
+@keyframes floatHeart {
+    0% {
+        transform: translateY(100vh) rotate(0deg) scale(0.5);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 0.25;
+    }
+    90% {
+        opacity: 0.15;
+    }
+    100% {
+        transform: translateY(-10vh) rotate(360deg) scale(0.8);
+        opacity: 0;
+    }
+}
+
+.floating-sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--color-accent-primary);
+    pointer-events: none;
+    animation: floatSparkle linear infinite;
+    box-shadow: 0 0 6px rgba(212, 175, 55, 0.6);
+}
+
+@keyframes floatSparkle {
+    0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+    }
+    15% {
+        opacity: 0.7;
+        transform: translateY(80vh) scale(1);
+    }
+    50% {
+        opacity: 0.4;
+    }
+    85% {
+        opacity: 0.2;
+        transform: translateY(10vh) scale(0.6);
+    }
+    100% {
+        transform: translateY(-5vh) scale(0);
+        opacity: 0;
+    }
+}
+
+/* ==========================================================================
+   Custom Cursor
+   ========================================================================== */
 .custom-cursor,
 .custom-cursor-follower {
     position: fixed;
@@ -96,6 +208,9 @@ body.hover-interactive .custom-cursor-follower {
     background: rgba(224, 122, 95, 0.08);
 }
 
+/* ==========================================================================
+   Audio Control
+   ========================================================================== */
 .audio-control {
     position: fixed;
     top: 26px;
@@ -144,9 +259,12 @@ body.hover-interactive .custom-cursor-follower {
 .audio-visualizer.playing span:nth-child(3) { animation-delay: 0.24s; }
 .audio-visualizer.playing span:nth-child(4) { animation-delay: 0.36s; }
 
+/* ==========================================================================
+   Master Stage
+   ========================================================================== */
 #master-stage {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     min-height: 100vh;
     background:
         radial-gradient(circle at 18% 18%, rgba(212, 175, 55, 0.11), transparent 34%),
@@ -166,6 +284,9 @@ body.hover-interactive .custom-cursor-follower {
     isolation: isolate;
 }
 
+/* ==========================================================================
+   Ambient Glow (Breathing)
+   ========================================================================== */
 .ambient-glow {
     position: absolute;
     inset: 50% auto auto 50%;
@@ -176,8 +297,43 @@ body.hover-interactive .custom-cursor-follower {
     filter: blur(10px);
     transform: translate(-50%, -50%);
     z-index: -1;
+    animation: ambientBreathe 6s ease-in-out infinite;
 }
 
+@keyframes ambientBreathe {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.08);
+        opacity: 0.8;
+    }
+}
+
+/* Eyes section dual orb mode */
+.ambient-glow.eyes-mode {
+    animation: eyesGlow 3s ease-in-out infinite;
+    background: 
+        radial-gradient(circle at 35% 50%, rgba(212, 175, 55, 0.25) 0%, transparent 40%),
+        radial-gradient(circle at 65% 50%, rgba(224, 122, 95, 0.25) 0%, transparent 40%);
+    width: min(90vw, 1000px);
+}
+
+@keyframes eyesGlow {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+    }
+}
+
+/* ==========================================================================
+   Stage Grid
+   ========================================================================== */
 .stage-grid {
     position: relative;
     display: grid;
@@ -232,16 +388,10 @@ body.hover-interactive .custom-cursor-follower {
     pointer-events: none;
 }
 
-.kicker {
-    color: var(--color-whisper);
-    font-size: clamp(0.66rem, 1.1vw, 0.78rem);
-    font-weight: 500;
-    letter-spacing: 0.42em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-}
-
-.arrival-layer h1 {
+/* ==========================================================================
+   Hero Title — Shimmer Effect
+   ========================================================================== */
+.hero-title {
     color: var(--color-text-main);
     font-family: var(--font-display);
     font-size: clamp(3rem, 9.5vw, 8.5rem);
@@ -251,10 +401,45 @@ body.hover-interactive .custom-cursor-follower {
     font-variant-ligatures: common-ligatures discretionary-ligatures;
 }
 
-.arrival-layer h1 span {
-    color: var(--color-accent-primary);
+.shimmer-text {
+    display: inline-block;
+    background: linear-gradient(
+        120deg,
+        var(--color-accent-primary) 0%,
+        #F4E285 20%,
+        var(--color-accent-primary) 40%,
+        #F0C75E 60%,
+        var(--color-accent-primary) 80%,
+        #F4E285 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     font-style: italic;
-    text-shadow: 0 0 34px rgba(212, 175, 55, 0.45);
+    animation: shimmerFlow 4s ease-in-out infinite;
+    filter: drop-shadow(0 0 34px rgba(212, 175, 55, 0.45));
+}
+
+@keyframes shimmerFlow {
+    0% { background-position: 100% 50%; }
+    100% { background-position: -100% 50%; }
+}
+
+/* Kaviya name breathing glow */
+.shimmer-text::after {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(ellipse, rgba(212, 175, 55, 0.2) 0%, transparent 70%);
+    z-index: -1;
+    animation: nameGlow 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes nameGlow {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.05); }
 }
 
 .arrival-line {
@@ -269,6 +454,9 @@ body.hover-interactive .custom-cursor-follower {
     font-variant-ligatures: common-ligatures discretionary-ligatures;
 }
 
+/* ==========================================================================
+   Text Layers — Active Glow & Typewriter
+   ========================================================================== */
 .text-layer {
     max-width: 860px;
     margin: auto;
@@ -284,6 +472,11 @@ body.hover-interactive .custom-cursor-follower {
     font-variant-ligatures: common-ligatures discretionary-ligatures;
 }
 
+/* Active text glow effect */
+.text-layer.active-glow p {
+    text-shadow: 0 0 40px rgba(212, 175, 55, 0.15), 0 0 80px rgba(212, 175, 55, 0.08);
+}
+
 .text-layer span {
     display: block;
     max-width: 620px;
@@ -295,6 +488,25 @@ body.hover-interactive .custom-cursor-follower {
     letter-spacing: 0.15em;
 }
 
+/* Typewriter cursor */
+.typewriter-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 0.85em;
+    background: var(--color-accent-primary);
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: cursorBlink 0.8s step-end infinite;
+}
+
+@keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* ==========================================================================
+   Photo Cards — Premium Redesigned System
+   ========================================================================== */
 .memory-canvas {
     width: 100%;
     height: 100%;
@@ -321,6 +533,7 @@ body.hover-interactive .custom-cursor-follower {
     z-index: 2;
 }
 
+/* --- BASE PHOTO CARD --- */
 .photo-card {
     position: absolute;
     left: 50%;
@@ -328,20 +541,414 @@ body.hover-interactive .custom-cursor-follower {
     width: clamp(150px, 22vw, 270px);
     aspect-ratio: 4 / 5;
     margin: 0;
-    padding: 14px;
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    border-radius: 6px;
-    background: linear-gradient(135deg, #FFFFFF 0%, #FAFAF7 100%);
-    box-shadow: 0 4px 12px rgba(44, 36, 36, 0.04), 0 12px 32px rgba(44, 36, 36, 0.08), 0 24px 64px rgba(44, 36, 36, 0.06);
+    padding: 0;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    box-shadow: none;
     clip-path: circle(0% at 50% 50%);
     filter: blur(18px);
     transform: translate3d(-50%, -50%, -320px) scale(0.7);
-    overflow: hidden;
+    overflow: visible;
     will-change: opacity, transform, filter, clip-path;
     z-index: 2;
     scale: 1;
 }
 
+/* --- CARD FRAME: Outer shell with double-mat effect --- */
+.card-frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* --- GOLD FRAME (Bloom gallery) --- */
+.gold-frame {
+    padding: 10px;
+    background: linear-gradient(145deg, #E8D5A3, #D4AF37 25%, #C5A028 50%, #D4AF37 75%, #F0DFA0);
+    border-radius: 5px;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.15),
+        0 4px 12px rgba(44, 36, 36, 0.06),
+        0 12px 36px rgba(44, 36, 36, 0.1),
+        0 28px 72px rgba(44, 36, 36, 0.08),
+        0 0 0 1px rgba(212, 175, 55, 0.4);
+}
+
+/* Corner ornaments */
+.frame-corner {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.frame-corner::before,
+.frame-corner::after {
+    content: '';
+    position: absolute;
+    background: rgba(252, 248, 248, 0.6);
+}
+
+.frame-corner::before {
+    width: 100%;
+    height: 1.5px;
+}
+
+.frame-corner::after {
+    width: 1.5px;
+    height: 100%;
+}
+
+/* Position the corners */
+.frame-corner.tl { top: 4px; left: 4px; }
+.frame-corner.tl::before { top: 0; left: 0; }
+.frame-corner.tl::after { top: 0; left: 0; }
+
+.frame-corner.tr { top: 4px; right: 4px; }
+.frame-corner.tr::before { top: 0; right: 0; left: auto; }
+.frame-corner.tr::after { top: 0; right: 0; left: auto; }
+
+.frame-corner.bl { bottom: 4px; left: 4px; }
+.frame-corner.bl::before { bottom: 0; left: 0; top: auto; }
+.frame-corner.bl::after { bottom: 0; left: 0; top: auto; }
+
+.frame-corner.br { bottom: 4px; right: 4px; }
+.frame-corner.br::before { bottom: 0; right: 0; left: auto; top: auto; }
+.frame-corner.br::after { bottom: 0; right: 0; left: auto; top: auto; }
+
+/* Gold frame embossed ridge inner border */
+.gold-frame .card-inner-mat {
+    border: 2px solid rgba(180, 150, 50, 0.35);
+    box-shadow: inset 0 0 12px rgba(212, 175, 55, 0.15);
+}
+
+/* --- CINEMA FRAME (Duet gallery) --- */
+.cinema-frame {
+    padding: 6px 24px;
+    background: linear-gradient(180deg, #1A1614 0%, #2C2424 50%, #1A1614 100%);
+    border-radius: 3px;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 8px 20px rgba(0, 0, 0, 0.15),
+        0 20px 50px rgba(44, 36, 36, 0.15),
+        0 40px 80px rgba(44, 36, 36, 0.1);
+}
+
+/* Film sprocket holes */
+.film-sprocket {
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    width: 14px;
+    z-index: 6;
+    pointer-events: none;
+}
+
+.left-sprocket { left: 3px; }
+.right-sprocket { right: 3px; }
+
+.film-sprocket::before,
+.film-sprocket::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background: rgba(44, 36, 36, 0.7);
+    border: 1px solid rgba(80, 60, 50, 0.5);
+    transform: translateX(-50%);
+}
+
+.film-sprocket::before { top: 12%; }
+.film-sprocket::after { bottom: 12%; }
+
+/* Cinema frame inner border */
+.cinema-frame .card-inner-mat {
+    border: 1px solid rgba(100, 80, 60, 0.3);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Spotlight beam */
+.photo-spotlight {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse 60% 80% at 50% 30%,
+        rgba(255, 248, 220, 0.12) 0%,
+        transparent 70%
+    );
+    pointer-events: none;
+    z-index: 4;
+    mix-blend-mode: soft-light;
+}
+
+/* --- CLIP FRAME (Ribbon gallery) --- */
+.clip-frame {
+    padding: 8px;
+    background: linear-gradient(135deg, #FFFDF5 0%, #FFF8E8 50%, #FFFDF5 100%);
+    border-radius: 3px;
+    box-shadow:
+        0 2px 6px rgba(44, 36, 36, 0.04),
+        0 8px 22px rgba(44, 36, 36, 0.08),
+        0 18px 48px rgba(44, 36, 36, 0.06),
+        0 0 0 1px rgba(212, 175, 55, 0.12);
+    /* Subtle paper texture */
+    background-image:
+        linear-gradient(135deg, #FFFDF5 0%, #FFF8E8 50%, #FFFDF5 100%),
+        repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(200, 180, 140, 0.02) 4px, rgba(200, 180, 140, 0.02) 5px);
+}
+
+/* Photo clip / clothespin on top */
+.photo-clip {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    width: 20px;
+    height: 16px;
+    transform: translateX(-50%);
+    z-index: 12;
+    pointer-events: none;
+}
+
+.photo-clip::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 50%;
+    width: 16px;
+    height: 10px;
+    background: linear-gradient(180deg, #D4AF37, #C5A028);
+    border-radius: 2px 2px 0 0;
+    transform: translateX(-50%);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.photo-clip::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    background: #F0DFA0;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    border: 1.5px solid #D4AF37;
+    box-shadow: 0 0 4px rgba(212, 175, 55, 0.4);
+}
+
+.clip-frame .card-inner-mat {
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    box-shadow: inset 0 0 8px rgba(200, 180, 140, 0.1);
+}
+
+/* --- LOCKET FRAME (Mosaic gallery) --- */
+.locket-frame {
+    padding: 10px;
+    background: linear-gradient(145deg, #D4A373, #C9956E 30%, #E8C9A8 60%, #D4A373 90%);
+    border-radius: 6px;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.35),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+        0 4px 14px rgba(44, 36, 36, 0.08),
+        0 14px 40px rgba(44, 36, 36, 0.12),
+        0 30px 70px rgba(44, 36, 36, 0.08),
+        0 0 0 1.5px rgba(212, 175, 55, 0.25);
+}
+
+/* Heart ornament on top center of locket cards */
+.heart-ornament {
+    position: absolute;
+    z-index: 12;
+    pointer-events: none;
+}
+
+.top-ornament {
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 13px;
+}
+
+.top-ornament::before,
+.top-ornament::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 8px;
+    height: 12px;
+    background: #E07A5F;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 0 6px rgba(224, 122, 95, 0.5);
+}
+
+.top-ornament::before {
+    left: 0;
+    transform: rotate(-20deg);
+    transform-origin: bottom right;
+}
+
+.top-ornament::after {
+    right: 0;
+    transform: rotate(20deg);
+    transform-origin: bottom left;
+}
+
+.locket-frame .card-inner-mat {
+    border: 2px solid rgba(180, 130, 80, 0.3);
+    box-shadow: inset 0 0 15px rgba(212, 163, 115, 0.15);
+    border-radius: 4px;
+}
+
+/* ==========================================================================
+   Inner Mat & Photo (shared across all frames)
+   ========================================================================== */
+.card-inner-mat {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 2px;
+    background: #FAF8F5;
+}
+
+.card-inner-mat img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    border-radius: 1px;
+    background: rgba(252, 248, 248, 0.82);
+    filter: sepia(0.04) contrast(1.04) saturate(1.05);
+}
+
+/* ==========================================================================
+   Photo Vignette Overlays
+   ========================================================================== */
+.photo-vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+    border-radius: 1px;
+    /* Standard soft vignette */
+    background: radial-gradient(
+        ellipse 85% 85% at 50% 50%,
+        transparent 55%,
+        rgba(44, 36, 36, 0.08) 75%,
+        rgba(44, 36, 36, 0.18) 100%
+    );
+}
+
+/* Dramatic vignette for cinema */
+.vignette-dramatic {
+    background: radial-gradient(
+        ellipse 75% 70% at 50% 45%,
+        transparent 40%,
+        rgba(26, 22, 20, 0.12) 65%,
+        rgba(26, 22, 20, 0.35) 100%
+    ) !important;
+}
+
+/* Warm vignette for fairy lights */
+.vignette-warm {
+    background: radial-gradient(
+        ellipse 80% 80% at 50% 50%,
+        transparent 50%,
+        rgba(200, 160, 100, 0.06) 70%,
+        rgba(44, 36, 36, 0.14) 100%
+    ) !important;
+}
+
+/* Rose vignette for love locket */
+.vignette-rose {
+    background: radial-gradient(
+        ellipse 82% 82% at 50% 50%,
+        transparent 45%,
+        rgba(224, 122, 95, 0.06) 65%,
+        rgba(44, 36, 36, 0.16) 100%
+    ) !important;
+}
+
+/* ==========================================================================
+   Light Leak Effect
+   ========================================================================== */
+.photo-light-leak {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 4;
+    border-radius: 1px;
+    background: linear-gradient(
+        125deg,
+        transparent 30%,
+        rgba(244, 226, 133, 0.12) 45%,
+        rgba(244, 162, 97, 0.08) 55%,
+        transparent 70%
+    );
+    animation: lightLeakShift 6s ease-in-out infinite alternate;
+    mix-blend-mode: screen;
+}
+
+.light-leak-rose {
+    background: linear-gradient(
+        125deg,
+        transparent 30%,
+        rgba(244, 194, 194, 0.15) 45%,
+        rgba(224, 122, 95, 0.1) 55%,
+        transparent 70%
+    ) !important;
+}
+
+@keyframes lightLeakShift {
+    0% { opacity: 0.4; transform: translateX(-3%); }
+    100% { opacity: 0.8; transform: translateX(3%); }
+}
+
+/* ==========================================================================
+   Glow Aura (outside the frame)
+   ========================================================================== */
+.photo-glow {
+    position: absolute;
+    inset: -16px;
+    border-radius: 10px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.photo-card:nth-child(odd) .photo-glow {
+    background: radial-gradient(ellipse, var(--color-glow-gold), transparent 70%);
+    animation: glowPulse 3.5s ease-in-out infinite;
+}
+
+.photo-card:nth-child(even) .photo-glow {
+    background: radial-gradient(ellipse, var(--color-glow-coral), transparent 70%);
+    animation: glowPulse 3.5s ease-in-out infinite 1.5s;
+}
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.35; transform: scale(1); }
+    50% { opacity: 0.75; transform: scale(1.06); }
+}
+
+.photo-section[style*="visibility: visible"] .photo-glow,
+.photo-card[style*="visibility: visible"] .photo-glow {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   Hover Effects on Cards
+   ========================================================================== */
+/* Light sweep on hover */
 .photo-card::before {
     content: "";
     position: absolute;
@@ -349,37 +956,39 @@ body.hover-interactive .custom-cursor-follower {
     left: 0;
     width: 200%;
     height: 100%;
-    background: linear-gradient(105deg, transparent 20%, rgba(255, 255, 255, 0.6) 25%, transparent 30%);
+    background: linear-gradient(105deg, transparent 20%, rgba(255, 255, 255, 0.5) 25%, transparent 30%);
     transform: translateX(-100%);
     transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
     pointer-events: none;
-    z-index: 5;
+    z-index: 15;
 }
 
 .photo-card.hovered::before {
     transform: translateX(50%);
 }
 
-.photo-card::after {
+/* Animated border glow on hover */
+.photo-card.hovered .card-frame {
+    box-shadow:
+        0 0 20px rgba(212, 175, 55, 0.2),
+        0 0 40px rgba(224, 122, 95, 0.1),
+        0 12px 40px rgba(44, 36, 36, 0.12);
+}
+
+/* Inner shadow on the photo */
+.card-inner-mat::after {
     content: "";
     position: absolute;
-    inset: 14px;
+    inset: 0;
     pointer-events: none;
-    box-shadow: inset 0px 4px 10px rgba(44, 36, 36, 0.15), inset 0px 1px 2px rgba(44, 36, 36, 0.2);
+    box-shadow: inset 0px 3px 8px rgba(44, 36, 36, 0.1), inset 0px 1px 2px rgba(44, 36, 36, 0.12);
     border-radius: 2px;
-    z-index: 3;
+    z-index: 5;
 }
 
-.photo-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-    border-radius: 2px;
-    background: rgba(252, 248, 248, 0.82);
-    filter: sepia(0.05) contrast(1.05);
-}
-
+/* ==========================================================================
+   Card Size Variants
+   ========================================================================== */
 .photo-card.tall {
     width: clamp(170px, 24vw, 300px);
 }
@@ -404,6 +1013,9 @@ body.hover-interactive .custom-cursor-follower {
     width: clamp(128px, 16vw, 208px);
 }
 
+/* ==========================================================================
+   Photo Caption
+   ========================================================================== */
 .photo-caption {
     position: absolute;
     left: 50%;
@@ -430,6 +1042,186 @@ body.hover-interactive .custom-cursor-follower {
     bottom: var(--photo-caption-bottom);
 }
 
+/* ==========================================================================
+   Gallery 1: Diamond Constellation — Golden Gallery Frames
+   ========================================================================== */
+.hero-card {
+    z-index: 5 !important;
+}
+
+.hero-card .photo-glow {
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.5) 0%, transparent 65%) !important;
+    inset: -28px !important;
+    animation: heroSpotlight 4s ease-in-out infinite !important;
+}
+
+@keyframes heroSpotlight {
+    0%, 100% { opacity: 0.45; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.14); }
+}
+
+.orbit-card {
+    z-index: 3 !important;
+}
+
+/* Orbit cards get a subtler, smaller gold frame */
+.orbit-card .gold-frame {
+    padding: 7px;
+}
+
+/* ==========================================================================
+   Gallery 2: Cinema Spotlight — Film Strip
+   ========================================================================== */
+.editorial-back {
+    z-index: 3 !important;
+}
+
+.editorial-front {
+    z-index: 6 !important;
+}
+
+.editorial-front .photo-glow {
+    background: radial-gradient(ellipse, rgba(212, 175, 55, 0.45) 0%, transparent 60%) !important;
+    inset: -22px !important;
+}
+
+/* Film grain overlay on duet section */
+.photo-duet::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(44, 36, 36, 0.015) 2px,
+        rgba(44, 36, 36, 0.015) 4px
+    );
+    pointer-events: none;
+    z-index: 8;
+    mix-blend-mode: multiply;
+    opacity: 0.6;
+}
+
+/* ==========================================================================
+   Gallery 3: Fairy Light String — Ribbon
+   ========================================================================== */
+.wave-peak {
+    z-index: 4 !important;
+}
+
+.wave-valley {
+    z-index: 2 !important;
+}
+
+.wave-featured {
+    width: clamp(120px, 15vw, 195px) !important;
+    z-index: 5 !important;
+}
+
+.wave-center {
+    width: clamp(115px, 14vw, 185px) !important;
+    z-index: 6 !important;
+}
+
+.wave-center .photo-glow {
+    background: radial-gradient(circle, rgba(224, 122, 95, 0.4) 0%, transparent 60%) !important;
+    inset: -20px !important;
+}
+
+/* Fairy light string connecting the photos */
+.fairy-string {
+    position: absolute;
+    top: calc(50% - 18px);
+    left: 8%;
+    right: 8%;
+    height: 2px;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(212, 175, 55, 0.15) 10%,
+        rgba(224, 122, 95, 0.12) 30%,
+        rgba(212, 175, 55, 0.18) 50%,
+        rgba(224, 122, 95, 0.12) 70%,
+        rgba(212, 175, 55, 0.15) 90%,
+        transparent 100%
+    );
+}
+
+/* Glowing dots on the fairy string */
+.fairy-string::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: radial-gradient(circle 3px, rgba(244, 226, 133, 0.6) 0%, transparent 100%) 8% center / 10% 6px no-repeat,
+                radial-gradient(circle 3px, rgba(224, 122, 95, 0.5) 0%, transparent 100%) 22% center / 10% 6px no-repeat,
+                radial-gradient(circle 3px, rgba(244, 226, 133, 0.6) 0%, transparent 100%) 36% center / 10% 6px no-repeat,
+                radial-gradient(circle 3px, rgba(212, 175, 55, 0.5) 0%, transparent 100%) 50% center / 10% 6px no-repeat,
+                radial-gradient(circle 3px, rgba(224, 122, 95, 0.5) 0%, transparent 100%) 64% center / 10% 6px no-repeat,
+                radial-gradient(circle 3px, rgba(244, 226, 133, 0.6) 0%, transparent 100%) 78% center / 10% 6px no-repeat,
+                radial-gradient(circle 3px, rgba(212, 175, 55, 0.5) 0%, transparent 100%) 92% center / 10% 6px no-repeat;
+    animation: fairyTwinkle 3s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes fairyTwinkle {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+/* ==========================================================================
+   Gallery 4: Love Locket — Heart Formation
+   ========================================================================== */
+.heart-top-left {
+    z-index: 4 !important;
+}
+
+.heart-top-right {
+    z-index: 4 !important;
+}
+
+.heart-mid-left {
+    z-index: 3 !important;
+}
+
+.heart-mid-right {
+    z-index: 3 !important;
+}
+
+/* Heart halo glow behind the formation */
+.photo-mosaic .photo-cluster::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 42%;
+    width: 340px;
+    height: 340px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(224, 122, 95, 0.14) 0%, rgba(212, 175, 55, 0.06) 50%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+    animation: heartHalo 3s ease-in-out infinite;
+}
+
+@keyframes heartHalo {
+    0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 0.75; transform: translate(-50%, -50%) scale(1.18); }
+}
+
+.photo-mosaic .photo-glow {
+    background: radial-gradient(ellipse, rgba(224, 122, 95, 0.4) 0%, transparent 65%) !important;
+}
+
+/* ==========================================================================
+   Zenith (Grand Finale)
+   ========================================================================== */
 .zenith-layer {
     max-width: 920px;
     margin: auto;
@@ -438,28 +1230,77 @@ body.hover-interactive .custom-cursor-follower {
 .zenith-layer h2 {
     color: var(--color-text-main);
     font-family: var(--font-display);
-    font-size: clamp(3rem, 10vw, 9rem);
+    font-size: clamp(2.4rem, 8vw, 6.5rem);
     font-weight: 300;
-    line-height: 0.92;
+    line-height: 0.95;
     text-wrap: balance;
     letter-spacing: -0.02em;
     font-variant-ligatures: common-ligatures discretionary-ligatures;
+    margin-bottom: 36px;
+    background: linear-gradient(
+        120deg,
+        var(--color-text-main) 0%,
+        var(--color-accent-primary) 50%,
+        var(--color-text-main) 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmerFlow 5s ease-in-out infinite;
 }
 
-.zenith-layer h2 span {
-    color: var(--color-accent-primary);
-    font-style: italic;
-    text-shadow: 0 0 34px rgba(212, 175, 55, 0.45);
-}
-
-.zenith-layer > p:last-child {
+.zenith-message {
     max-width: 640px;
-    margin: 30px auto 0;
-    color: var(--color-text-main);
-    font-size: clamp(0.98rem, 1.8vw, 1.24rem);
-    line-height: 1.8;
+    margin: 0 auto;
 }
 
+.zenith-para {
+    color: var(--color-text-main);
+    font-size: clamp(0.95rem, 1.6vw, 1.18rem);
+    line-height: 1.85;
+    margin-bottom: 22px;
+    opacity: 0;
+}
+
+.zenith-para:last-child {
+    margin-bottom: 0;
+}
+
+.zenith-sign-off {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 4vw, 3rem) !important;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--color-accent-primary) !important;
+    margin-top: 36px !important;
+    text-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+}
+
+/* ==========================================================================
+   Section Transition Sparkles
+   ========================================================================== */
+.transition-sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-accent-primary);
+    pointer-events: none;
+    z-index: 10;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.8);
+}
+
+/* ==========================================================================
+   Falling Petal (Enhanced)
+   ========================================================================== */
+.falling-petal {
+    filter: drop-shadow(0 0 4px rgba(224, 122, 95, 0.3));
+}
+
+/* ==========================================================================
+   Keyframes
+   ========================================================================== */
 @keyframes magneticPulse {
     0%, 100% {
         box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.26);
@@ -472,65 +1313,6 @@ body.hover-interactive .custom-cursor-follower {
 @keyframes visualizerBounce {
     from { transform: scaleY(0.18); }
     to { transform: scaleY(1); }
-}
-
-@media (max-width: 760px) {
-    .memory-canvas {
-        --photo-cluster-lift: clamp(-64px, -7vh, -36px);
-        --photo-caption-bottom: 12px;
-    }
-
-    .audio-control {
-        top: 16px;
-        right: 16px;
-        padding: 9px 12px;
-    }
-
-    .audio-label {
-        display: none;
-    }
-
-    .stage-viewport {
-        min-height: 560px;
-    }
-
-    .stage-grid {
-        width: calc(100vw - 28px);
-        min-height: calc(100vh - 60px);
-    }
-
-    .arrival-layer h1 {
-        font-size: clamp(2.5rem, 13vw, 5.2rem);
-        line-height: 0.98;
-    }
-
-    .text-layer p {
-        font-size: clamp(2rem, 12vw, 4.5rem);
-    }
-
-    .photo-card {
-        width: clamp(120px, 38vw, 210px);
-        padding: 6px;
-    }
-
-    .photo-card.tall,
-    .photo-card.feature {
-        width: clamp(146px, 44vw, 236px);
-    }
-
-    .photo-card.slim,
-    .photo-card.screen {
-        width: clamp(84px, 27vw, 142px);
-    }
-
-    .photo-card.square {
-        width: clamp(118px, 34vw, 178px);
-    }
-
-    .photo-caption {
-        bottom: clamp(18px, 5vh, 40px);
-        font-size: clamp(1.08rem, 5.3vw, 1.5rem);
-    }
 }
 
 /* ==========================================================================
@@ -602,7 +1384,7 @@ body.hover-interactive .custom-cursor-follower {
 
 .seal-container.dragging {
     cursor: grabbing;
-    transition: none; /* Instant feedback when dragging */
+    transition: none;
 }
 
 .wax-seal-barrier.split-open .seal-container {
@@ -620,6 +1402,12 @@ body.hover-interactive .custom-cursor-follower {
     align-items: center;
     filter: drop-shadow(0 8px 24px rgba(44, 36, 36, 0.18));
     transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    animation: sealPulse 2s ease-in-out infinite;
+}
+
+@keyframes sealPulse {
+    0%, 100% { filter: drop-shadow(0 8px 24px rgba(44, 36, 36, 0.18)); }
+    50% { filter: drop-shadow(0 8px 32px rgba(212, 175, 55, 0.35)); }
 }
 
 .wax-seal svg {
@@ -662,3 +1450,171 @@ body.hover-interactive .custom-cursor-follower {
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
+/* ==========================================================================
+   Responsive — Mobile
+   ========================================================================== */
+@media (max-width: 760px) {
+    .memory-canvas {
+        --photo-cluster-lift: clamp(-64px, -7vh, -36px);
+        --photo-caption-bottom: 12px;
+    }
+
+    .audio-control {
+        top: 16px;
+        right: 16px;
+        padding: 9px 12px;
+    }
+
+    .audio-label {
+        display: none;
+    }
+
+    .stage-viewport {
+        min-height: 560px;
+    }
+
+    .stage-grid {
+        width: calc(100vw - 28px);
+        min-height: calc(100vh - 60px);
+    }
+
+    .hero-title {
+        font-size: clamp(2.5rem, 13vw, 5.2rem);
+        line-height: 0.98;
+    }
+
+    .text-layer p {
+        font-size: clamp(2rem, 12vw, 4.5rem);
+    }
+
+    .photo-card {
+        width: clamp(120px, 38vw, 210px);
+        padding: 6px;
+    }
+
+    .photo-card.tall,
+    .photo-card.feature {
+        width: clamp(146px, 44vw, 236px);
+    }
+
+    .photo-card.slim,
+    .photo-card.screen {
+        width: clamp(84px, 27vw, 142px);
+    }
+
+    .photo-card.square {
+        width: clamp(118px, 34vw, 178px);
+    }
+
+    .photo-caption {
+        bottom: clamp(18px, 5vh, 40px);
+        font-size: clamp(1.08rem, 5.3vw, 1.5rem);
+    }
+
+    .zenith-layer h2 {
+        font-size: clamp(2rem, 10vw, 4rem);
+    }
+
+    .zenith-para {
+        font-size: clamp(0.88rem, 3.8vw, 1.05rem) !important;
+    }
+
+    .scroll-progress {
+        height: 2px;
+    }
+}
+
+/* ==========================================================================
+   Responsive — Short Screens (Prevent Overflow)
+   ========================================================================== */
+@media (max-height: 840px) {
+    .zenith-layer h2 {
+        font-size: clamp(2.2rem, 6vw, 4rem);
+        margin-bottom: 24px;
+    }
+
+    .zenith-para {
+        font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+        margin-bottom: 14px;
+        line-height: 1.6;
+    }
+
+    .zenith-sign-off {
+        font-size: clamp(1.4rem, 3.5vw, 2.4rem) !important;
+        margin-top: 24px !important;
+    }
+}
+
+/* Hide custom cursor on touch and tablet viewports */
+@media (max-width: 1023px) {
+    .custom-cursor,
+    .custom-cursor-follower {
+        display: none !important;
+    }
+    body {
+        cursor: auto !important;
+    }
+}
+
+/* ==========================================================================
+   Responsive — Large Screens
+   ========================================================================== */
+@media (min-width: 1440px) {
+    .stage-grid {
+        width: min(1360px, calc(100vw - 80px));
+    }
+    .photo-card {
+        width: clamp(180px, 18vw, 320px);
+    }
+    .photo-card.tall,
+    .photo-card.feature {
+        width: clamp(210px, 20vw, 360px);
+    }
+    .photo-card.slim,
+    .photo-card.screen {
+        width: clamp(120px, 12vw, 200px);
+    }
+    .photo-card.square {
+        width: clamp(170px, 16vw, 280px);
+    }
+}
+
+@media (min-width: 1920px) {
+    .stage-grid {
+        width: min(1760px, calc(100vw - 120px));
+    }
+    .photo-card {
+        width: clamp(230px, 16vw, 420px);
+    }
+    .photo-card.tall,
+    .photo-card.feature {
+        width: clamp(270px, 18vw, 480px);
+    }
+    .photo-card.slim,
+    .photo-card.screen {
+        width: clamp(160px, 10vw, 280px);
+    }
+    .photo-card.square {
+        width: clamp(210px, 14vw, 360px);
+    }
+}
+
+@media (min-width: 2560px) { /* 4K Screens */
+    .stage-grid {
+        width: min(2300px, calc(100vw - 160px));
+    }
+    .photo-card {
+        width: clamp(300px, 14vw, 550px);
+    }
+    .photo-card.tall,
+    .photo-card.feature {
+        width: clamp(350px, 16vw, 640px);
+    }
+    .photo-card.slim,
+    .photo-card.screen {
+        width: clamp(210px, 9vw, 380px);
+    }
+    .photo-card.square {
+        width: clamp(280px, 12vw, 480px);
+    }
+}
