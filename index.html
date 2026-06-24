@@ -2740,10 +2740,47 @@
                 // Horizontal Ribbon Pinning Track
                 const runwaySection = document.getElementById('section-runway');
                 const ribbonTrack = document.getElementById('ribbon-track');
-                
+
+                // Build mosaic timeline FIRST (paused) so runway's onLeave can play it
+                const mosaicSection = document.getElementById('section-mosaic');
+                let mosaicTl = null;
+                let mosaicRevealed = false;
+
+                function revealMosaic() {
+                    if (mosaicRevealed || !mosaicTl) return;
+                    mosaicRevealed = true;
+                    mosaicTl.play();
+                }
+
+                if (mosaicSection) {
+                    mosaicTl = gsap.timeline({ paused: true });
+                    mosaicTl.set(mosaicSection, { zIndex: 990, position: 'relative' });
+
+                    const mosaicPhotos = mosaicSection.querySelectorAll('.photo-holder');
+                    mosaicPhotos.forEach((photo, index) => {
+                        const wrap = photo.querySelector('.photo-holder-img-wrap');
+                        const img  = photo.querySelector('img');
+                        if (wrap && img) {
+                            gsap.set(wrap, { clipPath: 'inset(100% 0% 0% 0%)' });
+                            gsap.set(img,  { scale: 1.08 });
+                            mosaicTl
+                                .to(wrap, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'power4.inOut' }, index * 0.25)
+                                .to(img,  { scale: 1.04, duration: 1.2, ease: 'power3.out' }, '<');
+                        }
+                    });
+
+                    // Fallback: catch users who jump directly to mosaic via nav
+                    ScrollTrigger.create({
+                        trigger: mosaicSection,
+                        start: 'top 80%',
+                        once: true,
+                        onEnter: revealMosaic
+                    });
+                }
+
                 if (runwaySection && ribbonTrack) {
                     const getScrollAmount = () => {
-                        const trackWidth = ribbonTrack.scrollWidth;
+                        const trackWidth    = ribbonTrack.scrollWidth;
                         const viewportWidth = window.innerWidth;
                         return -Math.max(0, trackWidth - viewportWidth * 0.92);
                     };
@@ -2759,42 +2796,14 @@
                             pinSpacing: true,
                             anticipatePin: 1,
                             scrub: 1,
-                            invalidateOnRefresh: true
-                        }
-                    });
-                }
-
-                // Mosaic Section Entrance Reveal Timeline (Section following Runway)
-                const mosaicSection = document.getElementById('section-mosaic');
-                if (mosaicSection) {
-                    const mosaicTl = gsap.timeline({
-                        scrollTrigger: {
-                            trigger: mosaicSection,
-                            start: 'top 95%',
-                            toggleActions: 'play none none none',
-                            once: true
-                        }
-                    });
-
-                    // Force z-index and position on the mosaic section during its reveal
-                    mosaicTl.set(mosaicSection, { zIndex: 990, position: 'relative' });
-
-                    const photos = mosaicSection.querySelectorAll('.photo-holder');
-                    photos.forEach((photo, index) => {
-                        const wrap = photo.querySelector('.photo-holder-img-wrap');
-                        const img = photo.querySelector('img');
-                        if (wrap && img) {
-                            gsap.set(wrap, { clipPath: 'inset(100% 0% 0% 0%)' });
-                            gsap.set(img, { scale: 1.08 });
-
-                            mosaicTl.to(wrap,
-                                { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'power4.inOut' },
-                                index * 0.25
-                            )
-                            .to(img,
-                                { scale: 1.04, duration: 1.2, ease: 'power3.out' },
-                                '<'
-                            );
+                            invalidateOnRefresh: true,
+                            // ── THE KEY FIX ──────────────────────────────────────────
+                            // When the pin releases and the page scrolls past the runway,
+                            // directly play the mosaic reveal — no ScrollTrigger math involved.
+                            onLeave: () => {
+                                // Small rAF delay so the browser has painted the unpin transition
+                                requestAnimationFrame(() => requestAnimationFrame(revealMosaic));
+                            }
                         }
                     });
                 }
