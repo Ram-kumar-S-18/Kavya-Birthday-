@@ -4,366 +4,3000 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kaviya | A Birthday Story</title>
-    <meta name="description" content="A birthday story written for the most beautiful soul — Kaviya.">
+    <meta name="description" content="A cinematic birthday story handcrafted for Kaviya. An editorial journey through beautiful moments.">
+    <meta name="theme-color" content="#FAF8F5">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="preload" as="image" href="photos/1781799660423.png">
-    <link rel="preload" as="image" href="photos/1781799671233.png">
-    <link rel="preload" as="image" href="photos/1781799677010.png">
-    <link rel="preload" as="image" href="photos/1781799682283.png">
-    <link rel="preload" as="image" href="photos/1781799687992.png">
-    <link rel="preload" as="image" href="photos/1781799704353.png">
-    <link rel="preload" as="image" href="photos/IMG_20260618_215602.jpg.jpeg">
-    <link rel="preload" as="image" href="photos/IMG_20260618_215611.jpg.jpeg">
-    <link rel="preload" as="image" href="photos/IMG_20260618_215630.jpg.jpeg">
-    <link rel="preload" as="image" href="photos/IMG_20260618_215643.jpg.jpeg">
-    <link rel="preload" as="image" href="photos/IMG_20260618_215656.jpg.jpeg">
-    <link rel="preload" as="image" href="photos/IMG_20260618_215710.jpg.jpeg">
-    <link rel="preload" as="image" href="photos/IMG_20260618_215724.jpg.jpeg">
-    <link rel="preload" as="image" href="photos/IMG_20260618_215740.jpg.jpeg">
-    <link rel="preload" as="image" href="photos/IMG_20260618_215804.jpg.jpeg">
-    <link rel="preload" as="image" href="photos/Screenshot_20260618_215213.jpg.jpeg">
-    <link rel="preload" as="image" href="photos/Screenshot_20260618_215244.jpg.jpeg">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Inter:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           1. Core Tokens & Styling Design System
+           ========================================================================== */
+        :root {
+            --bg-cream: #FAF8F5;
+            --bg-twilight: #131016;
+            --text-dark: #2C2523;
+            --text-light: #F3ECE7;
+            --accent-gold: #C5A059;
+            --accent-gold-glow: rgba(197, 160, 89, 0.3);
+            --accent-blush: #E2B2B2;
+            --accent-blush-soft: rgba(226, 178, 178, 0.25);
+            
+            --bg-current: var(--bg-cream);
+            --text-current: var(--text-dark);
+            
+            --font-serif: 'Cormorant Garamond', Georgia, serif;
+            --font-sans: 'Inter', -apple-system, sans-serif;
+            --font-cursive: 'Playfair Display', Georgia, serif;
+            
+            --ease-luxury: cubic-bezier(0.25, 1, 0.5, 1);
+            --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --ease-smooth: cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            overflow-x: hidden;
+            background-color: var(--bg-cream);
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: var(--bg-current);
+            color: var(--text-current);
+            font-family: var(--font-sans);
+            font-weight: 300;
+            overflow: hidden; /* Locked until wax seal opens */
+            overflow-x: hidden;
+            cursor: none;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 1.2s var(--ease-luxury), color 1.2s var(--ease-luxury);
+        }
+
+        html.twilight-theme {
+            --bg-current: var(--bg-twilight) !important;
+            --text-current: var(--text-light) !important;
+            background-color: var(--bg-twilight);
+            transition: background-color 1.2s var(--ease-luxury);
+        }
+
+        button, a {
+            cursor: none;
+            color: inherit;
+            text-decoration: none;
+            background: none;
+            border: none;
+            outline: none;
+        }
+
+        /* ==========================================================================
+           2. Film Grain & Background Stardust
+           ========================================================================== */
+        .film-grain {
+            position: fixed;
+            inset: 0;
+            z-index: 9000;
+            pointer-events: none;
+            opacity: 0.022;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-size: 256px 256px;
+            animation: grainDrift 0.6s steps(4) infinite;
+        }
+
+        @keyframes grainDrift {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(-1%, -2%); }
+            50% { transform: translate(2%, 1%); }
+            75% { transform: translate(-2%, 2%); }
+            100% { transform: translate(1%, -1%); }
+        }
+
+        #stardust-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            width: 100vw;
+            height: 100vh;
+            opacity: 0.85;
+            transition: opacity 1.5s ease;
+        }
+
+        /* ==========================================================================
+           3. Custom Editorial Cursor
+           ========================================================================== */
+        .custom-cursor,
+        .custom-cursor-follower {
+            position: fixed;
+            left: 0;
+            top: 0;
+            border-radius: 50%;
+            pointer-events: none;
+            will-change: transform;
+            transform: translate3d(-50%, -50%, 0);
+            transition: width 0.3s var(--ease-luxury), height 0.3s var(--ease-luxury), background-color 0.3s, border-color 0.3s;
+            z-index: 9999;
+        }
+
+        .custom-cursor {
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent-gold);
+            box-shadow: 0 0 10px var(--accent-gold-glow);
+        }
+
+        .custom-cursor-follower {
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            background: rgba(197, 160, 89, 0.02);
+            z-index: 9998;
+        }
+
+        body.hover-interactive .custom-cursor {
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-blush);
+            box-shadow: 0 0 12px var(--accent-blush);
+        }
+
+        body.hover-interactive .custom-cursor-follower {
+            width: 52px;
+            height: 52px;
+            border-color: rgba(226, 178, 178, 0.4);
+            background: rgba(226, 178, 178, 0.04);
+        }
+
+        .cursor-trail-dot {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            pointer-events: none;
+            z-index: 9997;
+            opacity: 0;
+            will-change: transform;
+            transform: translate3d(-50%, -50%, 0);
+        }
+
+        /* ==========================================================================
+           4. Generative Audio Control UI
+           ========================================================================== */
+        .audio-control {
+            position: fixed;
+            bottom: 32px;
+            left: 32px;
+            z-index: 300;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border: 1px solid rgba(197, 160, 89, 0.18);
+            border-radius: 100px;
+            background: rgba(250, 248, 245, 0.45);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            color: var(--accent-gold);
+            padding: 12px 20px 12px 16px;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.02);
+            transition: all 0.4s var(--ease-luxury);
+        }
+
+        .audio-control:hover {
+            border-color: var(--accent-gold);
+            background: rgba(250, 248, 245, 0.8);
+            box-shadow: 0 12px 30px rgba(197, 160, 89, 0.12);
+        }
+
+        .audio-control.playing {
+            box-shadow: 0 0 25px rgba(197, 160, 89, 0.2);
+            border-color: var(--accent-gold);
+        }
+
+        .audio-visualizer {
+            display: inline-flex;
+            align-items: flex-end;
+            gap: 2.5px;
+            width: 16px;
+            height: 14px;
+        }
+
+        .audio-visualizer span {
+            display: block;
+            width: 2px;
+            height: 100%;
+            background: var(--accent-gold);
+            border-radius: 1px;
+            transform-origin: bottom;
+            transform: scaleY(0.15);
+            transition: transform 0.15s ease;
+        }
+
+        .audio-visualizer.playing span {
+            animation: visualizerBounce 0.8s ease-in-out infinite alternate;
+        }
+
+        .audio-visualizer.playing span:nth-child(2) { animation-delay: 0.1s; }
+        .audio-visualizer.playing span:nth-child(3) { animation-delay: 0.2s; }
+        .audio-visualizer.playing span:nth-child(4) { animation-delay: 0.3s; }
+        .audio-visualizer.playing span:nth-child(5) { animation-delay: 0.15s; }
+
+        @keyframes visualizerBounce {
+            from { transform: scaleY(0.12); }
+            to { transform: scaleY(1); }
+        }
+
+        /* ==========================================================================
+           5. Preloader
+           ========================================================================== */
+        .preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: #FDFBF7;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.2s var(--ease-luxury), visibility 0s 1.2s;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .preloader-monogram {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin-bottom: 36px;
+        }
+
+        .preloader-monogram svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .preloader-monogram .mono-ring {
+            fill: none;
+            stroke: var(--accent-gold);
+            stroke-width: 0.5;
+            stroke-dasharray: 220;
+            stroke-dashoffset: 220;
+            animation: drawRing 2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+        }
+
+        .preloader-monogram .mono-letter {
+            fill: var(--accent-gold);
+            opacity: 0;
+            animation: fadeInLetter 0.8s ease forwards 1.4s;
+        }
+
+        @keyframes drawRing {
+            to { stroke-dashoffset: 0; }
+        }
+
+        @keyframes fadeInLetter {
+            to { opacity: 1; }
+        }
+
+        .preloader-line {
+            width: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+            margin-bottom: 28px;
+            animation: expandLine 1.5s cubic-bezier(0.65, 0, 0.35, 1) forwards 0.5s;
+        }
+
+        @keyframes expandLine {
+            to { width: 240px; }
+        }
+
+        .preloader-text {
+            font-family: var(--font-sans);
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--text-dark);
+            opacity: 0.5;
+        }
+
+        .preloader-progress {
+            position: absolute;
+            bottom: 48px;
+            right: 48px;
+            font-family: var(--font-sans);
+            font-size: 11px;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            color: rgba(44, 37, 35, 0.4);
+        }
+
+        /* ==========================================================================
+           6. Wax Seal Envelope (The Gatekeeper)
+           ========================================================================== */
+        .wax-seal-barrier {
+            position: fixed;
+            inset: 0;
+            z-index: 9500;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-cream);
+            transition: opacity 1s var(--ease-luxury);
+        }
+
+        .wax-seal-barrier.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .envelope-half {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #FDFBF7 0%, #EFEBE5 100%);
+            border: 1px solid rgba(197, 160, 89, 0.1);
+            transition: transform 1.2s var(--ease-smooth), opacity 1.2s ease;
+            z-index: 101;
+            pointer-events: none;
+        }
+
+        .envelope-half::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 128 128' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");
+            background-size: 128px 128px;
+            opacity: 0.02;
+            mix-blend-mode: multiply;
+        }
+
+        .envelope-half.left {
+            clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+            border-right: 1px solid rgba(197, 160, 89, 0.15);
+        }
+
+        .envelope-half.right {
+            clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+            border-left: 1px solid rgba(197, 160, 89, 0.15);
+        }
+
+        .wax-seal-barrier.split-open #envelope-left {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+
+        .wax-seal-barrier.split-open #envelope-right {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        .seal-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 102;
+            cursor: grab;
+            user-select: none;
+            touch-action: none;
+            will-change: transform, opacity;
+            transition: opacity 0.6s ease, transform 0.6s var(--ease-spring);
+        }
+
+        .seal-container.dragging {
+            cursor: grabbing;
+            transition: none;
+        }
+
+        .wax-seal-barrier.split-open .seal-container {
+            opacity: 0;
+            transform: translate(-50%, 0%) scale(0.5);
+            pointer-events: none;
+            transition: opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth);
+        }
+
+        .wax-seal {
+            width: clamp(110px, 15vw, 130px);
+            height: clamp(110px, 15vw, 130px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s var(--ease-luxury);
+            animation: sealPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes sealPulse {
+            0%, 100% { filter: drop-shadow(0 8px 24px rgba(44, 36, 36, 0.12)); }
+            50% { filter: drop-shadow(0 8px 30px rgba(197, 160, 89, 0.28)); }
+        }
+
+        .wax-seal svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            transition: transform 0.3s var(--ease-luxury);
+        }
+
+        .wax-seal:hover svg {
+            transform: scale(1.05) rotate(3deg);
+        }
+
+        .seal-prompt {
+            margin-top: 16px;
+            font-family: var(--font-sans);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            opacity: 0.8;
+            pointer-events: none;
+            text-align: center;
+        }
+
+        .seal-thread {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(197, 160, 89, 0.2), transparent);
+            transform: translate(-50%, -50%);
+            z-index: 101;
+        }
+
+        .seal-thread-v {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 1px;
+            height: 120px;
+            background: linear-gradient(180deg, transparent, rgba(197, 160, 89, 0.15), transparent);
+            transform: translate(-50%, -50%);
+            z-index: 101;
+        }
+
+        /* ==========================================================================
+           7. Scroll Progress Bar & Chapter Navigation
+           ========================================================================== */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            z-index: 3000;
+            background: rgba(197, 160, 89, 0.05);
+        }
+
+        .scroll-progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-gold), var(--accent-blush), var(--accent-gold));
+            background-size: 200% 100%;
+            animation: shimmerBar 3s linear infinite;
+            box-shadow: 0 0 10px rgba(197, 160, 89, 0.3);
+        }
+
+        @keyframes shimmerBar {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
+        }
+
+        .chapter-nav {
+            position: fixed;
+            right: 32px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1500;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .chapter-nav.visible {
+            opacity: 1;
+        }
+
+        .chapter-nav-line {
+            position: absolute;
+            right: 5px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, rgba(197, 160, 89, 0.15), transparent);
+        }
+
+        .chapter-dot {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 10px 0;
+            cursor: none;
+        }
+
+        .chapter-dot-label {
+            font-family: var(--font-sans);
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            opacity: 0;
+            transform: translateX(8px);
+            transition: opacity 0.3s ease, transform 0.3s var(--ease-spring);
+            white-space: nowrap;
+            padding: 4px 12px;
+            background: rgba(250, 248, 245, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(197, 160, 89, 0.12);
+            border-radius: 4px;
+            pointer-events: none;
+        }
+
+        .chapter-dot:hover .chapter-dot-label {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .chapter-dot-circle {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(197, 160, 89, 0.25);
+            background: transparent;
+            transition: all 0.4s var(--ease-spring);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .chapter-dot-circle::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            transform: scale(0);
+            transition: transform 0.4s var(--ease-spring);
+        }
+
+        .chapter-dot.active .chapter-dot-circle {
+            border-color: var(--accent-gold);
+            transform: scale(1.3);
+            box-shadow: 0 0 10px rgba(197, 160, 89, 0.25);
+        }
+
+        .chapter-dot.active .chapter-dot-circle::after {
+            transform: scale(1);
+        }
+
+        /* ==========================================================================
+           8. Fine-Art / Glassmorphic Photo Holders
+           ========================================================================== */
+        .photo-holder {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding: 14px 14px 42px 14px;
+            background: rgba(253, 251, 247, 0.55);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(197, 160, 89, 0.16);
+            border-radius: 8px;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.03),
+                0 5px 12px rgba(0, 0, 0, 0.01),
+                inset 0 1px 1px rgba(255, 255, 255, 0.6);
+            overflow: hidden;
+            transition: transform 0.8s var(--ease-luxury), box-shadow 0.8s var(--ease-luxury), border-color 0.8s var(--ease-luxury);
+            will-change: transform;
+            pointer-events: auto;
+        }
+
+        /* Inner border removed — clean photo edges */
+
+        /* Light sheen sweep */
+        .photo-holder::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -150%;
+            width: 100%; height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.15) 30%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0.15) 70%,
+                transparent
+            );
+            transform: skewX(-25deg);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .photo-holder:hover::after {
+            left: 150%;
+            transition: left 1.4s var(--ease-luxury);
+        }
+
+        .photo-holder:hover {
+            transform: scale(1.02) translateY(-4px);
+            border-color: var(--accent-gold);
+            box-shadow: 
+                0 22px 40px rgba(197, 160, 89, 0.12),
+                0 8px 16px rgba(0, 0, 0, 0.03),
+                inset 0 1px 1px rgba(255, 255, 255, 0.7);
+        }
+
+        .photo-holder-img-wrap {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #EAE5E1;
+            border-radius: 4px;
+            clip-path: inset(100% 0 0 0);
+            will-change: clip-path;
+        }
+
+        .photo-holder-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(1);
+            transition: filter 0.7s var(--ease-luxury), transform 0.7s var(--ease-luxury);
+            will-change: filter, transform;
+        }
+
+        .photo-holder:hover .photo-holder-img-wrap img {
+            filter: grayscale(0) saturate(1.1);
+            transform: scale(1.04);
+        }
+
+        .photo-holder-metadata {
+            position: absolute;
+            bottom: 12px;
+            left: 14px;
+            right: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-sans);
+            font-size: 8px;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(44, 37, 35, 0.5);
+            opacity: 0.8;
+            transition: opacity 0.4s ease, color 0.4s ease;
+        }
+
+        .photo-holder:hover .photo-holder-metadata {
+            opacity: 1;
+            color: var(--text-dark);
+        }
+
+        .photo-metadata-caption {
+            font-family: var(--font-serif);
+            font-style: italic;
+            text-transform: none;
+            letter-spacing: 0;
+            font-size: 10px;
+        }
+
+        /* ==========================================================================
+           9. Journal Continuous Layout Grid Sections
+           ========================================================================== */
+        main {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+        }
+
+        .journal-section {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10vh 4%;
+            overflow: hidden;
+        }
+
+        /* Section dividers */
+        .section-divider {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+            margin: 0 auto;
+            opacity: 0.2;
+        }
+
+        /* ==========================================================================
+           Heart Shower Animation
+           ========================================================================== */
+        #heart-shower {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 200;
+            overflow: hidden;
+        }
+
+        .heart-drop {
+            position: absolute;
+            top: -60px;
+            user-select: none;
+            animation: heartFall linear forwards;
+            will-change: transform, opacity;
+        }
+
+        @keyframes heartFall {
+            0%   { transform: translateY(0) rotate(-10deg) scale(1);   opacity: 1; }
+            15%  { transform: translateY(12vh) rotate(8deg) scale(1.05); opacity: 1; }
+            85%  { opacity: 0.7; }
+            100% { transform: translateY(110vh) rotate(20deg) scale(0.75); opacity: 0; }
+        }
+
+        /* Typography spacing */
+        .text-reveal-container {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .text-reveal-line {
+            display: block;
+            transform: translateY(105%);
+            will-change: transform;
+        }
+
+        .editorial-num {
+            font-family: var(--font-sans);
+            font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+            font-weight: 500;
+            color: var(--accent-gold);
+            letter-spacing: 0.2em;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .editorial-num::after {
+            content: '';
+            height: 1px;
+            flex: 1;
+            max-width: 60px;
+            background: linear-gradient(90deg, var(--accent-gold), transparent);
+        }
+
+        .editorial-title {
+            font-family: var(--font-serif);
+            font-size: clamp(2.8rem, 8vw, 7.5rem);
+            font-weight: 300;
+            font-style: italic;
+            line-height: 0.95;
+            letter-spacing: -0.02em;
+        }
+
+        .editorial-para {
+            font-family: var(--font-serif);
+            font-size: clamp(1.6rem, 3.8vw, 3.2rem);
+            font-weight: 300;
+            line-height: 1.25;
+            letter-spacing: -0.01em;
+            color: inherit;
+        }
+
+        .editorial-author {
+            font-family: var(--font-sans);
+            font-size: clamp(0.68rem, 1vw, 0.78rem);
+            font-weight: 400;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: rgba(44, 37, 35, 0.5);
+            margin-top: 36px;
+            display: block;
+            position: relative;
+            padding-left: 28px;
+        }
+
+        .editorial-author::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 18px;
+            height: 1px;
+            background: var(--accent-gold);
+        }
+
+        .editorial-caption {
+            font-family: var(--font-serif);
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            font-style: italic;
+            text-align: center;
+            color: var(--accent-gold);
+            margin-top: 32px;
+            opacity: 0.8;
+        }
+
+        /* 1. Arrival (Cover) */
+        #section-arrival {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            padding-bottom: 12vh;
+        }
+
+        .shimmer-text {
+            background: linear-gradient(
+                105deg,
+                var(--text-current) 0%,
+                var(--text-current) 35%,
+                var(--accent-gold) 50%,
+                var(--text-current) 65%,
+                var(--text-current) 100%
+            );
+            background-size: 250% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmerText 4.5s ease-in-out infinite;
+        }
+
+        @keyframes shimmerText {
+            0% { background-position: 120% 0; }
+            100% { background-position: -120% 0; }
+        }
+
+        .ornament {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 24px 0;
+            opacity: 0.5;
+        }
+
+        .ornament::before,
+        .ornament::after {
+            content: '';
+            width: 36px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold));
+        }
+
+        .ornament::after {
+            background: linear-gradient(90deg, var(--accent-gold), transparent);
+        }
+
+        .ornament-diamond {
+            width: 5px;
+            height: 5px;
+            background: var(--accent-gold);
+            transform: rotate(45deg);
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 48px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-sans);
+            font-size: 9px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            opacity: 0.45;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .scroll-hint-line {
+            width: 1px;
+            height: 36px;
+            background: linear-gradient(to bottom, var(--accent-gold), transparent);
+            animation: scrollLinePulse 1.8s ease-in-out infinite;
+        }
+
+        @keyframes scrollLinePulse {
+            0% { transform: scaleY(0.2); transform-origin: top; }
+            50% { transform: scaleY(1); transform-origin: top; }
+            50.1% { transform: scaleY(1); transform-origin: bottom; }
+            100% { transform: scaleY(0); transform-origin: bottom; }
+        }
+
+        /* 2. Kindness Layout */
+        .editorial-split-layout {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            width: 100%;
+            max-width: 1140px;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .split-image-col {
+            grid-column: 1 / 6;
+            aspect-ratio: 4 / 5;
+            position: relative;
+        }
+
+        .split-text-col {
+            grid-column: 6 / 13;
+            text-align: left;
+        }
+
+        /* 3. Eyes Layout */
+        .flanked-layout {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            width: 100%;
+            max-width: 1140px;
+            gap: 36px;
+            align-items: center;
+        }
+
+        .flanked-cell-1 {
+            grid-column: 1 / 5;
+            aspect-ratio: 4 / 5;
+            z-index: 10;
+        }
+
+        .flanked-text {
+            grid-column: 5 / 9;
+            text-align: center;
+            padding: 0 16px;
+            z-index: 11;
+        }
+
+        .flanked-cell-2 {
+            grid-column: 9 / 13;
+            aspect-ratio: 4 / 5;
+            z-index: 10;
+        }
+
+        /* 4. Bloom Layout */
+        .bloom-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(12, 1fr);
+            width: 100%;
+            max-width: 1140px;
+            height: min(650px, 80vh);
+            gap: 24px;
+        }
+
+        .bloom-cell-1 {
+            grid-column: 1 / 7;
+            grid-row: 1 / 13;
+            position: relative;
+        }
+
+        .bloom-cell-2 {
+            grid-column: 7 / 13;
+            grid-row: 1 / 7;
+            position: relative;
+        }
+
+        .bloom-cell-3 {
+            grid-column: 7 / 12;
+            grid-row: 7 / 13;
+            position: relative;
+        }
+
+        /* 5. Strength (Quiet quote block) */
+        .quote-block-layout {
+            max-width: 780px;
+            text-align: center;
+            border: 1px solid rgba(197, 160, 89, 0.12);
+            padding: 60px 40px;
+            border-radius: 12px;
+            background: rgba(253, 251, 247, 0.35);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.01);
+            backdrop-filter: blur(10px);
+        }
+
+        /* 6. Duet Layout */
+        .duet-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            width: 100%;
+            max-width: 980px;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .duet-cell-1 {
+            grid-column: 2 / 7;
+            aspect-ratio: 4 / 5;
+            position: relative;
+        }
+
+        .duet-cell-2 {
+            grid-column: 7 / 12;
+            aspect-ratio: 4 / 5;
+            position: relative;
+        }
+
+        /* 7. Ribbon Runway (Horizontal pin scroll) */
+        .ribbon-runway-section {
+            width: 100%;
+            min-height: 100vh;
+            background: #FDFBF7;
+            display: block;
+            position: relative;
+            padding: 0;
+            overflow: visible;
+        }
+
+        .runway-pin-wrapper {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-sizing: border-box;
+            padding: 8vh 4% 6vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ribbon-runway-header {
+            max-width: 1140px;
+            width: 92%;
+            margin: 0 auto 40px;
+            text-align: left;
+        }
+
+        .ribbon-runway {
+            width: 100%;
+            height: 480px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .ribbon-track {
+            display: flex;
+            gap: 48px;
+            padding-left: 8%;
+            padding-right: 120px;
+            will-change: transform;
+        }
+
+        .ribbon-cell {
+            width: 320px;
+            height: 400px;
+            aspect-ratio: 4 / 5;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        /* 8. Mosaic Grid Layout */
+        .mosaic-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            width: 100%;
+            max-width: 1140px;
+            gap: 24px;
+        }
+
+        .mosaic-cell-1 {
+            grid-column: 1 / 5;
+            aspect-ratio: 4 / 5;
+        }
+
+        .mosaic-cell-2 {
+            grid-column: 5 / 9;
+            aspect-ratio: 4 / 5;
+        }
+
+        .mosaic-cell-3 {
+            grid-column: 9 / 13;
+            aspect-ratio: 9 / 16;
+        }
+
+        .mosaic-cell-4 {
+            grid-column: 5 / 9;
+            aspect-ratio: 9 / 16;
+            transform: translateY(20px);
+        }
+
+        #section-mosaic {
+            position: relative;
+            z-index: 990;
+        }
+
+        /* ==========================================================================
+           10. Climax & Finale (Night Sky Twilight Transformation)
+           ========================================================================== */
+        #section-climax {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+            z-index: 999;
+            position: relative;
+            padding: 12vh 4%;
+            transition: background-color 1.5s var(--ease-luxury);
+        }
+
+        .zenith-obsidian {
+            max-width: 820px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 999;
+            color: var(--text-current);
+        }
+
+        .zenith-title {
+            font-family: var(--font-serif);
+            font-size: clamp(2.4rem, 5.5vw, 4.4rem);
+            font-style: italic;
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 48px;
+            text-shadow: 0 0 20px rgba(197, 160, 89, 0.05);
+            transition: color 1.2s ease;
+        }
+
+        .zenith-content-box {
+            max-width: 620px;
+            margin: 0 auto;
+        }
+
+        .zenith-p {
+            font-family: var(--font-serif);
+            font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+            line-height: 1.85;
+            margin-bottom: 28px;
+            opacity: 0;
+            color: var(--text-current);
+        }
+
+        .zenith-sign {
+            font-family: var(--font-cursive);
+            font-size: clamp(1.6rem, 3.2vw, 2.5rem);
+            font-style: italic;
+            color: var(--accent-gold) !important;
+            margin-top: 48px;
+            opacity: 0;
+        }
+
+        .viewport-glow {
+            position: fixed;
+            inset: 0;
+            z-index: 99;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 2s ease;
+            box-shadow:
+                inset 0 0 80px rgba(197, 160, 89, 0.15),
+                inset 0 0 160px rgba(197, 160, 89, 0.05);
+        }
+
+        .viewport-glow.active {
+            opacity: 1;
+        }
+
+        /* Fireworks */
+        .firework-container {
+            position: fixed;
+            inset: 0;
+            z-index: 98;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .firework-container.active {
+            opacity: 1;
+        }
+
+        .firework-burst {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+        }
+
+        /* ==========================================================================
+           11. Premium Footer
+           ========================================================================== */
+        .premium-footer {
+            position: relative;
+            width: 100%;
+            padding: 100px 0 60px;
+            text-align: center;
+            background: linear-gradient(180deg, transparent 0%, #0d0b0f 100%);
+            z-index: 11;
+            overflow: hidden;
+            border-top: 1px solid rgba(197, 160, 89, 0.05);
+            transition: opacity 1.2s ease;
+            opacity: 0;
+        }
+
+        .premium-footer.visible {
+            opacity: 1;
+        }
+
+        .footer-glow {
+            position: absolute;
+            top: -120px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(197, 160, 89, 0.06) 0%, transparent 70%);
+            filter: blur(40px);
+            pointer-events: none;
+        }
+
+        .footer-rule {
+            width: 50px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+            margin: 0 auto 32px;
+        }
+
+        .footer-heart {
+            display: inline-block;
+            color: var(--accent-blush);
+            font-size: 16px;
+            margin-bottom: 18px;
+            animation: heartPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartPulse {
+            0%, 100% { transform: scale(1); }
+            15% { transform: scale(1.22); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+        }
+
+        .footer-text {
+            font-family: var(--font-sans);
+            font-size: 10px;
+            font-weight: 400;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: rgba(243, 236, 231, 0.4);
+            margin-bottom: 6px;
+        }
+
+        .footer-credit {
+            font-family: var(--font-serif);
+            font-size: 0.95rem;
+            font-style: italic;
+            color: rgba(243, 236, 231, 0.2);
+        }
+
+        /* ==========================================================================
+           12. Responsive Design overrides
+           ========================================================================== */
+        /* ==========================================================================
+           RESPONSIVE SYSTEM — Tablet (≤1024px)
+           ========================================================================== */
+        @media (max-width: 1024px) {
+            .chapter-nav { right: 16px; }
+
+            .editorial-split-layout {
+                gap: 40px;
+            }
+
+            .ribbon-cell {
+                width: 280px;
+                height: 360px;
+            }
+        }
+
+        /* ==========================================================================
+           RESPONSIVE SYSTEM — Mobile & Tablet (≤768px)
+           ========================================================================== */
+        @media (max-width: 768px) {
+            /* Hide desktop-only UI chrome */
+            .chapter-nav { display: none; }
+            .custom-cursor,
+            .custom-cursor-follower,
+            .cursor-trail-dot { display: none !important; }
+            body { cursor: auto; overflow-x: hidden; }
+            button, a { cursor: auto; }
+
+            /* Audio button */
+            .audio-control {
+                bottom: 16px;
+                left: 16px;
+                padding: 10px 16px;
+                font-size: 9px;
+            }
+
+            /* Sections */
+            .journal-section {
+                padding: 8vh 5%;
+                min-height: auto;
+            }
+
+            /* ---- Hero / Arrival ---- */
+            .editorial-title {
+                font-size: clamp(2.2rem, 11vw, 4rem);
+                line-height: 1.1;
+            }
+            .editorial-sub {
+                font-size: clamp(0.75rem, 3.5vw, 1rem);
+            }
+
+            /* ---- Split layout → stack ---- */
+            .editorial-split-layout {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+            .split-image-col {
+                grid-column: 1;
+                aspect-ratio: 4 / 5;
+                max-height: 65vw;
+            }
+            .split-text-col { grid-column: 1; }
+
+            /* ---- Flanked layout → stack ---- */
+            .flanked-layout {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .flanked-cell-1,
+            .flanked-cell-2 {
+                grid-column: 1;
+                aspect-ratio: 4 / 5;
+            }
+            .flanked-text { grid-column: 1; }
+
+            /* ---- Bloom grid → stack ---- */
+            .bloom-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+                height: auto;
+                gap: 24px;
+            }
+            .bloom-cell-1,
+            .bloom-cell-2,
+            .bloom-cell-3 {
+                grid-column: 1;
+                grid-row: auto;
+                aspect-ratio: 4 / 5;
+            }
+
+            /* ---- Duet grid → stack ---- */
+            .duet-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .duet-cell-1,
+            .duet-cell-2 {
+                grid-column: 1;
+                aspect-ratio: 4 / 5;
+            }
+
+            /* ---- Mosaic → single column ---- */
+            .mosaic-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .mosaic-cell-1,
+            .mosaic-cell-2,
+            .mosaic-cell-3,
+            .mosaic-cell-4 {
+                grid-column: 1;
+                aspect-ratio: 4 / 5;
+                transform: none !important;
+            }
+
+            /* ---- Horizontal runway → vertical scroll ---- */
+            .ribbon-runway {
+                height: auto;
+                min-height: 340px;
+                overflow-x: auto;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+                scroll-snap-type: x mandatory;
+            }
+            .ribbon-track {
+                display: flex;
+                flex-direction: row;
+                transform: none !important; /* disable GSAP horizontal on mobile */
+                gap: 16px;
+                padding: 0 5%;
+            }
+            .ribbon-cell {
+                flex-shrink: 0;
+                width: 72vw;
+                height: 300px;
+                scroll-snap-align: center;
+            }
+
+            /* ---- Quote blocks ---- */
+            .quote-block-layout {
+                padding: 36px 20px;
+            }
+
+            /* ---- Zenith finale text ---- */
+            .zenith-p {
+                font-size: clamp(1.6rem, 7vw, 3rem) !important;
+                padding: 0 6%;
+            }
+            .zenith-sign {
+                font-size: clamp(1rem, 4.5vw, 1.6rem) !important;
+            }
+
+            /* ---- Wax seal — touch-friendly sizing ---- */
+            .wax-seal {
+                width: clamp(100px, 28vw, 130px) !important;
+                height: clamp(100px, 28vw, 130px) !important;
+            }
+            .seal-prompt { font-size: 10px; }
+        }
+
+        /* ==========================================================================
+           RESPONSIVE SYSTEM — Small Mobile (≤480px)
+           ========================================================================== */
+        @media (max-width: 480px) {
+            .journal-section {
+                padding: 6vh 4%;
+            }
+
+            .editorial-title {
+                font-size: clamp(2rem, 12vw, 3.2rem);
+            }
+
+            .split-image-col,
+            .flanked-cell-1,
+            .flanked-cell-2,
+            .bloom-cell-1,
+            .bloom-cell-2,
+            .bloom-cell-3,
+            .duet-cell-1,
+            .duet-cell-2,
+            .mosaic-cell-1,
+            .mosaic-cell-2,
+            .mosaic-cell-3,
+            .mosaic-cell-4 {
+                aspect-ratio: 3 / 4;
+            }
+
+            .ribbon-cell {
+                width: 88vw;
+                height: 260px;
+            }
+
+            .zenith-p {
+                font-size: clamp(1.4rem, 8vw, 2.2rem) !important;
+            }
+
+            /* Scroll progress bar thinner on small screens */
+            .scroll-progress { width: 2px; }
+        }
+    </style>
 </head>
 <body>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-monogram">
+            <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                <circle class="mono-ring" cx="60" cy="60" r="50" />
+                <text class="mono-letter" x="60" y="74" font-family="'Playfair Display', serif" font-size="44" font-weight="400" font-style="italic" text-anchor="middle">K</text>
+            </svg>
+        </div>
+        <div class="preloader-line"></div>
+        <p class="preloader-text">Opening the journal</p>
+        <span class="preloader-progress" id="preloader-progress">0%</span>
+    </div>
+
+    <!-- Film Grain Background -->
+    <div class="film-grain" aria-hidden="true"></div>
+
+    <!-- Interactive Background Particles -->
+    <canvas id="stardust-canvas" aria-hidden="true"></canvas>
+
+    <!-- Custom Cursor -->
     <div class="custom-cursor" id="custom-cursor"></div>
     <div class="custom-cursor-follower" id="custom-cursor-follower"></div>
 
-    <!-- Scroll Progress Bar -->
+    <!-- Scroll Progress Indicator -->
     <div class="scroll-progress" id="scroll-progress" aria-hidden="true">
         <div class="scroll-progress-fill" id="scroll-progress-fill"></div>
     </div>
 
-    <button class="audio-control" id="audio-control" type="button" aria-label="Toggle ambient audio">
+    <!-- Chapter Navigation -->
+    <nav class="chapter-nav" id="chapter-nav" aria-label="Chapter navigation">
+        <div class="chapter-nav-line"></div>
+        <div class="chapter-dot active" data-target="#section-arrival">
+            <span class="chapter-dot-label">Arrival</span>
+            <div class="chapter-dot-circle"></div>
+        </div>
+        <div class="chapter-dot" data-target="#section-kindness">
+            <span class="chapter-dot-label">Warmth</span>
+            <div class="chapter-dot-circle"></div>
+        </div>
+        <div class="chapter-dot" data-target="#section-eyes">
+            <span class="chapter-dot-label">Eyes</span>
+            <div class="chapter-dot-circle"></div>
+        </div>
+        <div class="chapter-dot" data-target="#section-bloom">
+            <span class="chapter-dot-label">Bloom</span>
+            <div class="chapter-dot-circle"></div>
+        </div>
+        <div class="chapter-dot" data-target="#section-strength">
+            <span class="chapter-dot-label">Strength</span>
+            <div class="chapter-dot-circle"></div>
+        </div>
+        <div class="chapter-dot" data-target="#section-beautiful">
+            <span class="chapter-dot-label">Grace</span>
+            <div class="chapter-dot-circle"></div>
+        </div>
+        <div class="chapter-dot" data-target="#section-duet">
+            <span class="chapter-dot-label">Duet</span>
+            <div class="chapter-dot-circle"></div>
+        </div>
+        <div class="chapter-dot" data-target="#section-impact">
+            <span class="chapter-dot-label">Impact</span>
+            <div class="chapter-dot-circle"></div>
+        </div>
+        <div class="chapter-dot" data-target="#section-runway">
+            <span class="chapter-dot-label">Runway</span>
+            <div class="chapter-dot-circle"></div>
+        </div>
+        <div class="chapter-dot" data-target="#section-mosaic">
+            <span class="chapter-dot-label">Mosaic</span>
+            <div class="chapter-dot-circle"></div>
+        </div>
+        <div class="chapter-dot" data-target="#section-climax">
+            <span class="chapter-dot-label">Finale</span>
+            <div class="chapter-dot-circle"></div>
+        </div>
+    </nav>
+
+    <!-- Generative Audio Control Panel -->
+    <button class="audio-control" id="audio-control" type="button" aria-label="Toggle ambient soundtrack">
         <span class="audio-visualizer" id="visualizer" aria-hidden="true">
             <span></span>
             <span></span>
             <span></span>
             <span></span>
+            <span></span>
         </span>
-        <span class="audio-label">AMBIENT OFF</span>
+        <span class="audio-label">Soundtrack</span>
     </button>
 
-    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+    <!-- Heart shower container (sibling to seal, at body level) -->
+    <div id="heart-shower"></div>
 
-    <!-- Floating Hearts Layer -->
-    <div class="floating-hearts-layer" id="floating-hearts-layer" aria-hidden="true"></div>
-
-    <main id="master-stage" aria-label="Kaviya birthday narrative">
-        <section class="stage-viewport">
-            <div class="ambient-glow" id="ambient-glow" aria-hidden="true"></div>
-
-            <div class="stage-grid">
-                <!-- 1. ARRIVAL -->
-                <article class="narrative-layer arrival-layer" data-layer="arrival">
-                    <h1 class="hero-title">Happy Birthday, <br><span class="shimmer-text">Kaviya</span></h1>
-                    <p class="arrival-line">For the girl who makes the stars jealous...</p>
-                </article>
-
-                <!-- 2. KINDNESS -->
-                <article class="narrative-layer text-layer" data-layer="kindness">
-                    <p class="typewriter-text">You have this warmth about you that makes everyone around you feel like they actually matter.</p>
-                    <span>Your kindness isn't something you do — it's just who you are. And honestly, the world doesn't deserve you.</span>
-                </article>
-
-                <!-- 3. THOSE EYES ✨ NEW -->
-                <article class="narrative-layer text-layer" data-layer="eyes">
-                    <p class="typewriter-text">And then there are your eyes...</p>
-                    <span>The kind that make you forget what you were about to say. I kept falling, and honestly? I never wanted to land.</span>
-                </article>
-
-                <!-- 4. RESILIENCE -->
-                <article class="narrative-layer text-layer" data-layer="resilience">
-                    <p class="typewriter-text">You carry this quiet strength that makes people want to be better just by being near you.</p>
-                    <span>You turn ordinary days into something that actually feels worth remembering.</span>
-                </article>
-
-                <!-- 5. BEAUTIFUL INSIDE & OUT ✨ NEW -->
-                <article class="narrative-layer text-layer" data-layer="beautiful">
-                    <p class="typewriter-text">Beautiful isn't even the right word for you.</p>
-                    <span>Some people are pretty. Some people are kind. You? You're the unfair combination of both. And it's honestly just rude how effortlessly you do it.</span>
-                </article>
-
-                <!-- 6. IMPACT -->
-                <article class="narrative-layer text-layer" data-layer="impact">
-                    <p class="typewriter-text">I don't know when it happened, but somewhere along the way, you became my favorite part of everything.</p>
-                    <span>Some people cross your mind. You? You moved in and redecorated.</span>
-                </article>
-
-                <!-- PHOTO GALLERIES -->
-                <section class="memory-canvas" aria-label="Photo memories">
-
-                    <!-- ============================================
-                         BLOOM — "Golden Gallery Frames"
-                         Ornate double-mat gold frames with corner flourishes
-                         ============================================ -->
-                    <section class="photo-section photo-bloom" data-photo-section="bloom" aria-label="Golden gallery frames">
-                        <div class="photo-cluster">
-                            <figure class="photo-card portrait tall hero-card" data-x="0" data-y="-30" data-r="0">
-                                <div class="card-frame gold-frame">
-                                    <div class="frame-corner tl"></div>
-                                    <div class="frame-corner tr"></div>
-                                    <div class="frame-corner bl"></div>
-                                    <div class="frame-corner br"></div>
-                                    <div class="card-inner-mat">
-                                        <img src="photos/1781799660423.png" alt="Kaviya memory photo">
-                                        <div class="photo-vignette"></div>
-                                        <div class="photo-light-leak"></div>
-                                    </div>
-                                </div>
-                                <div class="photo-glow" aria-hidden="true"></div>
-                            </figure>
-                            <figure class="photo-card portrait orbit-card" data-x="-260" data-y="60" data-r="-14">
-                                <div class="card-frame gold-frame">
-                                    <div class="frame-corner tl"></div>
-                                    <div class="frame-corner tr"></div>
-                                    <div class="frame-corner bl"></div>
-                                    <div class="frame-corner br"></div>
-                                    <div class="card-inner-mat">
-                                        <img src="photos/1781799671233.png" alt="Kaviya memory photo">
-                                        <div class="photo-vignette"></div>
-                                    </div>
-                                </div>
-                                <div class="photo-glow" aria-hidden="true"></div>
-                            </figure>
-                            <figure class="photo-card square orbit-card" data-x="260" data-y="60" data-r="12">
-                                <div class="card-frame gold-frame">
-                                    <div class="frame-corner tl"></div>
-                                    <div class="frame-corner tr"></div>
-                                    <div class="frame-corner bl"></div>
-                                    <div class="frame-corner br"></div>
-                                    <div class="card-inner-mat">
-                                        <img src="photos/1781799687992.png" alt="Kaviya memory photo">
-                                        <div class="photo-vignette"></div>
-                                    </div>
-                                </div>
-                                <div class="photo-glow" aria-hidden="true"></div>
-                            </figure>
-                            <figure class="photo-card square orbit-card" data-x="0" data-y="180" data-r="-4">
-                                <div class="card-frame gold-frame">
-                                    <div class="frame-corner tl"></div>
-                                    <div class="frame-corner tr"></div>
-                                    <div class="frame-corner bl"></div>
-                                    <div class="frame-corner br"></div>
-                                    <div class="card-inner-mat">
-                                        <img src="photos/1781799704353.png" alt="Kaviya memory photo">
-                                        <div class="photo-vignette"></div>
-                                    </div>
-                                </div>
-                                <div class="photo-glow" aria-hidden="true"></div>
-                            </figure>
-                        </div>
-                        <p class="photo-caption">Every photo with you is proof that some moments are just built different.</p>
-                    </section>
-
-                    <!-- ============================================
-                         DUET — "Cinema Spotlight"
-                         Film-strip sprocket frames with spotlight vignette
-                         ============================================ -->
-                    <section class="photo-section photo-duet" data-photo-section="duet" aria-label="Cinema spotlight duet">
-                        <div class="photo-cluster">
-                            <figure class="photo-card portrait feature editorial-back" data-x="-100" data-y="-40" data-r="-12">
-                                <div class="card-frame cinema-frame">
-                                    <div class="film-sprocket left-sprocket"></div>
-                                    <div class="film-sprocket right-sprocket"></div>
-                                    <div class="card-inner-mat">
-                                        <img src="photos/IMG_20260618_215602.jpg.jpeg" alt="Kaviya portrait memory">
-                                        <div class="photo-vignette vignette-dramatic"></div>
-                                        <div class="photo-spotlight"></div>
-                                    </div>
-                                </div>
-                                <div class="photo-glow" aria-hidden="true"></div>
-                            </figure>
-                            <figure class="photo-card portrait feature editorial-front" data-x="100" data-y="40" data-r="8">
-                                <div class="card-frame cinema-frame">
-                                    <div class="film-sprocket left-sprocket"></div>
-                                    <div class="film-sprocket right-sprocket"></div>
-                                    <div class="card-inner-mat">
-                                        <img src="photos/IMG_20260618_215611.jpg.jpeg" alt="Kaviya portrait memory">
-                                        <div class="photo-vignette vignette-dramatic"></div>
-                                        <div class="photo-spotlight"></div>
-                                        <div class="photo-light-leak"></div>
-                                    </div>
-                                </div>
-                                <div class="photo-glow" aria-hidden="true"></div>
-                            </figure>
-                        </div>
-                        <p class="photo-caption">The camera doesn't do you justice, but it tries its best.</p>
-                    </section>
-
-                    <!-- ============================================
-                         RIBBON — "Fairy Light String"
-                         Photos clipped to a fairy light string with bokeh
-                         ============================================ -->
-                    <section class="photo-section photo-ribbon" data-photo-section="ribbon" aria-label="Fairy light string">
-                        <div class="photo-cluster">
-                            <div class="fairy-string" aria-hidden="true"></div>
-                            <figure class="photo-card portrait slim wave-peak" data-x="-390" data-y="-60" data-r="-16">
-                                <div class="card-frame clip-frame">
-                                    <div class="photo-clip"></div>
-                                    <div class="card-inner-mat">
-                                        <img src="photos/IMG_20260618_215630.jpg.jpeg" alt="Kaviya portrait memory">
-                                        <div class="photo-vignette vignette-warm"></div>
-                                    </div>
-                                </div>
-                                <div class="photo-glow" aria-hidden="true"></div>
-                            </figure>
-                            <figure class="photo-card portrait slim wave-valley" data-x="-260" data-y="55" data-r="10">
-                                <div class="card-frame clip-frame">
-                                    <div class="photo-clip"></div>
-                                    <div class="card-inner-mat">
-                                        <img src="photos/IMG_20260618_215643.jpg.jpeg" alt="Kaviya portrait memory">
-                                        <div class="photo-vignette vignette-warm"></div>
-                                    </div>
-                                </div>
-                                <div class="photo-glow" aria-hidden="true"></div>
-                            </figure>
-                            <figure class="photo-card portrait slim wave-peak wave-featured" data-x="-130" data-y="-70" data-r="-6">
-                                <div class="card-frame clip-frame">
-                                    <div class="photo-clip"></div>
-                                    <div class="card-inner-mat">
-                                        <img src="photos/IMG_20260618_215656.jpg.jpeg" alt="Kaviya portrait memory">
-                                        <div class="photo-vignette vignette-warm"></div>
-                                        <div class="photo-light-leak"></div>
-                                    </div>
-                                </div>
-                                <div class="photo-glow" aria-hidden="true"></div>
-                            </figure>
-                            <figure class="photo-card portrait slim wave-center" data-x="0" data-y="30" data-r="0">
-                                <div class="card-frame clip-frame">
-                                    <div class="photo-clip"></div>
-                                    <div class="card-inner-mat">
-                                        <img src="photos/IMG_20260618_215710.jpg.jpeg" alt="Kaviya portrait memory">
-                                        <div class="photo-vignette vignette-warm"></div>
-                                        <div class="photo-light-leak"></div>
-                                    </div>
-                                </div>
-                                <div class="photo-glow" aria-hidden="true"></div>
-                            </figure>
-                            <figure class="photo-card portrait slim wave-peak wave-featured" data-x="130" data-y="-70" data-r="7">
-                                <div class="card-frame clip-frame">
-                                    <div class="photo-clip"></div>
-                                    <div class="card-inner-mat">
-                                        <img src="photos/IMG_20260618_215724.jpg.jpeg" alt="Kaviya portrait memory">
-                                        <div class="photo-vignette vignette-warm"></div>
-                                    </div>
-                                </div>
-                                <div class="photo-glow" aria-hidden="true"></div>
-                            </figure>
-                            <figure class="photo-card portrait slim wave-valley" data-x="260" data-y="55" data-r="-9">
-                                <div class="card-frame clip-frame">
-                                    <div class="photo-clip"></div>
-                                    <div class="card-inner-mat">
-                                        <img src="photos/IMG_20260618_215740.jpg.jpeg" alt="Kaviya portrait memory">
-                                        <div class="photo-vignette vignette-warm"></div>
-                                    </div>
-                                </div>
-                                <div class="photo-glow" aria-hidden="true"></div>
-                            </figure>
-                            <figure class="photo-card portrait slim wave-peak" data-x="390" data-y="-60" data-r="14">
-                                <div class="card-frame clip-frame">
-                                    <div class="photo-clip"></div>
-                                    <div class="card-inner-mat">
-                                        <img src="photos/IMG_20260618_215804.jpg.jpeg" alt="Kaviya portrait memory">
-                                        <div class="photo-vignette vignette-warm"></div>
-                                    </div>
-                                </div>
-                                <div class="photo-glow" aria-hidden="true"></div>
-                            </figure>
-                        </div>
-                        <p class="photo-caption">Every single expression of yours tells a story I could listen to forever.</p>
-                    </section>
-
-                    <!-- ============================================
-                         MOSAIC — "Love Locket"
-                         Heart-ornamented cards with locket metallic frames
-                         ============================================ -->
-                    <section class="photo-section photo-mosaic" data-photo-section="mosaic" aria-label="Love locket memories">
-                        <div class="photo-cluster">
-                            <figure class="photo-card portrait heart-top-left" data-x="-140" data-y="-100" data-r="-18">
-                                <div class="card-frame locket-frame">
-                                    <div class="heart-ornament top-ornament"></div>
-                                    <div class="card-inner-mat">
-                                        <img src="photos/1781799677010.png" alt="Kaviya memory photo">
-                                        <div class="photo-vignette vignette-rose"></div>
-                                        <div class="photo-light-leak light-leak-rose"></div>
-                                    </div>
-                                </div>
-                                <div class="photo-glow" aria-hidden="true"></div>
-                            </figure>
-                            <figure class="photo-card portrait heart-top-right" data-x="140" data-y="-100" data-r="18">
-                                <div class="card-frame locket-frame">
-                                    <div class="heart-ornament top-ornament"></div>
-                                    <div class="card-inner-mat">
-                                        <img src="photos/1781799682283.png" alt="Kaviya memory photo">
-                                        <div class="photo-vignette vignette-rose"></div>
-                                        <div class="photo-light-leak light-leak-rose"></div>
-                                    </div>
-                                </div>
-                                <div class="photo-glow" aria-hidden="true"></div>
-                            </figure>
-                            <figure class="photo-card screen heart-mid-left" data-x="-200" data-y="50" data-r="-10">
-                                <div class="card-frame locket-frame">
-                                    <div class="heart-ornament top-ornament"></div>
-                                    <div class="card-inner-mat">
-                                        <img src="photos/Screenshot_20260618_215213.jpg.jpeg" alt="Kaviya screenshot memory">
-                                        <div class="photo-vignette vignette-rose"></div>
-                                    </div>
-                                </div>
-                                <div class="photo-glow" aria-hidden="true"></div>
-                            </figure>
-                            <figure class="photo-card screen heart-mid-right" data-x="200" data-y="50" data-r="10">
-                                <div class="card-frame locket-frame">
-                                    <div class="heart-ornament top-ornament"></div>
-                                    <div class="card-inner-mat">
-                                        <img src="photos/Screenshot_20260618_215244.jpg.jpeg" alt="Kaviya screenshot memory">
-                                        <div class="photo-vignette vignette-rose"></div>
-                                    </div>
-                                </div>
-                                <div class="photo-glow" aria-hidden="true"></div>
-                            </figure>
-                        </div>
-                        <p class="photo-caption">And when I look at all of these, I just think — how did I get this lucky?</p>
-                    </section>
-                </section>
-
-                <!-- GRAND FINALE -->
-                <article class="narrative-layer zenith-layer" data-layer="zenith">
-                    <h2>Here's What I Really Want to Say</h2>
-                    <div class="zenith-message">
-                        <p class="zenith-para">You are, without question, one of the most beautiful people I have ever known. And I don't just mean the kind of beautiful that turns heads — though trust me, you do that too.</p>
-                        <p class="zenith-para">Your heart is so genuinely good that it makes me want to be a better person. Your laugh is the kind that fills an entire room. And those eyes? Don't even get me started. I've been trying to find words for them and I still can't.</p>
-                        <p class="zenith-para">I hope this birthday reminds you of how many lives you light up just by being you. Especially mine.</p>
-                        <p class="zenith-para zenith-sign-off">Happy Birthday, Kaviya. ✨</p>
-                    </div>
-                </article>
+    <!-- Envelope gatekeeper screen (pre-activated so it covers content from frame 1) -->
+    <div class="wax-seal-barrier active" id="wax-seal-barrier">
+        <div class="envelope-half left" id="envelope-left"></div>
+        <div class="envelope-half right" id="envelope-right"></div>
+        <div class="seal-thread"></div>
+        <div class="seal-thread-v"></div>
+        <div class="seal-container" id="seal-container">
+            <div class="wax-seal" id="wax-seal" role="button" aria-label="Wax Seal. Pull downward to open.">
+                <svg viewBox="0 0 120 120" width="130" height="130" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <filter id="waxTexture">
+                            <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="4" result="noise" />
+                            <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G" />
+                        </filter>
+                        <radialGradient id="waxGrad" cx="40%" cy="35%" r="60%">
+                            <stop offset="0%" stop-color="#E5C57E" />
+                            <stop offset="40%" stop-color="#C5A059" />
+                            <stop offset="80%" stop-color="#A57F3A" />
+                            <stop offset="100%" stop-color="#806126" />
+                        </radialGradient>
+                        <radialGradient id="waxSheen" cx="30%" cy="25%" r="45%">
+                            <stop offset="0%" stop-color="rgba(255,255,255,0.22)" />
+                            <stop offset="100%" stop-color="rgba(255,255,255,0)" />
+                        </radialGradient>
+                    </defs>
+                    <path d="M 60,6 C 30,3 6,26 8,58 C 10,82 28,112 60,114 C 88,114 110,84 112,58 C 112,30 90,8 60,6 Z" fill="url(#waxGrad)" filter="url(#waxTexture)"/>
+                    <path d="M 60,6 C 30,3 6,26 8,58 C 10,82 28,112 60,114 C 88,114 110,84 112,58 C 112,30 90,8 60,6 Z" fill="url(#waxSheen)"/>
+                    <circle cx="60" cy="60" r="40" fill="none" stroke="#A27D34" stroke-width="0.8" opacity="0.6" />
+                    <circle cx="60" cy="60" r="34" fill="none" stroke="#B8934B" stroke-width="0.5" opacity="0.4" />
+                    <circle cx="60" cy="20" r="1.5" fill="#B8934B" opacity="0.5"/>
+                    <circle cx="60" cy="100" r="1.5" fill="#B8934B" opacity="0.5"/>
+                    <circle cx="20" cy="60" r="1.5" fill="#B8934B" opacity="0.5"/>
+                    <circle cx="100" cy="60" r="1.5" fill="#B8934B" opacity="0.5"/>
+                    <text x="60" y="73" font-family="'Playfair Display', serif" font-size="38" font-weight="500" font-style="italic" fill="#FAF7F2" text-anchor="middle" filter="drop-shadow(0 1px 3px rgba(0,0,0,0.35))">K</text>
+                </svg>
             </div>
+            <p class="seal-prompt" id="seal-prompt">Pull to open</p>
+        </div>
+    </div>
 
-            <div class="wax-seal-barrier" id="wax-seal-barrier">
-                <div class="envelope-half left" id="envelope-left"></div>
-                <div class="envelope-half right" id="envelope-right"></div>
-                <div class="seal-container" id="seal-container">
-                    <div class="wax-seal" id="wax-seal" role="button" aria-label="Wax Seal. Pull to open.">
-                        <svg viewBox="0 0 100 100" width="120" height="120" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Outer natural wax shape -->
-                            <path d="M 50,4 C 25,2 3,22 5,50 C 7,72 24,96 50,96 C 76,96 95,74 95,50 C 95,26 75,6 50,4 Z" fill="#D4AF37" filter="drop-shadow(0px 4px 10px rgba(0,0,0,0.3))"/>
-                            <!-- Inner circle ring -->
-                            <circle cx="50" cy="50" r="34" fill="none" stroke="#B89324" stroke-width="1.5" />
-                            <!-- K monogram -->
-                            <text x="50" y="59" font-family="'Cormorant Garamond', serif" font-size="32" font-weight="600" fill="#FCF8F8" text-anchor="middle">K</text>
-                        </svg>
+    <!-- Master Stage Journal -->
+    <main id="master-stage">
+        
+        <!-- 1. Arrival (Cover Page) -->
+        <section class="journal-section" id="section-arrival">
+            <div style="text-align: center;">
+                <div class="text-reveal-container">
+                    <h1 class="editorial-title text-reveal-line">Happy Birthday, <br><span class="shimmer-text">Kaviya</span></h1>
+                </div>
+                <div class="ornament">
+                    <div class="ornament-diamond"></div>
+                </div>
+                <div class="text-reveal-container">
+                    <p class="editorial-sub text-reveal-line">A bespoke photographic story journal</p>
+                </div>
+            </div>
+            <div class="scroll-hint">
+                <span>Scroll down</span>
+                <div class="scroll-hint-line"></div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 2. Kindness (Chapter 1) -->
+        <section class="journal-section" id="section-kindness">
+            <div class="editorial-split-layout">
+                <div class="split-image-col">
+                    <div class="photo-holder">
+                        <div class="photo-holder-img-wrap">
+                            <img src="photos/1781799704353.png" alt="Kaviya Warmth Moment" width="400" height="500" loading="lazy">
+                        </div>
+                        <div class="photo-holder-metadata">
+                            <span>MOMENT // 2026</span>
+                            <span class="photo-metadata-caption">Concept of Warmth</span>
+                        </div>
                     </div>
-                    <p class="seal-prompt" id="seal-prompt">Pull to open</p>
+                </div>
+                <div class="split-text-col">
+                    <h2 class="editorial-num">01 / CONCEPT OF WARMTH</h2>
+                    <div class="text-reveal-container">
+                        <p class="editorial-para text-reveal-line">You have this warmth about you that makes everyone around you feel like they actually matter.</p>
+                    </div>
+                    <span class="editorial-author">Quietly woven into you</span>
                 </div>
             </div>
         </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 3. Eyes (Chapter 2) -->
+        <section class="journal-section" id="section-eyes">
+            <div class="flanked-layout">
+                <div class="flanked-cell-1">
+                    <div class="photo-holder">
+                        <div class="photo-holder-img-wrap">
+                            <img src="photos/IMG_20260618_215804.jpg.jpeg" alt="Kaviya portrait memory" width="400" height="500" loading="lazy">
+                        </div>
+                        <div class="photo-holder-metadata">
+                            <span>MOMENT // 2026</span>
+                            <span class="photo-metadata-caption">Interception I</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flanked-text">
+                    <h2 class="editorial-num" style="justify-content: center;">02 / INTERCEPTION</h2>
+                    <div class="text-reveal-container">
+                        <p class="editorial-para text-reveal-line" style="text-align: center;">And then there are your eyes. The kind that make you forget what you were about to say.</p>
+                    </div>
+                    <span class="editorial-author" style="text-align: center; padding-left: 0;">Falling without a landing</span>
+                </div>
+                <div class="flanked-cell-2">
+                    <div class="photo-holder">
+                        <div class="photo-holder-img-wrap">
+                            <img src="photos/IMG_20260618_215602.jpg.jpeg" alt="Kaviya profile portrait" width="400" height="500" loading="lazy">
+                        </div>
+                        <div class="photo-holder-metadata">
+                            <span>MOMENT // 2026</span>
+                            <span class="photo-metadata-caption">Interception II</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 4. Bloom Gallery (Chapter 3) -->
+        <section class="journal-section" id="section-bloom">
+            <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 48px;">
+                <div class="bloom-grid">
+                    <div class="bloom-cell-1">
+                        <div class="photo-holder">
+                            <div class="photo-holder-img-wrap">
+                                <img src="photos/1781799677010.png" alt="Kaviya memory portrait" width="800" height="1000" loading="lazy">
+                            </div>
+                            <div class="photo-holder-metadata">
+                                <span>MOMENT // 2026</span>
+                                <span class="photo-metadata-caption">Bloom Portrait I</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bloom-cell-2">
+                        <div class="photo-holder">
+                            <div class="photo-holder-img-wrap">
+                                <img src="photos/1781799682283.png" alt="Kaviya memory profile" width="400" height="500" loading="lazy">
+                            </div>
+                            <div class="photo-holder-metadata">
+                                <span>MOMENT // 2026</span>
+                                <span class="photo-metadata-caption">Bloom Portrait II</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bloom-cell-3">
+                        <div class="photo-holder">
+                            <div class="photo-holder-img-wrap">
+                                <img src="photos/1781799687992.png" alt="Kaviya memory snapshot" width="400" height="500" loading="lazy">
+                            </div>
+                            <div class="photo-holder-metadata">
+                                <span>MOMENT // 2026</span>
+                                <span class="photo-metadata-caption">Bloom Portrait III</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="editorial-caption">Every photo with you is proof that some moments are just built different.</p>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 5. Strength (Chapter 4) -->
+        <section class="journal-section" id="section-strength">
+            <div class="quote-block-layout">
+                <h2 class="editorial-num" style="justify-content: center;">03 / STRENGTH</h2>
+                <div class="text-reveal-container">
+                    <p class="editorial-para text-reveal-line" style="text-align: center;">You carry this quiet strength that makes people want to be better just by being near you.</p>
+                </div>
+                <span class="editorial-author" style="text-align: center; padding-left: 0;">Sifting grace out of ordinary days</span>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 6. Beautiful (Chapter 5) -->
+        <section class="journal-section" id="section-beautiful">
+            <div class="editorial-split-layout">
+                <div class="split-image-col">
+                    <div class="photo-holder">
+                        <div class="photo-holder-img-wrap">
+                            <img src="photos/1781799660423.png" alt="Kaviya beauty snapshot" width="400" height="500" loading="lazy">
+                        </div>
+                        <div class="photo-holder-metadata">
+                            <span>MOMENT // 2026</span>
+                            <span class="photo-metadata-caption">Effortless Grace</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="split-text-col">
+                    <h2 class="editorial-num">04 / THE COMBINATION</h2>
+                    <div class="text-reveal-container">
+                        <p class="editorial-para text-reveal-line">Beautiful isn't even the right word. Some people are pretty. Some are kind. You? You are the unfair combination of both.</p>
+                    </div>
+                    <span class="editorial-author">Effortless grace</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 7. Duet (Chapter 6) -->
+        <section class="journal-section" id="section-duet">
+            <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 48px;">
+                <div class="duet-grid">
+                    <div class="duet-cell-1">
+                        <div class="photo-holder">
+                            <div class="photo-holder-img-wrap">
+                                <img src="photos/1781799671233.png" alt="Kaviya portrait memory" width="400" height="500" loading="lazy">
+                            </div>
+                            <div class="photo-holder-metadata">
+                                <span>MOMENT // 2026</span>
+                                <span class="photo-metadata-caption">Staggered Duet I</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="duet-cell-2">
+                        <div class="photo-holder">
+                            <div class="photo-holder-img-wrap">
+                                <img src="photos/IMG_20260618_215611.jpg.jpeg" alt="Kaviya profile memory" width="400" height="500" loading="lazy">
+                            </div>
+                            <div class="photo-holder-metadata">
+                                <span>MOMENT // 2026</span>
+                                <span class="photo-metadata-caption">Staggered Duet II</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="editorial-caption">The camera doesn't do you justice, but it tries its best.</p>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 8. Impact (Chapter 7) -->
+        <section class="journal-section" id="section-impact">
+            <div class="quote-block-layout">
+                <h2 class="editorial-num" style="justify-content: center;">05 / PERSISTENCE</h2>
+                <div class="text-reveal-container">
+                    <p class="editorial-para text-reveal-line" style="text-align: center;">I don't know when it happened, but somewhere along the way, you became my favorite part of everything.</p>
+                </div>
+                <span class="editorial-author" style="text-align: center; padding-left: 0;">Permanent redecoration</span>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 9. Ribbon Runway (Chapter 8 Horizontal Scroll) -->
+        <section class="journal-section ribbon-runway-section" id="section-runway">
+            <div class="runway-pin-wrapper">
+            <div class="ribbon-runway-header">
+                <h2 class="editorial-num">06 / EXPRESSION RUNWAY</h2>
+            </div>
+            <div class="ribbon-runway" id="ribbon-runway">
+                <div class="ribbon-track" id="ribbon-track">
+                    <div class="ribbon-cell">
+                        <div class="photo-holder">
+                            <div class="photo-holder-img-wrap">
+                                <img src="photos/IMG_20260618_215710.jpg.jpeg" alt="Kaviya runway portrait 1" width="400" height="500" loading="lazy">
+                            </div>
+                            <div class="photo-holder-metadata">
+                                <span>MOMENT // 2026</span>
+                                <span class="photo-metadata-caption">Runway Silhouette I</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ribbon-cell">
+                        <div class="photo-holder">
+                            <div class="photo-holder-img-wrap">
+                                <img src="photos/IMG_20260618_215724.jpg.jpeg" alt="Kaviya runway portrait 2" width="400" height="500" loading="lazy">
+                            </div>
+                            <div class="photo-holder-metadata">
+                                <span>MOMENT // 2026</span>
+                                <span class="photo-metadata-caption">Runway Silhouette II</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ribbon-cell">
+                        <div class="photo-holder">
+                            <div class="photo-holder-img-wrap">
+                                <img src="photos/IMG_20260618_215740.jpg.jpeg" alt="Kaviya runway portrait 3" width="400" height="500" loading="lazy">
+                            </div>
+                            <div class="photo-holder-metadata">
+                                <span>MOMENT // 2026</span>
+                                <span class="photo-metadata-caption">Runway Silhouette III</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ribbon-cell">
+                        <div class="photo-holder">
+                            <div class="photo-holder-img-wrap">
+                                <img src="photos/IMG_20260618_215630.jpg.jpeg" alt="Kaviya runway portrait 4" width="400" height="500" loading="lazy">
+                            </div>
+                            <div class="photo-holder-metadata">
+                                <span>MOMENT // 2026</span>
+                                <span class="photo-metadata-caption">Runway Silhouette IV</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ribbon-cell">
+                        <div class="photo-holder">
+                            <div class="photo-holder-img-wrap">
+                                <img src="photos/IMG_20260618_215643.jpg.jpeg" alt="Kaviya runway portrait 5" width="400" height="500" loading="lazy">
+                            </div>
+                            <div class="photo-holder-metadata">
+                                <span>MOMENT // 2026</span>
+                                <span class="photo-metadata-caption">Runway Silhouette V</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="editorial-caption">Every single expression of yours tells a story I could listen to forever.</p>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 10. Mosaic Collage (Chapter 9) -->
+        <section class="journal-section" id="section-mosaic">
+            <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 48px;">
+                <div class="mosaic-grid">
+                    <div class="mosaic-cell-1">
+                        <div class="photo-holder">
+                            <div class="photo-holder-img-wrap">
+                                <img src="photos/Screenshot_20260618_215213.jpg.jpeg" alt="Kaviya snapshot memory" width="400" height="500" loading="lazy">
+                            </div>
+                            <div class="photo-holder-metadata">
+                                <span>MOMENT // 2026</span>
+                                <span class="photo-metadata-caption">Locket Screenshot I</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mosaic-cell-2">
+                        <div class="photo-holder">
+                            <div class="photo-holder-img-wrap">
+                                <img src="photos/Screenshot_20260618_215244.jpg.jpeg" alt="Kaviya screenshot memory" width="400" height="500" loading="lazy">
+                            </div>
+                            <div class="photo-holder-metadata">
+                                <span>MOMENT // 2026</span>
+                                <span class="photo-metadata-caption">Locket Screenshot II</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mosaic-cell-3">
+                        <div class="photo-holder">
+                            <div class="photo-holder-img-wrap">
+                                <img src="photos/IMG_20260618_215656.jpg.jpeg" alt="Kaviya memory profile" width="360" height="640" loading="lazy">
+                            </div>
+                            <div class="photo-holder-metadata">
+                                <span>MOMENT // 2026</span>
+                                <span class="photo-metadata-caption">Editorial Capture III</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mosaic-cell-4">
+                        <div class="photo-holder">
+                            <div class="photo-holder-img-wrap">
+                                <img src="photos/1781799682283.png" alt="Kaviya portrait memory" width="360" height="640" loading="lazy">
+                            </div>
+                            <div class="photo-holder-metadata">
+                                <span>MOMENT // 2026</span>
+                                <span class="photo-metadata-caption">Bloom Portrait II</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="editorial-caption">And when I look at all of these, I just think — how did I get this lucky?</p>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- 11. Climax Finale (Twilight Velvet Transition) -->
+        <section class="journal-section" id="section-climax">
+            <!-- Viewport Edge Glow -->
+            <div class="viewport-glow" id="viewport-glow" aria-hidden="true"></div>
+            <!-- Fireworks Container -->
+            <div class="firework-container" id="firework-container" aria-hidden="true"></div>
+
+            <div class="zenith-obsidian">
+                <h2 class="zenith-title">Here's What I Really Want to Say...</h2>
+                <div class="zenith-content-box" id="zenith-letter-content">
+                    <p class="zenith-p">You are, without question, one of the most beautiful people I have ever known. And I don't just mean the kind of beautiful that turns heads — though trust me, you do that too.</p>
+                    <p class="zenith-p">Your heart is so genuinely good that it makes me want to be a better person. Your laugh is the kind that fills an entire room. And those eyes? Don't even get me started. I've been trying to find words for them and I still can't.</p>
+                    <p class="zenith-p">I hope this birthday reminds you of how many lives you light up just by being you. Especially mine.</p>
+                    <p class="zenith-sign">Happy Birthday, Kaviya. ✨</p>
+                </div>
+            </div>
+        </section>
+
     </main>
 
+    <!-- Premium Footer -->
+    <footer class="premium-footer" id="premium-footer">
+        <div class="footer-glow"></div>
+        <div class="footer-rule"></div>
+        <div class="footer-heart">♥</div>
+        <p class="footer-text">Handcrafted with love · 2026</p>
+        <p class="footer-credit">An editorial experience</p>
+    </footer>
+
+    <!-- CDN Dependencies -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-    <script src="app.js"></script>
+
+    <script>
+        // Force page to always start at the top on refresh — never restore mid-page scroll
+        history.scrollRestoration = 'manual';
+        window.scrollTo(0, 0);
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // ==========================================================================
+            // State System
+            // ==========================================================================
+            const state = {
+                mouse: {
+                    x: window.innerWidth / 2,
+                    y: window.innerHeight / 2,
+                    targetX: window.innerWidth / 2,
+                    targetY: window.innerHeight / 2,
+                    speedX: 0,
+                    speedY: 0
+                },
+                particlesState: 'drift',
+                zenithTextCoords: [],
+                audioPlaying: false,
+                sealOpened: false,
+                activeChapter: '#section-arrival'
+            };
+
+            // DOM Elements
+            const cursor = document.getElementById('custom-cursor');
+            const cursorFollower = document.getElementById('custom-cursor-follower');
+            const audioControl = document.getElementById('audio-control');
+            const visualizer = document.getElementById('visualizer');
+            const scrollProgressFill = document.getElementById('scroll-progress-fill');
+            const preloader = document.getElementById('preloader');
+            const preloaderProgress = document.getElementById('preloader-progress');
+            const chapterNav = document.getElementById('chapter-nav');
+            const chapterDots = document.querySelectorAll('.chapter-dot');
+            const viewportGlow = document.getElementById('viewport-glow');
+            const fireworkContainer = document.getElementById('firework-container');
+            const stardustCanvas = document.getElementById('stardust-canvas');
+
+            let lenis = null;
+            let audioCtx = null;
+
+            // Cursor trail dots
+            const trailDots = [];
+            const TRAIL_COUNT = 10;
+            for (let i = 0; i < TRAIL_COUNT; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'cursor-trail-dot';
+                document.body.appendChild(dot);
+                trailDots.push({ el: dot, x: 0, y: 0 });
+            }
+
+            // ==========================================================================
+            // 0. Preloader Image Asset Tracking
+            // ==========================================================================
+            function runPreloader() {
+                const images = document.querySelectorAll('.photo-holder img');
+                let loaded = 0;
+                const total = images.length;
+
+                if (total === 0) {
+                    dismissPreloader();
+                    return;
+                }
+
+                function checkLoaded() {
+                    loaded++;
+                    const pct = Math.min(100, Math.round((loaded / total) * 100));
+                    preloaderProgress.textContent = `${pct}%`;
+
+                    if (loaded >= total) {
+                        setTimeout(dismissPreloader, 600);
+                    }
+                }
+
+                images.forEach(img => {
+                    if (img.complete) {
+                        checkLoaded();
+                    } else {
+                        img.addEventListener('load', checkLoaded);
+                        img.addEventListener('error', checkLoaded);
+                    }
+                });
+
+                // Safety timeout
+                setTimeout(dismissPreloader, 4000);
+            }
+
+            function dismissPreloader() {
+                preloader.classList.add('hidden');
+                // Activate the seal immediately — no gap where content is exposed
+                activateWaxSeal();
+            }
+
+            runPreloader();
+
+            // ==========================================================================
+            // 1. Generative Ambient Piano Synthesizer (Web Audio API)
+            // ==========================================================================
+            class PianoSynth {
+                constructor() {
+                    this.ctx = null;
+                    this.delayNode = null;
+                    this.feedbackNode = null;
+                    this.delayGain = null;
+                }
+
+                init(audioCtx) {
+                    this.ctx = audioCtx;
+                    
+                    // Create delay lines to simulate rich cathedral echo
+                    this.delayNode = this.ctx.createDelay();
+                    this.delayNode.delayTime.value = 0.55;
+                    
+                    this.feedbackNode = this.ctx.createGain();
+                    this.feedbackNode.gain.value = 0.38;
+                    
+                    this.delayGain = this.ctx.createGain();
+                    this.delayGain.gain.value = 0.35;
+                    
+                    // Delay feedback loop
+                    this.delayNode.connect(this.feedbackNode);
+                    this.feedbackNode.connect(this.delayNode);
+                    
+                    this.delayNode.connect(this.delayGain);
+                    this.delayGain.connect(this.ctx.destination);
+                }
+
+                playNote(freq, time, duration = 2.4) {
+                    if (!this.ctx) return;
+                    
+                    const osc1 = this.ctx.createOscillator();
+                    const osc2 = this.ctx.createOscillator();
+                    const gainNode = this.ctx.createGain();
+                    const filterNode = this.ctx.createBiquadFilter();
+
+                    // Soft warm triangle core
+                    osc1.type = 'triangle';
+                    osc1.frequency.setValueAtTime(freq, time);
+
+                    // Round sine base
+                    osc2.type = 'sine';
+                    osc2.frequency.setValueAtTime(freq, time);
+
+                    // Soft attack and natural decay piano envelope
+                    gainNode.gain.setValueAtTime(0, time);
+                    gainNode.gain.linearRampToValueAtTime(0.06, time + 0.03); // gentle attack
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, time + duration);
+
+                    // Warm low-pass felt filter
+                    filterNode.type = 'lowpass';
+                    filterNode.frequency.setValueAtTime(650, time);
+                    filterNode.frequency.exponentialRampToValueAtTime(180, time + duration);
+
+                    osc1.connect(filterNode);
+                    osc2.connect(filterNode);
+                    filterNode.connect(gainNode);
+                    
+                    gainNode.connect(this.ctx.destination);
+                    gainNode.connect(this.delayNode);
+
+                    osc1.start(time);
+                    osc2.start(time);
+                    osc1.stop(time + duration);
+                    osc2.stop(time + duration);
+                }
+            }
+
+            const piano = new PianoSynth();
+
+            // Romantic chords in Cmaj7 - Fmaj7 - Am9 - G7sus4
+            const chords = [
+                [130.81, 261.63, 329.63, 392.00, 493.88], // Cmaj7 (C3, C4, E4, G4, B4)
+                [87.31, 174.61, 220.00, 261.63, 329.63],  // Fmaj7 (F2, F3, A3, C4, E4)
+                [110.00, 220.00, 261.63, 329.63, 392.00], // Am9 (A2, A3, C4, E4, G4)
+                [98.00, 196.00, 261.63, 293.66, 349.23]   // G7sus4 (G2, G3, C4, D4, F4)
+            ];
+
+            let chordIdx = 0;
+            let noteIdx = 0;
+
+            function initAudio() {
+                if (audioCtx) return;
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+                piano.init(audioCtx);
+            }
+
+            function scheduleNextNotes() {
+                if (!state.audioPlaying) return;
+                
+                const now = audioCtx.currentTime;
+                const chord = chords[chordIdx];
+                
+                // Play soft note arpeggios
+                const noteFreq = chord[noteIdx];
+                piano.playNote(noteFreq, now, 2.5);
+                
+                noteIdx++;
+                if (noteIdx >= chord.length) {
+                    noteIdx = 0;
+                    // Move to next chord progression
+                    chordIdx = (chordIdx + 1) % chords.length;
+                }
+                
+                // Schedule arpeggios every 550ms
+                setTimeout(scheduleNextNotes, 550);
+            }
+
+            function toggleAudio(forceState) {
+                initAudio();
+                const nextState = typeof forceState === 'boolean' ? forceState : !state.audioPlaying;
+                state.audioPlaying = nextState;
+
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                visualizer.classList.toggle('playing', nextState);
+                audioControl.classList.toggle('playing', nextState);
+                audioControl.querySelector('.audio-label').textContent = nextState ? 'PLAYING' : 'SOUNDTRACK';
+
+                if (nextState) {
+                    scheduleNextNotes();
+                }
+            }
+
+            audioControl.addEventListener('click', () => toggleAudio());
+
+            // ==========================================================================
+            // 2. Custom Cursor with Magnetic Tracking & Trail
+            // ==========================================================================
+            window.addEventListener('pointermove', (event) => {
+                state.mouse.targetX = event.clientX;
+                state.mouse.targetY = event.clientY;
+            });
+
+            function updateCursor() {
+                state.mouse.speedX = state.mouse.targetX - state.mouse.x;
+                state.mouse.speedY = state.mouse.targetY - state.mouse.y;
+
+                state.mouse.x += state.mouse.speedX * 0.15;
+                state.mouse.y += state.mouse.speedY * 0.15;
+
+                cursor.style.transform = `translate3d(${state.mouse.targetX}px, ${state.mouse.targetY}px, 0) translate3d(-50%, -50%, 0)`;
+                cursorFollower.style.transform = `translate3d(${state.mouse.x}px, ${state.mouse.y}px, 0) translate3d(-50%, -50%, 0)`;
+
+                // Speed-sensitive dot trails
+                const speed = Math.hypot(state.mouse.speedX, state.mouse.speedY);
+                for (let i = trailDots.length - 1; i > 0; i--) {
+                    trailDots[i].x = trailDots[i - 1].x;
+                    trailDots[i].y = trailDots[i - 1].y;
+                }
+                trailDots[0].x = state.mouse.targetX;
+                trailDots[0].y = state.mouse.targetY;
+
+                trailDots.forEach((dot, i) => {
+                    const trailOpacity = speed > 2.5 ? Math.max(0, 0.45 - (i / TRAIL_COUNT) * 0.6) : 0;
+                    dot.el.style.opacity = trailOpacity;
+                    const trailScale = 1 - (i / TRAIL_COUNT) * 0.7;
+                    dot.el.style.transform = `translate3d(${dot.x}px, ${dot.y}px, 0) translate3d(-50%, -50%, 0) scale(${trailScale})`;
+                });
+
+                requestAnimationFrame(updateCursor);
+            }
+            updateCursor();
+
+            document.addEventListener('mouseover', (event) => {
+                if (event.target.closest('button, a, [role="button"], .chapter-dot')) {
+                    document.body.classList.add('hover-interactive');
+                }
+            });
+
+            document.addEventListener('mouseout', (event) => {
+                if (!event.relatedTarget || !event.relatedTarget.closest('button, a, [role="button"], .chapter-dot')) {
+                    document.body.classList.remove('hover-interactive');
+                }
+            });
+
+            // ==========================================================================
+            // 3. Image 3D Tilt on Hover
+            // ==========================================================================
+            function initTiltEffects() {
+                const tiltElements = document.querySelectorAll('[data-tilt]');
+                tiltElements.forEach(el => {
+                    el.addEventListener('pointermove', (e) => {
+                        const rect = el.getBoundingClientRect();
+                        const x = (e.clientX - rect.left) / rect.width - 0.5;
+                        const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+                        const rotateY = x * 7;
+                        const rotateX = -y * 5;
+
+                        el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+                        el.style.transition = 'transform 0.1s ease-out';
+                    });
+
+                    el.addEventListener('pointerleave', () => {
+                        el.style.transform = '';
+                        el.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+                    });
+                });
+            }
+            initTiltEffects();
+
+            // ==========================================================================
+            // 4. Interactive Wax Seal Envelope Gatekeeper
+            // ==========================================================================
+            function activateWaxSeal() {
+                const barrier = document.getElementById('wax-seal-barrier');
+                const leftEnv = document.getElementById('envelope-left');
+                const rightEnv = document.getElementById('envelope-right');
+                const sealContainer = document.getElementById('seal-container');
+
+                barrier.classList.add('active');
+
+                let isDragging = false;
+                let startY = 0;
+
+                function updateTear(dy) {
+                    const viewportHeight = window.innerHeight;
+                    const viewportWidth = window.innerWidth;
+                    const initialY = viewportHeight * 0.5;
+                    const sealY = initialY + dy;
+                    const maxGap = viewportWidth * 0.22;
+                    const gapX = Math.min(maxGap, dy * 0.45);
+
+                    leftEnv.style.clipPath = `polygon(0% 0%, calc(50% - ${gapX}px) 0%, 50% ${sealY}px, 50% 100%, 0% 100%)`;
+                    rightEnv.style.clipPath = `polygon(calc(50% + ${gapX}px) 0%, 100% 0%, 100% 100%, 50% 100%, 50% ${sealY}px)`;
+                }
+
+                function onPointerDown(e) {
+                    isDragging = true;
+                    startY = e.clientY;
+                    sealContainer.classList.add('dragging');
+                    document.body.classList.add('hover-interactive');
+                    sealContainer.setPointerCapture(e.pointerId);
+                    initAudio();
+                }
+
+                function onPointerMove(e) {
+                    if (!isDragging) return;
+
+                    const dyRaw = e.clientY - startY;
+                    const dy = Math.max(0, dyRaw);
+
+                    sealContainer.style.transform = `translate(-50%, calc(-50% + ${dy}px))`;
+                    updateTear(dy);
+
+                    const threshold = window.innerHeight * 0.38;
+                    if (dy >= threshold) {
+                        isDragging = false;
+                        sealContainer.releasePointerCapture(e.pointerId);
+                        popSeal();
+                    }
+                }
+
+                function onPointerUp(e) {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    sealContainer.releasePointerCapture(e.pointerId);
+                    resetSeal();
+                }
+
+                function resetSeal() {
+                    sealContainer.classList.remove('dragging');
+                    document.body.classList.remove('hover-interactive');
+
+                    const transform = sealContainer.style.transform;
+                    const match = transform.match(/calc\(-50% \+ ([\d.]+)px\)/);
+                    const currentDy = match ? parseFloat(match[1]) : 0;
+
+                    const animObj = { dy: currentDy };
+                    gsap.to(animObj, {
+                        dy: 0,
+                        duration: 0.6,
+                        ease: 'elastic.out(1, 0.65)',
+                        onUpdate: () => {
+                            sealContainer.style.transform = `translate(-50%, calc(-50% + ${animObj.dy}px))`;
+                            updateTear(animObj.dy);
+                        }
+                    });
+                }
+
+                function popSeal() {
+                    state.sealOpened = true;
+
+                    // Play premium welcome chime
+                    if (audioCtx) {
+                        const popTime = audioCtx.currentTime;
+                        const sweep = audioCtx.createOscillator();
+                        const sweepGain = audioCtx.createGain();
+
+                        sweep.type = 'sine';
+                        sweep.frequency.setValueAtTime(440, popTime);
+                        sweep.frequency.exponentialRampToValueAtTime(880, popTime + 0.6);
+
+                        sweepGain.gain.setValueAtTime(0.06, popTime);
+                        sweepGain.gain.exponentialRampToValueAtTime(0.001, popTime + 0.6);
+
+                        sweep.connect(sweepGain);
+                        sweepGain.connect(audioCtx.destination);
+
+                        sweep.start();
+                        sweep.stop(popTime + 0.6);
+                    }
+
+                    barrier.classList.add('split-open');
+
+                    setTimeout(() => {
+                        barrier.classList.remove('active');
+                        document.body.style.overflow = '';
+                        if (lenis) lenis.start();
+
+                        // Fade in UI indicators
+                        chapterNav.classList.add('visible');
+                        toggleAudio(true); // Automatically start music arpeggios
+
+                        // Recalculate ScrollTrigger positions now that page is scrollable!
+                        ScrollTrigger.refresh();
+
+                        // Launch heart shower over the hero section
+                        startHeartShower();
+                    }, 850);
+                }
+
+                function startHeartShower() {
+                    const container = document.getElementById('heart-shower');
+                    const hearts = ['❤️','💕','💖','💗','💓','💝','🩷','💞','💘'];
+                    const count = 65;
+
+                    for (let i = 0; i < count; i++) {
+                        setTimeout(() => {
+                            const el = document.createElement('span');
+                            el.className = 'heart-drop';
+                            el.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                            const size = Math.random() * 22 + 14;        // 14–36px
+                            const duration = Math.random() * 1.8 + 2.2;  // 2.2–4s
+                            const xPos = Math.random() * 100;             // 0–100% from left
+                            const wobble = (Math.random() - 0.5) * 60;   // slight horizontal drift
+                            el.style.cssText = `
+                                left: ${xPos}%;
+                                font-size: ${size}px;
+                                animation-duration: ${duration}s;
+                                animation-delay: 0s;
+                                transform-origin: center center;
+                                margin-left: ${wobble}px;
+                            `;
+                            container.appendChild(el);
+                            el.addEventListener('animationend', () => el.remove(), { once: true });
+                        }, i * 55);
+                    }
+                }
+
+                sealContainer.addEventListener('pointerdown', onPointerDown);
+                sealContainer.addEventListener('pointermove', onPointerMove);
+                sealContainer.addEventListener('pointerup', onPointerUp);
+                sealContainer.addEventListener('pointercancel', onPointerUp);
+            }
+
+            // ==========================================================================
+            // 5. Ambient Gold Stardust Physics overlay
+            // ==========================================================================
+            const ctx = stardustCanvas.getContext('2d');
+            const particles = [];
+            const particleCount = 420;
+
+            class Particle {
+                constructor(index) {
+                    this.x = Math.random() * window.innerWidth;
+                    this.y = Math.random() * window.innerHeight;
+                    this.vx = (Math.random() - 0.5) * 0.8;
+                    this.vy = (Math.random() - 0.5) * 0.8;
+                    this.size = Math.random() * 2.8 + 1.2;
+                    this.baseAlpha = Math.random() * 0.25 + 0.15;
+                    this.alpha = this.baseAlpha;
+                    
+                    const hues = [40, 42, 38, 35]; // Gold spectrum
+                    const sat = 70 + Math.random() * 20;
+                    const lit = 60 + Math.random() * 20;
+                    this.color = `hsl(${hues[Math.floor(Math.random() * hues.length)]}, ${sat}%, ${lit}%)`;
+                    this.pulsePhase = Math.random() * Math.PI * 2;
+                    this.index = index;
+                }
+
+                update(time) {
+                    const cursorVector = state.mouse;
+
+                    if (state.particlesState === 'zenith' && state.zenithTextCoords.length) {
+                        const targetIdx = this.index % state.zenithTextCoords.length;
+                        const target = state.zenithTextCoords[targetIdx];
+
+                        const spring = 0.055;
+                        const friction = 0.84;
+
+                        if (target) {
+                            const fx = (target.x - this.x) * spring;
+                            const fy = (target.y - this.y) * spring;
+
+                            this.vx = (this.vx + fx) * friction;
+                            this.vy = (this.vy + fy) * friction;
+                        } else {
+                            this.vx += (Math.random() - 0.5) * 0.03;
+                            this.vy += (Math.random() - 0.5) * 0.03;
+                        }
+
+                        const pulse = Math.sin(time * 3.5 + this.pulsePhase) * 0.15;
+                        this.alpha += (0.7 + pulse - this.alpha) * 0.1;
+                    } 
+                    else {
+                        this.vx += (Math.random() - 0.5) * 0.03;
+                        this.vy += (Math.random() - 0.5) * 0.03;
+                        this.vx = Math.min(0.8, Math.max(-0.8, this.vx));
+                        this.vy = Math.min(0.8, Math.max(-0.8, this.vy));
+
+                        this.alpha += (this.baseAlpha - this.alpha) * 0.05;
+
+                        if (this.x < -10) this.x = window.innerWidth + 10;
+                        if (this.x > window.innerWidth + 10) this.x = -10;
+                        if (this.y < -10) this.y = window.innerHeight + 10;
+                        if (this.y > window.innerHeight + 10) this.y = -10;
+                    }
+
+                    // Mouse proximity repulsion
+                    const dx = this.x - cursorVector.x;
+                    const dy = this.y - cursorVector.y;
+                    const dist = Math.hypot(dx, dy);
+                    const repelRadius = state.particlesState === 'zenith' ? 60 : 110;
+
+                    if (dist < repelRadius && dist > 0.1) {
+                        const force = (repelRadius - dist) / repelRadius;
+                        const push = force * (state.particlesState === 'zenith' ? 3.6 : 0.6);
+                        this.vx += (dx / dist) * push;
+                        this.vy += (dy / dist) * push;
+                    }
+
+                    this.x += this.vx;
+                    this.y += this.vy;
+                }
+
+                draw() {
+                    ctx.save();
+                    ctx.globalAlpha = this.alpha;
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+
+            function extractTextCoords(textString) {
+                const tempCanvas = document.createElement('canvas');
+                const tempCtx = tempCanvas.getContext('2d');
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+                tempCanvas.width = width;
+                tempCanvas.height = height;
+
+                tempCtx.fillStyle = '#ffffff';
+                tempCtx.textAlign = 'center';
+                
+                const fontSize = width < 768 ? 22 : 44;
+                tempCtx.font = `italic 600 ${fontSize}px "Cormorant Garamond"`;
+                
+                tempCtx.fillText(textString, width / 2, height * 0.35);
+
+                const imgData = tempCtx.getImageData(0, 0, width, height).data;
+                const coords = [];
+                const step = width < 768 ? 5 : 4;
+                for (let y = 0; y < height; y += step) {
+                    for (let x = 0; x < width; x += step) {
+                        const index = (y * width + x) * 4;
+                        if (imgData[index] > 180) {
+                            coords.push({ x: x, y: y });
+                        }
+                    }
+                }
+                return coords;
+            }
+
+            function setupCanvas() {
+                stardustCanvas.width = window.innerWidth;
+                stardustCanvas.height = window.innerHeight;
+                particles.length = 0;
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push(new Particle(i));
+                }
+                state.zenithTextCoords = extractTextCoords("Happy Birthday, Kaviya. ✨");
+            }
+
+            function drawConstellation() {
+                if (state.particlesState !== 'zenith') return;
+                const maxDist = 28;
+                ctx.strokeStyle = 'rgba(197, 160, 89, 0.06)';
+                ctx.lineWidth = 0.5;
+
+                for (let i = 0; i < particles.length; i += 3) {
+                    for (let j = i + 3; j < particles.length; j += 3) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.hypot(dx, dy);
+
+                        if (dist < maxDist) {
+                            ctx.globalAlpha = (1 - dist / maxDist) * 0.12;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                ctx.globalAlpha = 1;
+            }
+
+            // ==========================================================================
+            // 6. GSAP Timeline reveals & continuous vertical transitions
+            // ==========================================================================
+            function initGSAPRedesign() {
+                // Initialize smooth scroll Lenis
+                lenis = new Lenis({
+                    duration: 1.25,
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                    smoothWheel: true,
+                    smoothTouch: false
+                });
+
+                lenis.on('scroll', ScrollTrigger.update);
+
+                gsap.ticker.add((time) => {
+                    lenis.raf(time * 1000);
+                });
+
+                lenis.stop(); // Block scroll until seal opened
+                document.body.style.overflow = 'hidden';
+
+                // Core Scroll Progress bar
+                gsap.to(scrollProgressFill, {
+                    scrollTrigger: {
+                        trigger: '#master-stage',
+                        start: 'top top',
+                        end: 'bottom bottom',
+                        scrub: true
+                    },
+                    width: '100%',
+                    ease: 'none'
+                });
+
+                // Section Text Reveals
+                document.querySelectorAll('.journal-section').forEach(section => {
+                    if (section.id === 'section-mosaic' || section.id === 'section-climax') return;
+                    const textLines = section.querySelectorAll('.text-reveal-line');
+                    if (textLines.length) {
+                        gsap.fromTo(textLines,
+                            { translateY: '105%' },
+                            {
+                                translateY: '0%',
+                                duration: 1.0,
+                                ease: 'power3.out',
+                                stagger: 0.14,
+                                scrollTrigger: {
+                                    trigger: section,
+                                    start: 'top 82%'
+                                }
+                            }
+                        );
+                    }
+
+                    // Section Photo Entrance reveals
+                    const photos = section.querySelectorAll('.photo-holder');
+                    photos.forEach(photo => {
+                        const wrap = photo.querySelector('.photo-holder-img-wrap');
+                        const img = photo.querySelector('img');
+                        if (wrap && img) {
+                            gsap.timeline({
+                                scrollTrigger: {
+                                    trigger: photo,
+                                    start: 'top 85%'
+                                }
+                            })
+                            .fromTo(wrap,
+                                { clipPath: 'inset(100% 0% 0% 0%)' },
+                                { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.3, ease: 'power4.inOut' }
+                            )
+                            .fromTo(img,
+                                { "--reveal-scale": 1.3 },
+                                { "--reveal-scale": 1.0, duration: 1.3, ease: 'power3.out' },
+                                '<'
+                            );
+                        }
+                    });
+                });
+
+                // Horizontal Ribbon Pinning Track
+                const runwaySection = document.getElementById('section-runway');
+                const ribbonTrack = document.getElementById('ribbon-track');
+                
+                if (runwaySection && ribbonTrack) {
+                    const getScrollAmount = () => {
+                        const trackWidth = ribbonTrack.scrollWidth;
+                        const viewportWidth = window.innerWidth;
+                        return -Math.max(0, trackWidth - viewportWidth * 0.92);
+                    };
+
+                    gsap.to(ribbonTrack, {
+                        x: getScrollAmount,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: runwaySection,
+                            start: 'top top',
+                            end: () => `+=${Math.max(300, ribbonTrack.scrollWidth - window.innerWidth)}`,
+                            pin: true,
+                            pinSpacing: true,
+                            anticipatePin: 1,
+                            scrub: 1,
+                            invalidateOnRefresh: true
+                        }
+                    });
+                }
+
+                // Mosaic Section Entrance Reveal Timeline (Section following Runway)
+                const mosaicSection = document.getElementById('section-mosaic');
+                if (mosaicSection) {
+                    const mosaicTl = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: mosaicSection,
+                            start: 'top 95%',
+                            toggleActions: 'play none none none',
+                            once: true
+                        }
+                    });
+
+                    // Force z-index and position on the mosaic section during its reveal
+                    mosaicTl.set(mosaicSection, { zIndex: 990, position: 'relative' });
+
+                    const photos = mosaicSection.querySelectorAll('.photo-holder');
+                    photos.forEach((photo, index) => {
+                        const wrap = photo.querySelector('.photo-holder-img-wrap');
+                        const img = photo.querySelector('img');
+                        if (wrap && img) {
+                            mosaicTl.fromTo(wrap,
+                                { clipPath: 'inset(100% 0% 0% 0%)' },
+                                { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'power4.inOut' },
+                                index * 0.25
+                            )
+                            .fromTo(img,
+                                { "--reveal-scale": 1.3 },
+                                { "--reveal-scale": 1.0, duration: 1.2, ease: 'power3.out' },
+                                '<'
+                            );
+                        }
+                    });
+                }
+
+                // Climax Climax / Twilight Night Sky Transformation & Zenith Climax Reveal
+                const climaxSection = document.getElementById('section-climax');
+                if (climaxSection) {
+                    const climaxTl = gsap.timeline({
+                        scrollTrigger: {
+                            trigger: climaxSection,
+                            start: 'top 85%',
+                            end: 'bottom bottom',
+                            toggleActions: 'play none none none',
+                            onEnter: () => {
+                                console.log("CLIMAX ENTER: Transitioning to twilight");
+                                state.particlesState = 'zenith';
+                                document.documentElement.classList.add('twilight-theme');
+                                document.body.classList.add('twilight-theme');
+                                viewportGlow.classList.add('active');
+                                const footer = document.getElementById('premium-footer');
+                                if (footer) footer.classList.add('visible');
+                            },
+                            onLeaveBack: () => {
+                                console.log("CLIMAX LEAVE BACK: Scrolled back out of climax to top");
+                                state.particlesState = 'drift';
+                                document.documentElement.classList.remove('twilight-theme');
+                                document.body.classList.remove('twilight-theme');
+                                viewportGlow.classList.remove('active');
+                                const footer = document.getElementById('premium-footer');
+                                if (footer) footer.classList.remove('visible');
+                            }
+                        }
+                    });
+
+                    // Force z-index: 999 onto the climax section and the zenith-layer
+                    climaxTl.set(climaxSection, { zIndex: 999, position: 'relative' });
+                    const zenithContent = climaxSection.querySelector('.zenith-obsidian');
+                    if (zenithContent) {
+                        climaxTl.set(zenithContent, { zIndex: 999, position: 'relative' });
+                    }
+
+                    // Custom, manual GSAP sequence that explicitly omits exit animations.
+                    // Final text tweens to autoAlpha: 1 and stays there forever.
+                    const zenithParas = climaxSection.querySelectorAll('.zenith-p');
+                    zenithParas.forEach((p, index) => {
+                        climaxTl.fromTo(p,
+                            { autoAlpha: 0, y: 24 },
+                            { autoAlpha: 1, y: 0, duration: 1.0, ease: 'power2.out' },
+                            index * 0.45
+                        );
+                    });
+
+                    const zenithSign = climaxSection.querySelector('.zenith-sign');
+                    if (zenithSign) {
+                        climaxTl.fromTo(zenithSign,
+                            { autoAlpha: 0, scale: 0.95 },
+                            {
+                                autoAlpha: 1,
+                                scale: 1,
+                                duration: 1.2,
+                                ease: 'back.out(1.5)',
+                                onStart: () => {
+                                    launchFireworks();
+                                }
+                            },
+                            "+=0.2"
+                        );
+                    }
+                }
+
+                // Chapter dots toggle navigation
+                document.querySelectorAll('.chapter-section, .journal-section').forEach(section => {
+                    const sectionId = `#${section.getAttribute('id')}`;
+                    const activeDot = document.querySelector(`.chapter-dot[data-target="${sectionId}"]`);
+                    
+                    if (activeDot) {
+                        ScrollTrigger.create({
+                            trigger: section,
+                            start: 'top 50%',
+                            end: 'bottom 50%',
+                            onToggle: (self) => {
+                                if (self.isActive) {
+                                    chapterDots.forEach(dot => dot.classList.remove('active'));
+                                    activeDot.classList.add('active');
+                                }
+                            }
+                        });
+                    }
+                });
+
+                // Click chapter navigation
+                chapterDots.forEach(dot => {
+                    dot.addEventListener('click', () => {
+                        const targetId = dot.getAttribute('data-target');
+                        const targetEl = document.querySelector(targetId);
+                        if (targetEl) {
+                            lenis.scrollTo(targetEl, { offset: 0, duration: 1.4 });
+                        }
+                    });
+                });
+
+                // Diagnostic logger
+                setInterval(() => {
+                    console.log('--- LAYOUT DIAGNOSTICS ---');
+                    console.log('ScrollY:', window.scrollY);
+                    document.querySelectorAll('section').forEach(s => {
+                        const r = s.getBoundingClientRect();
+                        console.log('Section:', s.id, 'top:', r.top + window.scrollY, 'rect-top:', r.top, 'height:', r.height, 'opacity:', window.getComputedStyle(s).opacity, 'display:', window.getComputedStyle(s).display);
+                    });
+                    ScrollTrigger.getAll().forEach((t, i) => {
+                        console.log('Trigger ' + i + ':', t.trigger ? (t.trigger.id || t.trigger.className) : 'none', 'start:', t.start, 'end:', t.end, 'progress:', t.progress);
+                    });
+                }, 2000);
+            }
+
+            // ==========================================================================
+            // 7. Interactive Fireworks
+            // ==========================================================================
+            let fireworksActive = false;
+            function launchFireworks() {
+                if (fireworksActive) return;
+                fireworksActive = true;
+                fireworkContainer.classList.add('active');
+
+                const colors = ['#C5A059', '#E2B2B2', '#F3ECE7', '#D5A7A7', '#D6B477'];
+                const burstCount = 6;
+
+                for (let b = 0; b < burstCount; b++) {
+                    setTimeout(() => {
+                        const cx = 15 + Math.random() * 70;
+                        const cy = 20 + Math.random() * 45;
+                        const sparks = 24;
+
+                        for (let s = 0; s < sparks; s++) {
+                            const spark = document.createElement('div');
+                            spark.className = 'firework-burst';
+                            spark.style.left = `${cx}%`;
+                            spark.style.top = `${cy}%`;
+                            spark.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+                            const angle = (s / sparks) * Math.PI * 2;
+                            const distance = 50 + Math.random() * 90;
+                            const dx = Math.cos(angle) * distance;
+                            const dy = Math.sin(angle) * distance;
+                            const duration = 0.8 + Math.random() * 0.7;
+
+                            fireworkContainer.appendChild(spark);
+
+                            gsap.fromTo(spark,
+                                { x: 0, y: 0, scale: 1.2, opacity: 1 },
+                                {
+                                    x: dx, y: dy + 40, scale: 0, opacity: 0,
+                                    duration: duration,
+                                    ease: 'power2.out',
+                                    onComplete: () => spark.remove()
+                                }
+                            );
+                        }
+                    }, b * 450);
+                }
+
+                setTimeout(() => {
+                    fireworkContainer.classList.remove('active');
+                    fireworksActive = false;
+                }, burstCount * 450 + 2000);
+            }
+
+            // ==========================================================================
+            // 8. Main Render & Animation loop
+            // ==========================================================================
+            const clock = {
+                startTime: Date.now(),
+                getElapsedTime: function() {
+                    return (Date.now() - this.startTime) * 0.001;
+                }
+            };
+
+            function animate() {
+                requestAnimationFrame(animate);
+                const time = clock.getElapsedTime();
+
+                // Clear/Motion blur
+                if (state.particlesState === 'zenith') {
+                    ctx.fillStyle = 'rgba(19, 16, 22, 0.18)'; // twilight blur trail
+                    ctx.fillRect(0, 0, stardustCanvas.width, stardustCanvas.height);
+                } else {
+                    ctx.clearRect(0, 0, stardustCanvas.width, stardustCanvas.height);
+                }
+
+                particles.forEach(p => {
+                    p.update(time);
+                    p.draw();
+                });
+
+                drawConstellation();
+            }
+
+            // Window Resizer
+            window.addEventListener('resize', () => {
+                setupCanvas();
+            });
+
+            // Initialize all systems
+            setupCanvas();
+            initGSAPRedesign();
+            animate();
+        });
+    </script>
 </body>
 </html>

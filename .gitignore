@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Netlify local cache
+.netlify/
+
+# Dev/temp files — not needed in production
+temp_script.js
+app.js
+style.css
+SKILL.md
+WEBSITE_OVERVIEW.md
+deno.lock
+package.json
+package-lock.json
+references/
+scripts/
+
+# OS files
+.DS_Store
+Thumbs.db
